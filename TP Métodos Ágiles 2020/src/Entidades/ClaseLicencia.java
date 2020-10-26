@@ -20,7 +20,7 @@ public class ClaseLicencia {
 		costos.add(Arrays.asList(59, 44, 39, 29)); //CLASE E
 		costos.add(Arrays.asList(59, 44, 39, 29)); //CLASE F
 		costos.add(Arrays.asList(40, 30, 25, 20)); //CLASE G
-	}
+	}				    // años: 5,   4,  3,  1.
 	
 	public static ClaseLicencia getSingletonInstance() {
         if (claseLicencia == null){
@@ -28,9 +28,10 @@ public class ClaseLicencia {
         }
         return claseLicencia;
     }
+	
 			
-	public static Integer getCostoLicencia(ArrayList<Clase> clases, Calendar fechaNacimiento) { //Clase=nombre enumerado
-		Integer costoTotal, edad;
+	public static Integer getCostoLicencia(ArrayList<Clase> clases, Calendar fechaNacimiento, Integer DNI) { //Clase=nombre enumerado
+		Integer costoTotal, edad, posicion, i;
 		
 		//CALCULAR EDAD
 		int año = fechaNacimiento.get(Calendar.YEAR);
@@ -40,15 +41,57 @@ public class ClaseLicencia {
 		LocalDate fechaActual = LocalDate.now();
 		Period diferencia = Period.between(fechaNac, fechaActual);
 		edad = diferencia.getYears();
-	
-		//TODO ver el tema de los 21 años
-		//Falta recorrer ArrayList e ir viendo las clases
-				
+		
+		
+		//OBTENER LA POSICIÓN DENTRO DEL ARRAY DE CADA CLASE
+		if(edad<=21) {
+				if(TitularDao.buscarTitular(DNI).getLicencia().isEmpty()) //Buscamos al titular y dsps su licencia
+					posicion = 3;
+				else
+					posicion = 2;
+		}else if(edad <= 46) {
+			posicion = 0;
+		}else if(edad <= 60) {
+			posicion = 1;
+		}else if(edad <= 70) {
+			posicion = 2;
+		}else if(edad> 70) {
+			posicion = 3;
+		}
+		
+		
+		//OBTENER EL COSTO
+		i = clases.size();
+		while (i != 0) {
+			switch(clases.get(i-1)) {
+			case Clase.A :
+				costoTotal = costoTotal + costos.get(0).get(posicion);
+				break;
+			case Clase.B :
+				costoTotal = costoTotal + costos.get(1).get(posicion);
+				break;
+			case Clase.C :
+				costoTotal = costoTotal + costos.get(2).get(posicion);
+				break;
+			case Clase.D :
+				costoTotal = costoTotal + costos.get(3).get(posicion);
+				break;
+			case Clase.E :
+				costoTotal = costoTotal + costos.get(4).get(posicion);
+				break;
+			case Clase.F :
+				costoTotal = costoTotal + costos.get(5).get(posicion);
+				break;
+			case Clase.G :
+				costoTotal = costoTotal + costos.get(6).get(posicion);
+				break;
+			}		
+			
+			i--;
+		}
+			
 		
 		return costoTotal;
 	}
-			
-			
-			
 
 }
