@@ -33,15 +33,7 @@ public class ClaseLicencia {
 	public static Integer getCostoLicencia(ArrayList<Clase> clases, Calendar fechaNacimiento, Integer DNI) { //Clase=nombre enumerado
 		Integer costoTotal, edad, posicion, i;
 		
-		//CALCULAR EDAD
-		int año = fechaNacimiento.get(Calendar.YEAR);
-		int mes = fechaNacimiento.get(Calendar.MONTH) + 1;
-		int dia = fechaNacimiento.get(Calendar.DATE);
-		LocalDate fechaNac = LocalDate.of(año, mes, dia);
-		LocalDate fechaActual = LocalDate.now();
-		Period diferencia = Period.between(fechaNac, fechaActual);
-		edad = diferencia.getYears();
-		
+		edad = calcularEdad(fechaNacimiento);		
 		
 		//OBTENER LA POSICIÓN DENTRO DEL ARRAY DE CADA CLASE
 		if(edad<=21) {
@@ -93,5 +85,18 @@ public class ClaseLicencia {
 		
 		return costoTotal;
 	}
+	
+	
+	public static Integer calcularEdad(Calendar fechaNacimiento) {
+		int año = fechaNacimiento.get(Calendar.YEAR);
+		int mes = fechaNacimiento.get(Calendar.MONTH) + 1;
+		int dia = fechaNacimiento.get(Calendar.DATE);
+		LocalDate fechaNac = LocalDate.of(año, mes, dia);
+		LocalDate fechaActual = LocalDate.now();
+		Period diferencia = Period.between(fechaNac, fechaActual);
+		
+		return diferencia.getYears();
+	}
+	
 
 }
