@@ -3,12 +3,17 @@ package Pantallas;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+
+import Entidades.Titular;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class BuscarTitular extends JFrame{
 
@@ -16,7 +21,9 @@ public class BuscarTitular extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
+	private JTextField tfBuscarDNI;
+	private String dniTitular;
+	private Titular titularEncontrado;
 
 	/**
 	 * Launch the application.
@@ -51,10 +58,18 @@ public class BuscarTitular extends JFrame{
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
 
-		textField = new JTextField();
-		textField.setBounds(193, 12, 138, 19);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		tfBuscarDNI = new JTextField();
+		tfBuscarDNI.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(!Character.isDigit(e.getKeyChar())) e.consume();
+				
+				if (tfBuscarDNI.getText().length()==8) e.consume();
+			}
+		});
+		tfBuscarDNI.setBounds(193, 12, 138, 19);
+		getContentPane().add(tfBuscarDNI);
+		tfBuscarDNI.setColumns(10);
 		
 		JLabel lblDNI = new JLabel("Ingresar n\u00FAmero DNI:");
 		lblDNI.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -65,6 +80,11 @@ public class BuscarTitular extends JFrame{
 		JButton buscar = new JButton("Buscar");
 		buscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				dniTitular = buscar.getText();
+				//Titular titular=GestorLicencia.getInstance.buscarTitular(dniTitular)
+				//
+				
 			}
 		});
 		buscar.setBounds(341, 11, 85, 21);
@@ -89,11 +109,11 @@ public class BuscarTitular extends JFrame{
 				dispose();
 			}
 		});
-		confirmar.setBounds(341, 152, 85, 21);
+		confirmar.setBounds(331, 152, 95, 21);
 		getContentPane().add(confirmar);
 		
 		JButton btnNewButton = new JButton("Crear titular");
-		btnNewButton.setBounds(171, 152, 95, 21);
+		btnNewButton.setBounds(164, 152, 109, 21);
 		getContentPane().add(btnNewButton);
 		
 		JPanel panel = new JPanel();
@@ -125,5 +145,9 @@ public class BuscarTitular extends JFrame{
 		lblFechaNacimiento.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblFechaNacimiento.setBounds(194, 80, 174, 13);
 		panel.add(lblFechaNacimiento);
+		
+		confirmar.setEnabled(false);
+		
+		
 	}
 }

@@ -2,6 +2,7 @@ package Pantallas;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -9,6 +10,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import Entidades.*;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JCheckBox;
@@ -32,7 +34,11 @@ public class EmitirLicencia extends JFrame{
 	private JTextField tfDepto;
 	private JTextField tfPiso;
 	private JTextField tfCalle;
-	
+	private Titular titularEmitir=new Titular();
+	private JCheckBox cbA,cbB,cbC,cbD,cbE,cbF,cbG;
+	private String aclaracion="<html>Aclaración:<br/>No se seleccionó un titular.</html>";
+	private JLabel lblAclaracion;
+	private JButton confirmar;
 	/**
 	 * Launch the application.
 	 */
@@ -210,7 +216,7 @@ public class EmitirLicencia extends JFrame{
 		lblSeleccionarClase.setBounds(404, 39, 278, 13);
 		panel.add(lblSeleccionarClase);
 		
-		JCheckBox cbA = new JCheckBox("Clase A");
+		cbA = new JCheckBox("Clase A");
 		cbA.setBounds(404, 55, 68, 21);
 		panel.add(cbA);
 		
@@ -218,7 +224,7 @@ public class EmitirLicencia extends JFrame{
 		lblObservaciones.setBounds(403, 216, 95, 21);
 		panel.add(lblObservaciones);
 		
-		JCheckBox cbB = new JCheckBox("Clase B");
+		cbB = new JCheckBox("Clase B");
 		cbB.setBounds(474, 55, 78, 21);
 		panel.add(cbB);
 		
@@ -226,38 +232,40 @@ public class EmitirLicencia extends JFrame{
 		cancelar.setBounds(29, 311, 85, 21);
 		panel.add(cancelar);
 		
-		JButton confirmar = new JButton("Confirmar");
+		confirmar = new JButton("Confirmar");
 		confirmar.setBounds(638, 311, 103, 21);
 		panel.add(confirmar);
 		
-		JCheckBox cbC = new JCheckBox("Clase C");
+		cbC = new JCheckBox("Clase C");
+
 		cbC.setBounds(550, 55, 78, 21);
 		panel.add(cbC);
 		
-		JCheckBox cbD = new JCheckBox("Clase D");
+		cbD = new JCheckBox("Clase D");
 		cbD.setBounds(625, 55, 84, 21);
 		panel.add(cbD);
 		
-		JCheckBox cbE = new JCheckBox("Clase E");
+		cbE = new JCheckBox("Clase E");
 		cbE.setBounds(404, 78, 68, 21);
 		panel.add(cbE);
 		
-		JCheckBox cbF = new JCheckBox("Clase F");
+		cbF = new JCheckBox("Clase F");
 		cbF.setBounds(474, 78, 68, 21);
 		panel.add(cbF);
 		
-		JCheckBox cbG = new JCheckBox("Clase G");
+		cbG = new JCheckBox("Clase G");
 		cbG.setBounds(550, 78, 95, 21);
 		panel.add(cbG);
 		
-		JLabel lblAclaracion = new JLabel("Aclaraci\u00F3n:");
-		lblAclaracion.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblAclaracion.setBounds(404, 122, 68, 13);
+		lblAclaracion = new JLabel(aclaracion);
+		lblAclaracion.setVerticalAlignment(SwingConstants.TOP);
+		lblAclaracion.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblAclaracion.setBounds(404, 122, 330, 91);
 		panel.add(lblAclaracion);
 		
-		JEditorPane editorPane = new JEditorPane();
-		editorPane.setBounds(404, 240, 337, 63);
-		panel.add(editorPane);
+		JEditorPane tfObservaciones = new JEditorPane();
+		tfObservaciones.setBounds(404, 240, 337, 63);
+		panel.add(tfObservaciones);
 		
 		tfNombre.setEnabled(false);
 		tfApellido.setEnabled(false);
@@ -271,6 +279,144 @@ public class EmitirLicencia extends JFrame{
 		tfPiso.setEnabled(false);
 		tfCalle.setEnabled(false);
 		cbDonante.setEnabled(false);
+		tfObservaciones.setEnabled(false);
+
+		actualizarAclaracion();
 		
+		confirmar.setEnabled(false);
+		
+		cbA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				actualizarAclaracion();
+			}
+		});
+		
+		cbB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cbC.setSelected(false);
+				cbD.setSelected(false);
+				cbE.setSelected(false);
+				cbF.setSelected(false);
+				cbG.setSelected(false);
+				
+				actualizarAclaracion();
+			}
+		});
+		
+		cbC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cbB.setSelected(false);
+				cbD.setSelected(false);
+				cbE.setSelected(false);
+				cbF.setSelected(false);
+				cbG.setSelected(false);
+			
+				actualizarAclaracion();
+			}
+		});
+		
+		cbD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cbC.setSelected(false);
+				cbB.setSelected(false);
+				cbE.setSelected(false);
+				cbF.setSelected(false);
+				cbG.setSelected(false);
+				
+				actualizarAclaracion();
+			}
+		});
+		
+		cbE.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cbC.setSelected(false);
+				cbD.setSelected(false);
+				cbB.setSelected(false);
+				cbF.setSelected(false);
+				cbG.setSelected(false);
+				
+				actualizarAclaracion();
+			}
+		});
+		
+		cbF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cbC.setSelected(false);
+				cbD.setSelected(false);
+				cbE.setSelected(false);
+				cbB.setSelected(false);
+				cbG.setSelected(false);
+				
+				actualizarAclaracion();
+			}
+		});
+		
+		cbG.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cbC.setSelected(false);
+				cbD.setSelected(false);
+				cbE.setSelected(false);
+				cbF.setSelected(false);
+				cbB.setSelected(false);
+				
+				actualizarAclaracion();
+			}
+		});
+
+	}	
+	
+	private void actualizarAclaracion() {
+		aclaracion="<html>Aclaración:<br/>";
+		
+		if(titularEmitir==null) {
+			aclaracion=aclaracion+"No se seleccionó un titular.</html>";
+			cbA.setEnabled(false);
+			cbB.setEnabled(false);
+			cbC.setEnabled(false);
+			cbD.setEnabled(false);
+			cbE.setEnabled(false);
+			cbF.setEnabled(false);
+			cbG.setEnabled(false);
+		}else{
+			
+			//if titular ya tiene licencia (...)
+			//else
+			
+			if(!cbA.isSelected()&&!cbB.isSelected()&&!cbC.isSelected()&&!cbD.isSelected()&&!cbE.isSelected()&&!cbF.isSelected()&&!cbG.isSelected()){
+				aclaracion=aclaracion+"Seleccione una clase para la licencia.</html>";
+			}else {
+				
+				aclaracion=aclaracion+"El titular puede conducir vehiculos de clase";
+
+				if(cbA.isSelected()) {
+					aclaracion=aclaracion+" A";
+				}
+				if(cbB.isSelected()&&cbA.isSelected()) {
+					aclaracion=aclaracion+" y B";
+				}
+				
+				if(cbC.isSelected()) {
+					aclaracion=aclaracion+" B y C";
+				}
+				if(cbD.isSelected()) {
+					aclaracion=aclaracion+" B C y D";
+				}
+				if(cbE.isSelected()) {
+					aclaracion=aclaracion+" B C D y E";
+				}
+				if(cbF.isSelected()) {
+					aclaracion=aclaracion+" B C D E y F";
+				}
+				if(cbG.isSelected()) {
+					aclaracion=aclaracion+" B C D E F y G";
+				}
+				aclaracion=aclaracion+".<html>";
+				
+				confirmar.setEnabled(true);
+			}
+		}
+				
+		lblAclaracion.setText(aclaracion);
 	}
 }
