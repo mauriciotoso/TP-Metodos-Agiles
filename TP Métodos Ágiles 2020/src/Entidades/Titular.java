@@ -1,4 +1,4 @@
-package EntidadTitular;
+package Entidades;
 
 import java.util.Calendar;
 

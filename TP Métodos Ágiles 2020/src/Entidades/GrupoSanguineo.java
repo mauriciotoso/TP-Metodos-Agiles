@@ -1,4 +1,4 @@
-package EntidadTitular;
+package Entidades;
 
 public enum GrupoSanguineo {
 	A, 
