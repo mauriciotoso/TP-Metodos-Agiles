@@ -10,6 +10,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -42,6 +43,10 @@ public class DarAltaTitular {
 	private JTextField textField_depto;
 	private String depto;
 	private boolean deptoval;
+	private String dia;
+	private String mes;
+	private String anyo;
+	private Calendar fecha;
 
 	/**
 	 * Launch the application.
@@ -80,7 +85,7 @@ public class DarAltaTitular {
 		lblCrearTitular.setBounds(10, 26, 80, 14);
 		frame.getContentPane().add(lblCrearTitular);
 		
-		JLabel lblDni = new JLabel("DNI");
+		JLabel lblDni = new JLabel("DNI*");
 		lblDni.setBounds(28, 70, 46, 14);
 		frame.getContentPane().add(lblDni);
 		
@@ -89,7 +94,11 @@ public class DarAltaTitular {
 		lblErrorDNI.setBounds(238, 70, 116, 14);
 		frame.getContentPane().add(lblErrorDNI);
 		lblErrorDNI.setVisible(false);
+		// !!!!!!!!!!!
 		
+		// VALIDAR CON GESTOR DNI UNICO
+		
+		// !!!!!!!!!!!
 		textField_DNI = new JTextField();
 		textField_DNI.addKeyListener(new KeyAdapter() {
 			@Override
@@ -97,28 +106,23 @@ public class DarAltaTitular {
 				if(textField_DNI.getText().length()==8) {
 					e.consume();
 				}
-			}
-		});
-		textField_DNI.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseExited(MouseEvent e) {
-				dnival = true;
-				if(textField_DNI.getText().length()<7) {
-					dnival = false;
-				}
-				dni = textField_DNI.getText();
-				for(int i = 0; i<dni.length(); i++) {
-					if(!(Character.isDigit(dni.charAt(i)))) {
+					dnival = true;
+					if(textField_DNI.getText().length()<7) {
 						dnival = false;
 					}
-				}
-				if(!dnival) {
-					lblErrorDNI.setText("DNI inválido");
-					lblErrorDNI.setVisible(true);
-				}
-				else {
-					lblErrorDNI.setVisible(false);
-				}
+					dni = textField_DNI.getText();
+					for(int i = 0; i<dni.length(); i++) {
+						if(!(Character.isDigit(dni.charAt(i)))) {
+							dnival = false;
+						}
+					}
+					if(!dnival) {
+						lblErrorDNI.setText("DNI inválido");
+						lblErrorDNI.setVisible(true);
+					}
+					else {
+						lblErrorDNI.setVisible(false);
+					}
 			}
 		});
 		
@@ -126,7 +130,7 @@ public class DarAltaTitular {
 		frame.getContentPane().add(textField_DNI);
 		textField_DNI.setColumns(10);
 		
-		JLabel lblApellido = new JLabel("Apellido");
+		JLabel lblApellido = new JLabel("Apellido*");
 		lblApellido.setBounds(28, 120, 46, 14);
 		frame.getContentPane().add(lblApellido);
 		
@@ -143,12 +147,6 @@ public class DarAltaTitular {
 				if(textField_Apellido.getText().length()==30) {
 					e.consume();
 				}
-			}
-		});
-		
-		textField_Apellido.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseExited(MouseEvent e) {
 				apellido = textField_Apellido.getText().toLowerCase().replace(" ", "");
 				apellidoval = true;
 				if(apellido.length()==0) { apellidoval = false;}
@@ -164,11 +162,12 @@ public class DarAltaTitular {
 				}
 			}
 		});
+		
 		textField_Apellido.setBounds(79, 117, 149, 20);
 		frame.getContentPane().add(textField_Apellido);
 		textField_Apellido.setColumns(10);
 		
-		JLabel lblNombre = new JLabel("Nombre");
+		JLabel lblNombre = new JLabel("Nombre*");
 		lblNombre.setBounds(28, 164, 46, 14);
 		frame.getContentPane().add(lblNombre);
 		
@@ -186,12 +185,6 @@ public class DarAltaTitular {
 				if(textField_Nombre.getText().length()==40) {
 					e.consume();
 				}
-			}
-		});
-		
-		textField_Nombre.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseExited(MouseEvent e) {
 				nombre = textField_Nombre.getText().toLowerCase().replace(" ", "");
 				nombreval = true;
 				if(nombre.length()==0) { nombreval = false;}
@@ -212,7 +205,7 @@ public class DarAltaTitular {
 		frame.getContentPane().add(textField_Nombre);
 		textField_Nombre.setColumns(10);
 		
-		JLabel lblFechaDeNacimiento = new JLabel("Fecha de nacimiento");
+		JLabel lblFechaDeNacimiento = new JLabel("Fecha de nacimiento*");
 		lblFechaDeNacimiento.setBounds(28, 230, 129, 14);
 		frame.getContentPane().add(lblFechaDeNacimiento);
 		
@@ -243,12 +236,14 @@ public class DarAltaTitular {
 			comboBoxAnyo.addItem(i.toString());
 		}
 		
+		
+		
 		JLabel lblDireccion = new JLabel("Direcci\u00F3n");
 		lblDireccion.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblDireccion.setBounds(403, 46, 58, 14);
 		frame.getContentPane().add(lblDireccion);
 		
-		JLabel lblCalle = new JLabel("Calle");
+		JLabel lblCalle = new JLabel("Calle*");
 		lblCalle.setBounds(413, 76, 46, 14);
 		frame.getContentPane().add(lblCalle);
 		
@@ -291,14 +286,14 @@ public class DarAltaTitular {
 		frame.getContentPane().add(textField_Calle);
 		textField_Calle.setColumns(10);
 		
-		JLabel lblN = new JLabel("N\u00B0");
+		JLabel lblN = new JLabel("Nro.*");
 		
 		lblN.setBounds(624, 76, 46, 14);
 		frame.getContentPane().add(lblN);
 		
 		JLabel lblErrornro = new JLabel("ErrorNro");
 		lblErrornro.setForeground(Color.RED);
-		lblErrornro.setBounds(624, 100, 104, 14);
+		lblErrornro.setBounds(634, 100, 104, 14);
 		frame.getContentPane().add(lblErrornro);
 		lblErrornro.setVisible(false);
 		
@@ -310,33 +305,27 @@ public class DarAltaTitular {
 				if(textField_nro.getText().length()==6) {
 					e.consume();
 				}
+				nro = textField_nro.getText();
+				nroval = true;
+				
+				if(nro.length()==0) { nroval = false;}
+				
+				for(int i = 0; i<nro.length(); i++) {
+					if(!(Character.isDigit(nro.charAt(i)))){
+						nroval = false;
+					}
+				}
+				if(!nroval) {
+					lblErrornro.setText("Número inválido");
+					lblErrornro.setVisible(true);
+				}
+				else {
+					lblErrornro.setVisible(false);
+				}
 			}
 		});
 		
-		textField_nro.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseExited(MouseEvent e) {
-					nro = textField_nro.getText();
-					nroval = true;
-					
-					if(nro.length()==0) { nroval = false;}
-					
-					for(int i = 0; i<nro.length(); i++) {
-						if(!(Character.isDigit(nro.charAt(i)))){
-							nroval = false;
-						}
-					}
-					if(!nroval) {
-						lblErrornro.setText("Número inválido");
-						lblErrornro.setVisible(true);
-					}
-					else {
-						lblErrornro.setVisible(false);
-					}
-				}
-			}
-		);
-		textField_nro.setBounds(645, 73, 46, 20);
+		textField_nro.setBounds(663, 73, 46, 20);
 		frame.getContentPane().add(textField_nro);
 		textField_nro.setColumns(10);
 		
@@ -357,12 +346,6 @@ public class DarAltaTitular {
 				if(textField_piso.getText().length()==4) {
 					e.consume();
 				}
-			}
-		});
-		
-		textField_piso.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseExited(MouseEvent e) {
 				piso = textField_piso.getText().toLowerCase();
 				pisoval = true;
 				
@@ -381,6 +364,7 @@ public class DarAltaTitular {
 				}
 			}
 		});
+		
 		textField_piso.setBounds(454, 122, 65, 20);
 		frame.getContentPane().add(textField_piso);
 		textField_piso.setColumns(10);
@@ -403,12 +387,6 @@ public class DarAltaTitular {
 				if(textField_depto.getText().length()==4) {
 					e.consume();
 				}
-			}
-		});
-		
-		textField_depto.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseExited(MouseEvent e) {
 				depto = textField_depto.getText().toLowerCase();
 				deptoval = true;
 				
@@ -428,11 +406,12 @@ public class DarAltaTitular {
 			}
 		});
 		
+		
 		textField_depto.setBounds(587, 122, 46, 20);
 		frame.getContentPane().add(textField_depto);
 		textField_depto.setColumns(10);
 		
-		JLabel lblGrupoSanguneo = new JLabel("Grupo Sangu\u00EDneo");
+		JLabel lblGrupoSanguneo = new JLabel("Grupo Sangu\u00EDneo*");
 		lblGrupoSanguneo.setBounds(403, 190, 109, 14);
 		frame.getContentPane().add(lblGrupoSanguneo);
 		
@@ -441,7 +420,7 @@ public class DarAltaTitular {
 		comboBoxGrupoS.setBounds(553, 186, 80, 22);
 		frame.getContentPane().add(comboBoxGrupoS);
 		
- 		JLabel lblFactorRh = new JLabel("Factor RH");
+ 		JLabel lblFactorRh = new JLabel("Factor RH*");
 		lblFactorRh.setBounds(403, 229, 58, 14);
 		frame.getContentPane().add(lblFactorRh);
 		
@@ -454,17 +433,53 @@ public class DarAltaTitular {
 		chckbxDonanteDeOrganos.setBounds(403, 267, 149, 23);
 		frame.getContentPane().add(chckbxDonanteDeOrganos);
 		
+		JLabel lblErrorFecha = new JLabel("Fecha inv\u00E1lida");
+		lblErrorFecha.setForeground(Color.RED);
+		lblErrorFecha.setBounds(28, 258, 174, 14);
+		frame.getContentPane().add(lblErrorFecha);
+		lblErrorFecha.setVisible(false);
+		
 		JButton btnNewButton = new JButton("Confirmar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				dia = comboBoxDia.getSelectedItem().toString();
+				mes = comboBoxMes.getSelectedItem().toString();
+				anyo = comboBoxAnyo.getSelectedItem().toString();
+				lblErrorFecha.setVisible(false);
+				
+				if(dia.compareTo("Día")==0 || mes.compareTo("Mes")==0 || anyo.compareTo("Año")==0) {
+					lblErrorFecha.setVisible(true);
+				
+				
+				}else {
+				
+				try {
+					
+					fecha = Calendar.getInstance();
+					fecha.setLenient(false);
+					fecha.set(Integer.parseInt(dia),Integer.parseInt(mes)-1, Integer.parseInt(anyo));
+				}catch(Exception a) {
+					lblErrorFecha.setVisible(true);
+					a.printStackTrace();
+				}
+			}
 			}
 		});
+		
 		btnNewButton.setBounds(624, 319, 129, 23);
 		frame.getContentPane().add(btnNewButton);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(10, 319, 89, 23);
 		frame.getContentPane().add(btnCancelar);
+		
+		JLabel lblCamposObligatorios = new JLabel("*: Campos obligatorios");
+		lblCamposObligatorios.setFont(new Font("Tahoma", Font.ITALIC, 10));
+		lblCamposObligatorios.setBounds(126, 321, 251, 18);
+		frame.getContentPane().add(lblCamposObligatorios);
+		
+	
+		
 		
 		
 		
