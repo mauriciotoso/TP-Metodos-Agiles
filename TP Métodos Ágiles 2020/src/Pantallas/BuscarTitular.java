@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-import Entidades.Titular;
+//import Entidades.Titular;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -23,7 +23,7 @@ public class BuscarTitular extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JTextField tfBuscarDNI;
 	private String dniTitular;
-	private Titular titularEncontrado;
+	//private Titular titularEncontrado;
 
 	/**
 	 * Launch the application.

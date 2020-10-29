@@ -3,6 +3,7 @@ package Pantallas;
 import java.awt.EventQueue;
 
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -34,7 +35,7 @@ public class EmitirLicencia extends JFrame{
 	private JTextField tfDepto;
 	private JTextField tfPiso;
 	private JTextField tfCalle;
-	private Titular titularEmitir=new Titular();
+//	private Titular titularEmitir=new Titular();
 	private JCheckBox cbA,cbB,cbC,cbD,cbE,cbF,cbG;
 	private String aclaracion="<html>Aclaración:<br/>No se seleccionó un titular.</html>";
 	private JLabel lblAclaracion;
@@ -369,7 +370,7 @@ public class EmitirLicencia extends JFrame{
 	private void actualizarAclaracion() {
 		aclaracion="<html>Aclaración:<br/>";
 		
-		if(titularEmitir==null) {
+		if(true/*titularEmitir==null*/) {
 			aclaracion=aclaracion+"No se seleccionó un titular.</html>";
 			cbA.setEnabled(false);
 			cbB.setEnabled(false);
@@ -379,7 +380,6 @@ public class EmitirLicencia extends JFrame{
 			cbF.setEnabled(false);
 			cbG.setEnabled(false);
 		}else{
-			
 			//if titular ya tiene licencia (...)
 			//else
 			
