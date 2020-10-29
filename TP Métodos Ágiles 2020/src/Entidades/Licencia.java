@@ -13,13 +13,13 @@ public class Licencia {
 	
 	public Calendar calcularVigencia(Calendar fechaNacimiento) {
 		Calendar fechaActual, fechaVencimiento;
-		Integer diferenciaMeses, cantidadAños;
+		Integer diferenciaMeses, cantidadAï¿½os;
 		
 		fechaActual = Calendar.getInstance();
 		Integer edad = ClaseLicencia.calcularEdad(fechaNacimiento);
 		
 		
-		//CALCULAMOS LOS MESES DE DIFERENCIA ENTRE HOY Y EL CUMPLEAÑOS
+		//CALCULAMOS LOS MESES DE DIFERENCIA ENTRE HOY Y EL CUMPLEAï¿½OS
 		if(fechaNacimiento.get(Calendar.MONTH) < fechaActual.get(Calendar.MONTH))
 			fechaNacimiento.set(Calendar.YEAR, fechaActual.get(Calendar.YEAR) + 1);
 		else
@@ -27,40 +27,39 @@ public class Licencia {
 		
 		fechaVencimiento = fechaNacimiento;
 		
-		int año = fechaNacimiento.get(Calendar.YEAR);
+		int aï¿½o = fechaNacimiento.get(Calendar.YEAR);
 		int mes = fechaNacimiento.get(Calendar.MONTH) + 1;
 		int dia = fechaNacimiento.get(Calendar.DATE);
-		LocalDate fechaNac = LocalDate.of(año, mes, dia);
+		LocalDate fechaNac = LocalDate.of(aï¿½o, mes, dia);
 		LocalDate fechaAct = LocalDate.now();
 		Period diferencia = Period.between(fechaNac, fechaAct);
 		
 		diferenciaMeses = Math.abs(diferencia.getMonths());
 					
 		
-		//VEMOS CUÁNTOS AÑOS CORRESPONDE SEGÚN EDAD
+		//VEMOS CUï¿½NTOS Aï¿½OS CORRESPONDE SEGï¿½N EDAD
 		if(edad<=21) {
 			if(TitularDao.buscarTitular(DNI).getLicencia().isEmpty()) //Buscamos al titular y dsps su licencia
-				cantidadAños = 1;
+				cantidadAï¿½os = 1;
 			else
-				cantidadAños = 3;
+				cantidadAï¿½os = 3;
 		}else if(edad <= 46) {
-			cantidadAños = 5;
+			cantidadAï¿½os = 5;
 		}else if(edad <= 60) {
-			cantidadAños = 4;
+			cantidadAï¿½os = 4;
 		}else if(edad <= 70) {
-			cantidadAños = 3;
+			cantidadAï¿½os = 3;
 		}else if(edad> 70) {
-			cantidadAños = 3;
+			cantidadAï¿½os = 3;
 		}
 		
 		if(diferenciaMeses <= 6) 
-			fechaVencimiento.add(Calendar.YEAR, cantidadAños);			
+			fechaVencimiento.add(Calendar.YEAR, cantidadAï¿½os);			
 		else 
-			fechaVencimiento.add(Calendar.YEAR, cantidadAños - 1);	
+			fechaVencimiento.add(Calendar.YEAR, cantidadAï¿½os - 1);	
 		
 		
 		
 		return fechaVencimiento;
 		
-}
 }
