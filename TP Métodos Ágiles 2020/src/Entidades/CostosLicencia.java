@@ -7,12 +7,14 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import Logica.GestorTitular;
 
-public class ClaseLicencia {
-	private List<List<Integer>> costos = new ArrayList<List<Integer>>();
-	private static ClaseLicencia claseLicencia;
+
+public class CostosLicencia {
+	private static List<List<Integer>> costos = new ArrayList<List<Integer>>();
+	private static CostosLicencia claseLicencia;
 	
-	private ClaseLicencia() {
+	private CostosLicencia() {
 		costos.add(Arrays.asList(40, 30, 25, 20)); //CLASE A
 		costos.add(Arrays.asList(40, 30, 25, 20)); //CLASE B
 		costos.add(Arrays.asList(47, 35, 30, 23)); //CLASE C
@@ -22,22 +24,22 @@ public class ClaseLicencia {
 		costos.add(Arrays.asList(40, 30, 25, 20)); //CLASE G
 	}				    // años: 5,   4,  3,  1.
 	
-	public static ClaseLicencia getSingletonInstance() {
+	public static CostosLicencia getInstance() {
         if (claseLicencia == null){
-            claseLicencia = new ClaseLicencia();
+            claseLicencia = new CostosLicencia();
         }
         return claseLicencia;
     }
 	
 			
-	public static Integer getCostoLicencia(ArrayList<Clase> clases, Calendar fechaNacimiento, Integer DNI) { //Clase=nombre enumerado
-		Integer costoTotal, edad, posicion, i;
+	public static Integer getCostoLicencia(ArrayList<Clase> clases, Calendar fechaNacimiento, String DNI) { //Clase=nombre enumerado
+		Integer costoTotal=0, edad, posicion, i;
 		
 		edad = calcularEdad(fechaNacimiento);		
 		
 		//OBTENER LA POSICIÓN DENTRO DEL ARRAY DE CADA CLASE
 		if(edad<=21) {
-				if(TitularDao.buscarTitular(DNI).getLicencia().isEmpty()) //Buscamos al titular y dsps su licencia
+				if(GestorTitular.getInstance().buscarTitular(DNI).getLicencia()==null) //Buscamos al titular y dsps su licencia
 					posicion = 3;
 				else
 					posicion = 2;
@@ -47,7 +49,7 @@ public class ClaseLicencia {
 			posicion = 1;
 		}else if(edad <= 70) {
 			posicion = 2;
-		}else if(edad> 70) {
+		}else{
 			posicion = 3;
 		}
 		
@@ -56,25 +58,25 @@ public class ClaseLicencia {
 		i = clases.size();
 		while (i != 0) {
 			switch(clases.get(i-1)) {
-			case Clase.A :
+			case A :
 				costoTotal = costoTotal + costos.get(0).get(posicion);
 				break;
-			case Clase.B :
+			case B :
 				costoTotal = costoTotal + costos.get(1).get(posicion);
 				break;
-			case Clase.C :
+			case C :
 				costoTotal = costoTotal + costos.get(2).get(posicion);
 				break;
-			case Clase.D :
+			case D :
 				costoTotal = costoTotal + costos.get(3).get(posicion);
 				break;
-			case Clase.E :
+			case E :
 				costoTotal = costoTotal + costos.get(4).get(posicion);
 				break;
-			case Clase.F :
+			case F :
 				costoTotal = costoTotal + costos.get(5).get(posicion);
 				break;
-			case Clase.G :
+			case G :
 				costoTotal = costoTotal + costos.get(6).get(posicion);
 				break;
 			}		

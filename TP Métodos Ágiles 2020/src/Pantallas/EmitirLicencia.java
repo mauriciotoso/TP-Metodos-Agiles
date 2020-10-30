@@ -1,22 +1,25 @@
 package Pantallas;
 
 import java.awt.EventQueue;
-
-
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import Entidades.*;
+import Logica.GestorLicencia;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JCheckBox;
 import java.awt.Font;
 import javax.swing.JEditorPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class EmitirLicencia extends JFrame{
 
@@ -31,7 +34,6 @@ public class EmitirLicencia extends JFrame{
 	private JTextField tfFechaNac;
 	private JTextField tfRH;
 	private JTextField tfGS;
-	private JTextField tfNroDir;
 	private JTextField tfDepto;
 	private JTextField tfPiso;
 	private JTextField tfCalle;
@@ -40,6 +42,10 @@ public class EmitirLicencia extends JFrame{
 	private String aclaracion="<html>Aclaración:<br/>No se seleccionó un titular.</html>";
 	private JLabel lblAclaracion;
 	private JButton confirmar;
+	private Titular titularEncontrado;
+	private JCheckBox cbDonante;
+	private JEditorPane tfObservaciones;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -62,7 +68,11 @@ public class EmitirLicencia extends JFrame{
 	public EmitirLicencia() {
 		initialize();
 	}
-
+	
+	public EmitirLicencia(Titular titularEncontrado) {
+		this.titularEncontrado=titularEncontrado;
+		initialize();
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -168,14 +178,9 @@ public class EmitirLicencia extends JFrame{
 		lblGrupoSanguineo.setBounds(10, 119, 117, 13);
 		panelTitular.add(lblGrupoSanguineo);
 		
-		JCheckBox cbDonante = new JCheckBox("Donante de Organos");
+		cbDonante = new JCheckBox("Donante de Organos");
 		cbDonante.setBounds(10, 141, 159, 21);
 		panelTitular.add(cbDonante);
-		
-		tfNroDir = new JTextField();
-		tfNroDir.setColumns(10);
-		tfNroDir.setBounds(247, 186, 73, 19);
-		panelTitular.add(tfNroDir);
 		
 		tfDepto = new JTextField();
 		tfDepto.setColumns(10);
@@ -206,12 +211,8 @@ public class EmitirLicencia extends JFrame{
 		
 		tfCalle = new JTextField();
 		tfCalle.setColumns(10);
-		tfCalle.setBounds(42, 189, 168, 19);
+		tfCalle.setBounds(42, 189, 189, 19);
 		panelTitular.add(tfCalle);
-		
-		JLabel lblNro = new JLabel("Nro");
-		lblNro.setBounds(217, 192, 32, 13);
-		panelTitular.add(lblNro);
 		
 		JLabel lblSeleccionarClase = new JLabel("Seleccione la Clase de la Licencia");
 		lblSeleccionarClase.setBounds(404, 39, 278, 13);
@@ -222,7 +223,7 @@ public class EmitirLicencia extends JFrame{
 		panel.add(cbA);
 		
 		JLabel lblObservaciones = new JLabel("Observaciones");
-		lblObservaciones.setBounds(403, 216, 95, 21);
+		lblObservaciones.setBounds(404, 203, 95, 21);
 		panel.add(lblObservaciones);
 		
 		cbB = new JCheckBox("Clase B");
@@ -234,6 +235,22 @@ public class EmitirLicencia extends JFrame{
 		panel.add(cancelar);
 		
 		confirmar = new JButton("Confirmar");
+		confirmar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ArrayList<Clase> clases= new ArrayList<Clase>();
+				if(cbA.isSelected()) clases.add(Clase.A);
+				if(cbB.isSelected()) clases.add(Clase.B);
+				else if(cbC.isSelected()) clases.add(Clase.C);
+				else if(cbD.isSelected()) clases.add(Clase.D);
+				else if(cbE.isSelected()) clases.add(Clase.E);
+				else if(cbF.isSelected()) clases.add(Clase.F);
+				else if(cbG.isSelected()) clases.add(Clase.G);
+					
+				GestorLicencia.getInstance().crearLicencia(titularEncontrado,clases);
+				
+			}
+		});
 		confirmar.setBounds(638, 311, 103, 21);
 		panel.add(confirmar);
 		
@@ -264,8 +281,21 @@ public class EmitirLicencia extends JFrame{
 		lblAclaracion.setBounds(404, 122, 330, 91);
 		panel.add(lblAclaracion);
 		
-		JEditorPane tfObservaciones = new JEditorPane();
-		tfObservaciones.setBounds(404, 240, 337, 63);
+		tfObservaciones = new JEditorPane();
+		tfObservaciones.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (e.getKeyChar()== '\n') {
+					System.out.println("entró");
+					String s=tfObservaciones.getText();
+					s=s.substring(0, s.length()-1);
+					tfObservaciones.setText(s);
+				}
+				
+				if (tfObservaciones.getText().length()==200) e.consume();
+			}
+		});
+		tfObservaciones.setBounds(404, 224, 337, 79);
 		panel.add(tfObservaciones);
 		
 		tfNombre.setEnabled(false);
@@ -275,7 +305,6 @@ public class EmitirLicencia extends JFrame{
 		tfFechaNac.setEnabled(false);
 		tfRH.setEnabled(false);
 		tfGS.setEnabled(false);
-		tfNroDir.setEnabled(false);
 		tfDepto.setEnabled(false);
 		tfPiso.setEnabled(false);
 		tfCalle.setEnabled(false);
@@ -370,7 +399,7 @@ public class EmitirLicencia extends JFrame{
 	private void actualizarAclaracion() {
 		aclaracion="<html>Aclaración:<br/>";
 		
-		if(true/*titularEmitir==null*/) {
+		if(titularEncontrado==null) {
 			aclaracion=aclaracion+"No se seleccionó un titular.</html>";
 			cbA.setEnabled(false);
 			cbB.setEnabled(false);
@@ -380,8 +409,9 @@ public class EmitirLicencia extends JFrame{
 			cbF.setEnabled(false);
 			cbG.setEnabled(false);
 		}else{
-			//if titular ya tiene licencia (...)
-			//else
+			tfObservaciones.setEnabled(true);
+			
+			actualizarDatos();
 			
 			if(!cbA.isSelected()&&!cbB.isSelected()&&!cbC.isSelected()&&!cbD.isSelected()&&!cbE.isSelected()&&!cbF.isSelected()&&!cbG.isSelected()){
 				aclaracion=aclaracion+"Seleccione una clase para la licencia.</html>";
@@ -395,7 +425,6 @@ public class EmitirLicencia extends JFrame{
 				if(cbB.isSelected()&&cbA.isSelected()) {
 					aclaracion=aclaracion+" y B";
 				}
-				
 				if(cbC.isSelected()) {
 					aclaracion=aclaracion+" B y C";
 				}
@@ -419,4 +448,23 @@ public class EmitirLicencia extends JFrame{
 				
 		lblAclaracion.setText(aclaracion);
 	}
+	
+	private void actualizarDatos() {
+		tfNombre.setText(titularEncontrado.getNombre());
+		tfApellido.setText(titularEncontrado.getApellido());;
+		tfTipoDoc.setText("DNI");
+		tfNroDoc.setText(titularEncontrado.getDni());;
+		tfFechaNac.setText(new SimpleDateFormat("dd/MM/yyyy").format(titularEncontrado.getFechaNacimiento().getTime()));
+		tfDepto.setText(titularEncontrado.getDepto());
+		tfPiso.setText(titularEncontrado.getPiso());
+		tfCalle.setText(titularEncontrado.getDireccion());
+		if(titularEncontrado.isFactorRH()) {
+			tfRH.setText(" + ");
+		}else {
+			tfRH.setText(" - ");
+		}
+		cbDonante.setSelected(titularEncontrado.isEsDonante());
+		tfGS.setText(titularEncontrado.getGrupoSanguineo().toString());
+	}
+
 }

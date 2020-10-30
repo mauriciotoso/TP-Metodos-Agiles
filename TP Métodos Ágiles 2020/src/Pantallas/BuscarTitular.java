@@ -3,9 +3,8 @@ package Pantallas;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-
-//import Entidades.Titular;
-
+import Entidades.Titular;
+import Logica.GestorTitular;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.*;
@@ -14,6 +13,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
 
 public class BuscarTitular extends JFrame{
 
@@ -23,8 +23,12 @@ public class BuscarTitular extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JTextField tfBuscarDNI;
 	private String dniTitular;
-	//private Titular titularEncontrado;
-
+	private Titular titularEncontrado;
+	private JLabel lblNombre;
+	private JLabel lblApellido;
+	private JLabel lblNroDni;
+	private JLabel lblFechaNacimiento;
+	private JButton confirmar;
 	/**
 	 * Launch the application.
 	 */
@@ -82,8 +86,8 @@ public class BuscarTitular extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				
 				dniTitular = buscar.getText();
-				//Titular titular=GestorLicencia.getInstance.buscarTitular(dniTitular)
-				//
+				titularEncontrado=GestorTitular.getInstance().buscarTitular(dniTitular);
+				actualizarDatos();
 				
 			}
 		});
@@ -101,10 +105,10 @@ public class BuscarTitular extends JFrame{
 		cancelar.setBounds(10, 152, 85, 21);
 		getContentPane().add(cancelar);
 		
-		JButton confirmar = new JButton("Confirmar");
+		confirmar = new JButton("Confirmar");
 		confirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EmitirLicencia emitir = new EmitirLicencia();
+				EmitirLicencia emitir = new EmitirLicencia(titularEncontrado);
 				emitir.setVisible(true);
 				dispose();
 			}
@@ -126,28 +130,46 @@ public class BuscarTitular extends JFrame{
 		lblDatos.setBounds(10, 10, 124, 13);
 		panel.add(lblDatos);
 		
-		JLabel lblNombre = new JLabel("Nombre:");
+		lblNombre = new JLabel("Nombre:");
 		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNombre.setBounds(10, 33, 174, 13);
+		lblNombre.setBounds(10, 33, 325, 13);
 		panel.add(lblNombre);
 		
-		JLabel lblApellido = new JLabel("Apellido:");
+		lblApellido = new JLabel("Apellido:");
 		lblApellido.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblApellido.setBounds(10, 56, 174, 13);
 		panel.add(lblApellido);
 		
-		JLabel lblNroDni = new JLabel("Nro. DNI:");
+		lblNroDni = new JLabel("DNI:");
 		lblNroDni.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNroDni.setBounds(10, 79, 174, 13);
 		panel.add(lblNroDni);
 		
-		JLabel lblFechaNacimiento = new JLabel("Fecha Nacimiento:");
+		lblFechaNacimiento = new JLabel("Fecha Nacimiento:");
 		lblFechaNacimiento.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblFechaNacimiento.setBounds(194, 80, 174, 13);
 		panel.add(lblFechaNacimiento);
 		
+		
 		confirmar.setEnabled(false);
-		
-		
 	}
+	
+	private void actualizarDatos() {
+		
+		if(titularEncontrado!=null) {
+		lblNombre.setText("Nombre: "+titularEncontrado.getNombre());
+		lblApellido.setText("Apellido: "+titularEncontrado.getApellido());
+		lblNroDni.setText("DNI: "+titularEncontrado.getDni());
+		lblFechaNacimiento.setText("Fecha Nacimiento: "+new SimpleDateFormat("dd/MM/yyyy").format(titularEncontrado.getFechaNacimiento().getTime()));
+
+		confirmar.setEnabled(true);
+		}else {
+			lblNombre.setText("No existe el titular con el documento ingresado.");
+			lblApellido.setText("");
+			lblNroDni.setText("");
+			lblFechaNacimiento.setText("");
+			
+			confirmar.setEnabled(false);
+		}
+}
 }

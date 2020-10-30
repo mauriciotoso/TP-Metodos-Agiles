@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public class Titular {
 	
-	private Integer dni;
+	private String dni;
 	private String apellido;
 	private String nombre;
 	private String direccion;
@@ -16,21 +16,13 @@ public class Titular {
 	private boolean factorRH;
 	// Donante: ES = true ; NO ES = false;
 	private boolean esDonante;
-	
-	/* !!!!!!!!!!
-	 
-	DESCOMENTAR CUANDO SE MERGEE Y ESTE LICENCIA
-	
 	private Licencia licencia;
-	
-	!!!!!!!!!!
-	*/
 	
 	public Titular() {
 		
 	}
 	
-	public Titular(Integer dni, String apellido, String nombre, String direccion, String depto, String piso,
+	public Titular(String dni, String apellido, String nombre, String direccion, String depto, String piso,
 			Calendar fechaNacimiento, GrupoSanguineo grupoSanguineo, boolean factorRH, boolean esDonante) {
 		super();
 		this.dni = dni;
@@ -45,7 +37,7 @@ public class Titular {
 		this.esDonante = esDonante;
 	}
 	
-	public Titular(Integer dni, String apellido, String nombre, String direccion,
+	public Titular(String dni, String apellido, String nombre, String direccion,
 			Calendar fechaNacimiento, GrupoSanguineo grupoSanguineo, boolean factorRH, boolean esDonante) {
 		super();
 		this.dni = dni;
@@ -60,11 +52,19 @@ public class Titular {
 		this.esDonante = esDonante;
 	}
 	
-	public Integer getDni() {
+	public Licencia getLicencia() {
+		return licencia;
+	}
+
+	public void setLicencia(Licencia licencia) {
+		this.licencia = licencia;
+	}
+
+	public String getDni() {
 		return dni;
 	}
 	
-	public void setDni(Integer dni) {
+	public void setDni(String dni) {
 		this.dni = dni;
 	}
 	public String getApellido() {
@@ -121,7 +121,4 @@ public class Titular {
 	public void setEsDonante(boolean esDonante) {
 		this.esDonante = esDonante;
 	}
-	
-	
-	
 }
