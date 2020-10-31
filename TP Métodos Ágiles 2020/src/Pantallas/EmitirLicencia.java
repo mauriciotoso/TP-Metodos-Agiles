@@ -247,8 +247,7 @@ public class EmitirLicencia extends JFrame{
 				else if(cbF.isSelected()) clases.add(Clase.F);
 				else if(cbG.isSelected()) clases.add(Clase.G);
 					
-				GestorLicencia.getInstance().crearLicencia(titularEncontrado,clases);
-				
+				GestorLicencia.getInstance().crearLicencia(titularEncontrado,clases,tfObservaciones.getText());
 			}
 		});
 		confirmar.setBounds(638, 311, 103, 21);
@@ -286,7 +285,6 @@ public class EmitirLicencia extends JFrame{
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if (e.getKeyChar()== '\n') {
-					System.out.println("entró");
 					String s=tfObservaciones.getText();
 					s=s.substring(0, s.length()-1);
 					tfObservaciones.setText(s);
@@ -415,6 +413,7 @@ public class EmitirLicencia extends JFrame{
 			
 			if(!cbA.isSelected()&&!cbB.isSelected()&&!cbC.isSelected()&&!cbD.isSelected()&&!cbE.isSelected()&&!cbF.isSelected()&&!cbG.isSelected()){
 				aclaracion=aclaracion+"Seleccione una clase para la licencia.</html>";
+				confirmar.setEnabled(false);
 			}else {
 				
 				aclaracion=aclaracion+"El titular puede conducir vehiculos de clase";

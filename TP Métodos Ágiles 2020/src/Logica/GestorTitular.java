@@ -2,7 +2,6 @@ package Logica;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-
 import Entidades.Clase;
 import Entidades.GrupoSanguineo;
 import Entidades.Licencia;
@@ -29,10 +28,14 @@ public class GestorTitular {
 		ArrayList<Clase> clases = new ArrayList<Clase>();
 		clases.add(Clase.A);
 		clases.add(Clase.C);
-		titular.setLicencia(new Licencia(clases,Calendar.getInstance(),titular,"-"));
+		//
+		Calendar c = Calendar.getInstance();
+		
+		c.add(Calendar.DAY_OF_MONTH, 50);
+		//
+		//titular.setLicencia(new Licencia(clases,c,titular,"-"));
 		return titular;
-				
-		//return null;
+		
 	}
 	
 }

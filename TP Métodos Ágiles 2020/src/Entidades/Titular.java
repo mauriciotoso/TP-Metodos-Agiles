@@ -121,4 +121,11 @@ public class Titular {
 	public void setEsDonante(boolean esDonante) {
 		this.esDonante = esDonante;
 	}
+
+	@Override
+	public String toString() {
+		return "Titular [dni=" + dni + ", apellido=" + apellido + ", nombre=" + nombre + "]";
+	}
+	
+	
 }

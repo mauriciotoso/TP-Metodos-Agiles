@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import Entidades.Titular;
+import Logica.GestorLicencia;
 import Logica.GestorTitular;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -29,6 +30,7 @@ public class BuscarTitular extends JFrame{
 	private JLabel lblNroDni;
 	private JLabel lblFechaNacimiento;
 	private JButton confirmar;
+	private JLabel lblLicencia;
 	/**
 	 * Launch the application.
 	 */
@@ -106,18 +108,11 @@ public class BuscarTitular extends JFrame{
 		getContentPane().add(cancelar);
 		
 		confirmar = new JButton("Confirmar");
-		confirmar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				EmitirLicencia emitir = new EmitirLicencia(titularEncontrado);
-				emitir.setVisible(true);
-				dispose();
-			}
-		});
-		confirmar.setBounds(331, 152, 95, 21);
+		confirmar.setBounds(288, 152, 138, 21);
 		getContentPane().add(confirmar);
 		
 		JButton btnNewButton = new JButton("Crear titular");
-		btnNewButton.setBounds(164, 152, 109, 21);
+		btnNewButton.setBounds(105, 152, 109, 21);
 		getContentPane().add(btnNewButton);
 		
 		JPanel panel = new JPanel();
@@ -147,8 +142,13 @@ public class BuscarTitular extends JFrame{
 		
 		lblFechaNacimiento = new JLabel("Fecha Nacimiento:");
 		lblFechaNacimiento.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblFechaNacimiento.setBounds(194, 80, 174, 13);
+		lblFechaNacimiento.setBounds(193, 33, 174, 13);
 		panel.add(lblFechaNacimiento);
+		
+		lblLicencia = new JLabel("Licencia: ");
+		lblLicencia.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblLicencia.setBounds(194, 57, 212, 14);
+		panel.add(lblLicencia);
 		
 		
 		confirmar.setEnabled(false);
@@ -161,8 +161,40 @@ public class BuscarTitular extends JFrame{
 		lblApellido.setText("Apellido: "+titularEncontrado.getApellido());
 		lblNroDni.setText("DNI: "+titularEncontrado.getDni());
 		lblFechaNacimiento.setText("Fecha Nacimiento: "+new SimpleDateFormat("dd/MM/yyyy").format(titularEncontrado.getFechaNacimiento().getTime()));
-
 		confirmar.setEnabled(true);
+		boolean vencida=GestorLicencia.getInstance().vencida(titularEncontrado.getLicencia());
+		if(titularEncontrado.getLicencia()==null||vencida) {
+			confirmar.setText("Emitir licencia");
+
+			if(vencida) lblLicencia.setText("Licencia: Vencida.");
+			else lblLicencia.setText("Licencia: No posee.");
+			
+			confirmar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					EmitirLicencia emitir = new EmitirLicencia(titularEncontrado);
+					emitir.setVisible(true);
+					
+					dispose();
+				}
+			});
+		}else{
+			if(GestorLicencia.getInstance().enRangoRenovacion(titularEncontrado.getLicencia())) {
+				lblLicencia.setText("Licencia: En rango de renovación.");
+				confirmar.setText("Renovar licencia");
+				confirmar.setEnabled(true);confirmar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						//Ir a renovar licencia
+						
+						//dispose();
+					}
+				});
+			}else{
+				lblLicencia.setText("Licencia: Vigente.");
+				confirmar.setEnabled(false);				
+				confirmar.setText("Confirmar");
+			}
+		}
+	
 		}else {
 			lblNombre.setText("No existe el titular con el documento ingresado.");
 			lblApellido.setText("");
@@ -171,5 +203,5 @@ public class BuscarTitular extends JFrame{
 			
 			confirmar.setEnabled(false);
 		}
-}
+	}
 }

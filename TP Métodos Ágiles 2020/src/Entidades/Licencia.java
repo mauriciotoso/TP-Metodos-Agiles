@@ -1,5 +1,6 @@
 package Entidades;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -45,7 +46,10 @@ public class Licencia {
 		this.titular = titular;
 	}
 
-	
-	
+	@Override
+	public String toString() {
+		return "Licencia [tipoLicencia=" + tipoLicencia + ", fechaVencimiento=" + new SimpleDateFormat("dd/MM/yyyy").format(fechaVencimiento.getTime())+ ", titular="
+				+ titular + ", observaciones=" + observaciones + "]";
+	}
 	
 }

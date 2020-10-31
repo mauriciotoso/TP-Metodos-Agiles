@@ -1,11 +1,12 @@
 package Logica;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
-
+import java.util.Date;
 import Entidades.Clase;
 import Entidades.CostosLicencia;
 import Entidades.Licencia;
@@ -27,14 +28,14 @@ public class GestorLicencia {
 		return gestorLicencia;
 	}
 	
-	public void crearLicencia(Titular titular, ArrayList<Clase> clases) {
+	public void crearLicencia(Titular titular, ArrayList<Clase> clases, String observaciones) {
 		Calendar vigencia = GestorLicencia.getInstance().calcularVigencia(titular);
-		Licencia licencia = new Licencia(clases,vigencia,titular);
+		Licencia licencia = new Licencia(clases,vigencia,titular, observaciones);
 		titular.setLicencia(licencia);
 		
 		//Guardamos licencia
 		//Actualizamos titular
-		System.out.println(new SimpleDateFormat("dd-mm-yyyy").format(vigencia.getTime()));
+		System.out.println(licencia);
 	}
 	
 	public Calendar calcularVigencia(Titular titular) {
@@ -76,7 +77,7 @@ public class GestorLicencia {
 		}else if(edad <= 70) {
 			cantidadAnios = 3;
 		}else {
-			cantidadAnios = 3;
+			cantidadAnios = 3;//Aca no deberia ser 1 año??
 		}
 		
 		if(diferenciaMeses <= 6) 
@@ -86,8 +87,53 @@ public class GestorLicencia {
 		
 		
 		
+		
 		return fechaVencimiento;
 		
 }
 
+	public boolean enRangoRenovacion(Licencia licencia){
+		
+		Calendar fechaVencimiento=licencia.getFechaVencimiento();
+		int anio = fechaVencimiento.get(Calendar.YEAR);
+		int mes = fechaVencimiento.get(Calendar.MONTH) + 1;
+		int dia = fechaVencimiento.get(Calendar.DATE);
+		
+		LocalDate fv = LocalDate.of(anio,mes,dia);
+		LocalDate fv45menos  = fv.minus(45, ChronoUnit.DAYS);
+
+		Calendar fechaActual = Calendar.getInstance();
+		anio = fechaActual.get(Calendar.YEAR);
+		mes = fechaActual.get(Calendar.MONTH) + 1;
+		dia = fechaActual.get(Calendar.DATE);
+		LocalDate actual = LocalDate.of(anio,mes,dia);
+		
+		Date datefv = Date.from(fv.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		Date datefv45menos = Date.from(fv45menos.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		Date dateactual = Date.from(actual.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		
+		return (dateactual.before(datefv)&&dateactual.after(datefv45menos));
+	}
+	
+	public boolean vencida(Licencia licencia){
+		if(licencia==null) return false;
+		
+		Calendar fechaVencimiento=licencia.getFechaVencimiento();
+		int anio = fechaVencimiento.get(Calendar.YEAR);
+		int mes = fechaVencimiento.get(Calendar.MONTH) + 1;
+		int dia = fechaVencimiento.get(Calendar.DATE);
+		LocalDate fv = LocalDate.of(anio,mes,dia);
+		
+		Calendar fechaActual = Calendar.getInstance();
+		anio = fechaActual.get(Calendar.YEAR);
+		mes = fechaActual.get(Calendar.MONTH) + 1;
+		dia = fechaActual.get(Calendar.DATE);
+		LocalDate actual = LocalDate.of(anio,mes,dia);
+		
+		Date datefv = Date.from(fv.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		Date dateactual = Date.from(actual.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		
+		return (dateactual.after(datefv));
+	}
+	
 }
