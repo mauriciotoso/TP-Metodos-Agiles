@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public class Titular {
 	
-	private Integer dni;
+	private String dni;
 	private String apellido;
 	private String nombre;
 	private String direccion;
@@ -30,7 +30,7 @@ public class Titular {
 		
 	}
 	
-	public Titular(Integer dni, String apellido, String nombre, String direccion, String depto, String piso,
+	public Titular(String dni, String apellido, String nombre, String direccion, String depto, String piso,
 			Calendar fechaNacimiento, GrupoSanguineo grupoSanguineo, boolean factorRH, boolean esDonante) {
 		super();
 		this.dni = dni;
@@ -45,7 +45,7 @@ public class Titular {
 		this.esDonante = esDonante;
 	}
 	
-	public Titular(Integer dni, String apellido, String nombre, String direccion,
+	public Titular(String dni, String apellido, String nombre, String direccion,
 			Calendar fechaNacimiento, GrupoSanguineo grupoSanguineo, boolean factorRH, boolean esDonante) {
 		super();
 		this.dni = dni;
@@ -60,11 +60,11 @@ public class Titular {
 		this.esDonante = esDonante;
 	}
 	
-	public Integer getDni() {
+	public String getDni() {
 		return dni;
 	}
 	
-	public void setDni(Integer dni) {
+	public void setDni(String dni) {
 		this.dni = dni;
 	}
 	public String getApellido() {
