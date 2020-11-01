@@ -17,14 +17,9 @@ public class Titular {
 	// Donante: ES = true ; NO ES = false;
 	private boolean esDonante;
 	
-	/* !!!!!!!!!!
-	 
-	DESCOMENTAR CUANDO SE MERGEE Y ESTE LICENCIA
-	
 	private Licencia licencia;
 	
-	!!!!!!!!!!
-	*/
+	
 	
 	public Titular() {
 		
@@ -120,6 +115,14 @@ public class Titular {
 	}
 	public void setEsDonante(boolean esDonante) {
 		this.esDonante = esDonante;
+	}
+
+	public Licencia getLicencia() {
+		return licencia;
+	}
+
+	public void setLicencia(Licencia licencia) {
+		this.licencia = licencia;
 	}
 	
 	
