@@ -1,7 +1,9 @@
 package Logica;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import Entidades.*;
+
 
 public class GestorTitular {
 	
@@ -17,6 +19,21 @@ public class GestorTitular {
 		}
 		return gestorTitular;
 	}
+
+	public Titular buscarTitular(String dniTitular) {
+		Titular titular=new Titular("41160819","Toso","Matias","BV",Calendar.getInstance(),GrupoSanguineo.A,true,false);
+		
+		ArrayList<Clase> clases = new ArrayList<Clase>();
+		clases.add(Clase.A);
+		clases.add(Clase.C);
+		//
+		Calendar c = Calendar.getInstance();
+		
+		c.add(Calendar.DAY_OF_MONTH, 50);
+		//
+		//titular.setLicencia(new Licencia(clases,c,titular,"-"));
+		return titular;
+
 	public boolean verificarDNI(String dni) {
 		// se necesita persistencia
 		//ir a bdd a verificar esto 
@@ -42,6 +59,7 @@ public class GestorTitular {
 		Titular titular = new Titular(dni, apellido, nombre, direccion, depto, piso, fecha,GrupoSanguineo.valueOf(grupoSanguineo),factor,esDonante);
 		
 		//persistencia de guardar el titular en la bdd
+
 		
 	}
 	
