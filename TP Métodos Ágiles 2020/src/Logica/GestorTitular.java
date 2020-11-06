@@ -2,10 +2,8 @@ package Logica;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import Entidades.Clase;
-import Entidades.GrupoSanguineo;
-import Entidades.Licencia;
-import Entidades.Titular;
+import Entidades.*;
+
 
 public class GestorTitular {
 	
@@ -35,6 +33,33 @@ public class GestorTitular {
 		//
 		//titular.setLicencia(new Licencia(clases,c,titular,"-"));
 		return titular;
+
+	public boolean verificarDNI(String dni) {
+		// se necesita persistencia
+		//ir a bdd a verificar esto 
+		
+		return true;
+	}
+	
+	public void crearTitular(String dni, String apellido, String nombre, String calle, String nro, String depto, String piso, Calendar fecha,
+			String grupoSanguineo, String factorRH, boolean esDonante) {
+		boolean factor;
+		String direccion = new String();
+		direccion += calle;
+		direccion +=" ";
+		direccion +=nro;
+		GrupoSanguineo.valueOf(grupoSanguineo);
+		if(depto.isEmpty()) depto+="-";
+		if(piso.isEmpty()) piso+="-";
+		if(factorRH.compareTo("POSITIVO")==0) {
+			factor = true;
+		}else {
+			factor = false;
+		}
+		Titular titular = new Titular(dni, apellido, nombre, direccion, depto, piso, fecha,GrupoSanguineo.valueOf(grupoSanguineo),factor,esDonante);
+		
+		//persistencia de guardar el titular en la bdd
+
 		
 	}
 	

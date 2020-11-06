@@ -66,6 +66,7 @@ public class Titular {
 		this.esDonante = esDonante;
 	}
 	
+
 	public Licencia getLicencia() {
 		return licencia;
 	}
@@ -140,6 +141,7 @@ public class Titular {
 	public String toString() {
 		return "Titular [dni=" + dni + ", apellido=" + apellido + ", nombre=" + nombre + "]";
 	}
+
 	
 	
 }
