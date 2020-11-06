@@ -1,11 +1,17 @@
 package Entidades;
 
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+import javax.persistence.*;
 
+@Entity
+@Table(name="licencia")
 public class Licencia {
 
+	@Id
+	private String idlicencia;
 	private ArrayList<Clase> tipoLicencia;
 	private Calendar fechaVencimiento;
 	private Titular titular;
