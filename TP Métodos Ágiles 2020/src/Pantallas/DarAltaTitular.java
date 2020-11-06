@@ -18,6 +18,9 @@ import java.awt.event.MouseEvent;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import Logica.GestorTitular;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class DarAltaTitular {
 
@@ -25,6 +28,7 @@ public class DarAltaTitular {
 	private JTextField textField_DNI;
 	private String dni;
 	private boolean dnival;
+	private boolean dniUnico;
 	private JTextField textField_Apellido;
 	private String apellido;
 	private boolean apellidoval;
@@ -47,6 +51,8 @@ public class DarAltaTitular {
 	private String mes;
 	private String anyo;
 	private Calendar fecha;
+	
+	private boolean confirmar;
 
 	/**
 	 * Launch the application.
@@ -75,6 +81,7 @@ public class DarAltaTitular {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		confirmar= true;
 		frame = new JFrame();
 		frame.setBounds(100, 100, 779, 391);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -89,23 +96,27 @@ public class DarAltaTitular {
 		lblDni.setBounds(28, 70, 46, 14);
 		frame.getContentPane().add(lblDni);
 		
-		JLabel lblErrorDNI = new JLabel("New label");
+		JLabel lblErrorDNI = new JLabel("DNI inv\u00E1lido");
 		lblErrorDNI.setForeground(Color.RED);
-		lblErrorDNI.setBounds(238, 70, 116, 14);
+		lblErrorDNI.setBounds(256, 67, 116, 14);
 		frame.getContentPane().add(lblErrorDNI);
 		lblErrorDNI.setVisible(false);
+		
+		JLabel lblDniunico = new JLabel("DNI ya en uso");
+		lblDniunico.setForeground(Color.RED);
+		lblDniunico.setBounds(256, 67, 129, 14);
+		frame.getContentPane().add(lblDniunico);
+		lblDniunico.setVisible(false);
 		// !!!!!!!!!!!
 		
 		// VALIDAR CON GESTOR DNI UNICO
 		
 		// !!!!!!!!!!!
 		textField_DNI = new JTextField();
-		textField_DNI.addKeyListener(new KeyAdapter() {
+		textField_DNI.addFocusListener(new FocusAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
-				if(textField_DNI.getText().length()==8) {
-					e.consume();
-				}
+			public void focusLost(FocusEvent e) {
+				
 					dnival = true;
 					if(textField_DNI.getText().length()<7) {
 						dnival = false;
@@ -118,35 +129,58 @@ public class DarAltaTitular {
 					}
 					if(!dnival) {
 						lblErrorDNI.setText("DNI inválido");
+						lblDniunico.setVisible(false);
 						lblErrorDNI.setVisible(true);
+						confirmar = false;
 					}
 					else {
 						lblErrorDNI.setVisible(false);
+						confirmar = true;
 					}
+				
+				dniUnico = GestorTitular.getInstance().verificarDNI(textField_DNI.getText());
+				
+				if(!dniUnico) {
+					//lblDniunico.setText("El DNI ya existe");
+					lblErrorDNI.setVisible(false);
+					lblDniunico.setVisible(true);
+					confirmar = false;
+				}else {
+					lblDniunico.setVisible(false);
+					confirmar = true;
+				}
 			}
-		});
 		
-		textField_DNI.setBounds(79, 67, 149, 20);
+				
+			}
+		);
+		textField_DNI.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(textField_DNI.getText().length()==8) {
+					e.consume();
+				}
+			}		
+			});
+		
+		textField_DNI.setBounds(97, 64, 149, 20);
 		frame.getContentPane().add(textField_DNI);
 		textField_DNI.setColumns(10);
 		
 		JLabel lblApellido = new JLabel("Apellido*");
-		lblApellido.setBounds(28, 120, 46, 14);
+		lblApellido.setBounds(28, 120, 62, 14);
 		frame.getContentPane().add(lblApellido);
 		
-		JLabel lblerrorapellido = new JLabel("lblErrorApellido");
+		JLabel lblerrorapellido = new JLabel("Apellido inv\u00E1lido");
 		lblerrorapellido.setForeground(Color.RED);
-		lblerrorapellido.setBounds(238, 120, 116, 14);
+		lblerrorapellido.setBounds(256, 117, 116, 14);
 		frame.getContentPane().add(lblerrorapellido);
 		lblerrorapellido.setVisible(false);
 		
 		textField_Apellido = new JTextField();
-		textField_Apellido.addKeyListener(new KeyAdapter() {
+		textField_Apellido.addFocusListener(new FocusAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
-				if(textField_Apellido.getText().length()==30) {
-					e.consume();
-				}
+			public void focusLost(FocusEvent e) {
 				apellido = textField_Apellido.getText().toLowerCase().replace(" ", "");
 				apellidoval = true;
 				if(apellido.length()==0) { apellidoval = false;}
@@ -155,36 +189,44 @@ public class DarAltaTitular {
 						lblerrorapellido.setText("Apellido inválido");
 						lblerrorapellido.setVisible(true);
 						apellidoval = false;
+						confirmar = false;
 					}
 				}
 				if(apellidoval) {
 					lblerrorapellido.setVisible(false);
+					confirmar = true;
 				}
 			}
+			
 		});
+		textField_Apellido.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(textField_Apellido.getText().length()==30) {
+					e.consume();
+				}
+			}
+		}
+				);
 		
-		textField_Apellido.setBounds(79, 117, 149, 20);
+		textField_Apellido.setBounds(97, 114, 149, 20);
 		frame.getContentPane().add(textField_Apellido);
 		textField_Apellido.setColumns(10);
 		
 		JLabel lblNombre = new JLabel("Nombre*");
-		lblNombre.setBounds(28, 164, 46, 14);
+		lblNombre.setBounds(28, 164, 62, 14);
 		frame.getContentPane().add(lblNombre);
 		
-		JLabel lblErrornombre = new JLabel("ErrorNombre");
+		JLabel lblErrornombre = new JLabel("Nombre inv\u00E1lido");
 		lblErrornombre.setForeground(Color.RED);
-		lblErrornombre.setBounds(238, 164, 116, 14);
+		lblErrornombre.setBounds(256, 161, 116, 14);
 		frame.getContentPane().add(lblErrornombre);
 		lblErrornombre.setVisible(false);
 		
 		textField_Nombre = new JTextField();
-	
-		textField_Nombre.addKeyListener(new KeyAdapter() {
+		textField_Nombre.addFocusListener(new FocusAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
-				if(textField_Nombre.getText().length()==40) {
-					e.consume();
-				}
+			public void focusLost(FocusEvent e) {
 				nombre = textField_Nombre.getText().toLowerCase().replace(" ", "");
 				nombreval = true;
 				if(nombre.length()==0) { nombreval = false;}
@@ -193,15 +235,26 @@ public class DarAltaTitular {
 						lblErrornombre.setText("Nombre inválido");
 						lblErrornombre.setVisible(true);
 						nombreval = false;
+						confirmar = false;
 					}
 				}
 				if(nombreval) {
 					lblErrornombre.setVisible(false);
+					confirmar = true;
+				}
+			}
+		});
+	
+		textField_Nombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(textField_Nombre.getText().length()==40) {
+					e.consume();
 				}
 			}
 		});
 		
-		textField_Nombre.setBounds(79, 161, 149, 20);
+		textField_Nombre.setBounds(97, 158, 149, 20);
 		frame.getContentPane().add(textField_Nombre);
 		textField_Nombre.setColumns(10);
 		
@@ -247,19 +300,16 @@ public class DarAltaTitular {
 		lblCalle.setBounds(413, 76, 46, 14);
 		frame.getContentPane().add(lblCalle);
 		
-		JLabel lblErrorcalle = new JLabel("ErrorCalle");
+		JLabel lblErrorcalle = new JLabel("Calle inv\u00E1lida");
 		lblErrorcalle.setForeground(Color.RED);
 		lblErrorcalle.setBounds(454, 100, 143, 14);
 		frame.getContentPane().add(lblErrorcalle);
 		lblErrorcalle.setVisible(false);
 		
 		textField_Calle = new JTextField();
-		textField_Calle.addKeyListener(new KeyAdapter() {
+		textField_Calle.addFocusListener(new FocusAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
-				if(textField_Calle.getText().length()==50) {
-					e.consume();
-				}
+			public void focusLost(FocusEvent e) {
 				calle = textField_Calle.getText().replace(" ", "");
 				calleval = true;
 				
@@ -274,11 +324,20 @@ public class DarAltaTitular {
 				if(!calleval) {
 					lblErrorcalle.setText("Calle inválida");
 					lblErrorcalle.setVisible(true);
+					confirmar = false;
 				}
 				else {
 					lblErrorcalle.setVisible(false);
+					confirmar = true;
 				}
-				
+			}
+		});
+		textField_Calle.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(textField_Calle.getText().length()==50) {
+					e.consume();
+				}	
 			}
 		});
 		
@@ -291,20 +350,16 @@ public class DarAltaTitular {
 		lblN.setBounds(624, 76, 46, 14);
 		frame.getContentPane().add(lblN);
 		
-		JLabel lblErrornro = new JLabel("ErrorNro");
+		JLabel lblErrornro = new JLabel("N\u00FAmero inv\u00E1lido");
 		lblErrornro.setForeground(Color.RED);
 		lblErrornro.setBounds(634, 100, 104, 14);
 		frame.getContentPane().add(lblErrornro);
 		lblErrornro.setVisible(false);
 		
 		textField_nro = new JTextField();
-		
-		textField_nro.addKeyListener(new KeyAdapter() {
+		textField_nro.addFocusListener(new FocusAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
-				if(textField_nro.getText().length()==6) {
-					e.consume();
-				}
+			public void focusLost(FocusEvent e) {
 				nro = textField_nro.getText();
 				nroval = true;
 				
@@ -318,10 +373,21 @@ public class DarAltaTitular {
 				if(!nroval) {
 					lblErrornro.setText("Número inválido");
 					lblErrornro.setVisible(true);
+					confirmar = false;
 				}
 				else {
 					lblErrornro.setVisible(false);
+					confirmar = true;
 				}
+			}
+		});
+		
+		textField_nro.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(textField_nro.getText().length()==6) {
+					e.consume();
+				}	
 			}
 		});
 		
@@ -333,19 +399,16 @@ public class DarAltaTitular {
 		lblPiso.setBounds(419, 125, 46, 14);
 		frame.getContentPane().add(lblPiso);
 		
-		JLabel ErrorPiso = new JLabel("New label");
+		JLabel ErrorPiso = new JLabel("Piso inv\u00E1lido");
 		ErrorPiso.setForeground(Color.RED);
 		ErrorPiso.setBounds(454, 150, 80, 14);
 		frame.getContentPane().add(ErrorPiso);
 		ErrorPiso.setVisible(false);
 		
 		textField_piso = new JTextField();
-		textField_piso.addKeyListener(new KeyAdapter() {
+		textField_piso.addFocusListener(new FocusAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
-				if(textField_piso.getText().length()==4) {
-					e.consume();
-				}
+			public void focusLost(FocusEvent e) {
 				piso = textField_piso.getText().toLowerCase();
 				pisoval = true;
 				
@@ -356,11 +419,21 @@ public class DarAltaTitular {
 					}
 				}
 				if(pisoval) {
-					ErrorPiso.setVisible(false);	
+					ErrorPiso.setVisible(false);
+					confirmar = true;
 			}
 				else {
 					ErrorPiso.setText("Piso inválido");
 					ErrorPiso.setVisible(true);
+					confirmar = false;
+				}
+			}
+		});
+		textField_piso.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(textField_piso.getText().length()==4) {
+					e.consume();
 				}
 			}
 		});
@@ -374,19 +447,16 @@ public class DarAltaTitular {
 		lblDpto.setBounds(535, 123, 46, 14);
 		frame.getContentPane().add(lblDpto);
 		
-		JLabel lblErrordepto = new JLabel("ErrorDepto");
+		JLabel lblErrordepto = new JLabel("Depto inv\u00E1lido");
 		lblErrordepto.setForeground(Color.RED);
 		lblErrordepto.setBounds(587, 150, 83, 14);
 		frame.getContentPane().add(lblErrordepto);
 		lblErrordepto.setVisible(false);
 		
 		textField_depto = new JTextField();
-		textField_depto.addKeyListener(new KeyAdapter() {
+		textField_depto.addFocusListener(new FocusAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
-				if(textField_depto.getText().length()==4) {
-					e.consume();
-				}
+			public void focusLost(FocusEvent e) {
 				depto = textField_depto.getText().toLowerCase();
 				deptoval = true;
 				
@@ -397,11 +467,21 @@ public class DarAltaTitular {
 					}
 				}
 				if(deptoval) {
-					lblErrordepto.setVisible(false);	
+					lblErrordepto.setVisible(false);
+					confirmar = true;
 			}
 				else {
 					lblErrordepto.setText("Piso inválido");
 					lblErrordepto.setVisible(true);
+					confirmar = false;
+				}
+			}
+		});
+		textField_depto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(textField_depto.getText().length()==4) {
+					e.consume();
 				}
 			}
 		});
@@ -421,7 +501,7 @@ public class DarAltaTitular {
 		frame.getContentPane().add(comboBoxGrupoS);
 		
  		JLabel lblFactorRh = new JLabel("Factor RH*");
-		lblFactorRh.setBounds(403, 229, 58, 14);
+		lblFactorRh.setBounds(403, 229, 109, 14);
 		frame.getContentPane().add(lblFactorRh);
 		
 		String[] factorRH = new String[] {"Positivo","Negativo"};
@@ -442,6 +522,8 @@ public class DarAltaTitular {
 		JButton btnNewButton = new JButton("Confirmar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
 				dia = comboBoxDia.getSelectedItem().toString();
 				mes = comboBoxMes.getSelectedItem().toString();
 				anyo = comboBoxAnyo.getSelectedItem().toString();
@@ -449,21 +531,55 @@ public class DarAltaTitular {
 				
 				if(dia.compareTo("Día")==0 || mes.compareTo("Mes")==0 || anyo.compareTo("Año")==0) {
 					lblErrorFecha.setVisible(true);
+					confirmar = false;
 				
+				}else{
 				
-				}else {
-				
-				try {
+					try {
 					
-					fecha = Calendar.getInstance();
-					fecha.setLenient(false);
-					fecha.set(Integer.parseInt(dia),Integer.parseInt(mes)-1, Integer.parseInt(anyo));
-				}catch(Exception a) {
-					lblErrorFecha.setVisible(true);
-					a.printStackTrace();
+						fecha = Calendar.getInstance();
+						fecha.setLenient(false);
+						fecha.set(Integer.parseInt(anyo),Integer.parseInt(mes)-1, Integer.parseInt(dia));
+						confirmar = true;
+						System.out.println("dia= "+fecha.get(Calendar.DAY_OF_MONTH)+" mes= "+fecha.get(Calendar.MONTH)+" año= "+fecha.get(Calendar.YEAR));
+					}catch(Exception a) {
+						confirmar= false;
+						lblErrorFecha.setVisible(true);	
+					}
 				}
+				
+				if(textField_DNI.getText().length()==0) {
+					confirmar = false;
+					lblErrorDNI.setVisible(true);
+				}
+				if(textField_Apellido.getText().length()==0) {
+					confirmar = false;
+					lblerrorapellido.setVisible(true);
+				}
+				if(textField_Nombre.getText().length()==0) {
+					confirmar = false;
+					lblErrornombre.setVisible(true);
+				}
+				if(textField_Calle.getText().length()==0) {
+					confirmar = false;
+					lblErrorcalle.setVisible(true);
+				}
+				if(textField_nro.getText().length()==0) {
+					confirmar = false;
+					lblErrornro.setVisible(true);
+				}
+					
+				
+				if(confirmar) {
+					System.out.println("Todo ok, se crea el titular");
+					GestorTitular.getInstance().crearTitular(textField_DNI.getText(), textField_Apellido.getText(), textField_Nombre.getText(), textField_Calle.getText(), textField_nro.getText(), 
+							textField_depto.getText(),textField_piso.getText(),fecha,comboBoxGrupoS.getSelectedItem().toString(), comboBoxFactor.getSelectedItem().toString(),chckbxDonanteDeOrganos.isSelected());
+				}else {
+					System.out.println("Hay algun error en algun lado(?");
+				}
+				
 			}
-			}
+
 		});
 		
 		btnNewButton.setBounds(624, 319, 129, 23);
@@ -478,8 +594,10 @@ public class DarAltaTitular {
 		lblCamposObligatorios.setBounds(126, 321, 251, 18);
 		frame.getContentPane().add(lblCamposObligatorios);
 		
-	
 		
+		
+	
+		//
 		
 		
 		
