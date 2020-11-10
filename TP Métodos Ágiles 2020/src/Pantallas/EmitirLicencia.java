@@ -7,12 +7,10 @@ import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import Entidades.*;
 import Logica.GestorLicencia;
-
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JCheckBox;
@@ -238,16 +236,17 @@ public class EmitirLicencia extends JFrame{
 		confirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				ArrayList<Clase> clases= new ArrayList<Clase>();
-				if(cbA.isSelected()) clases.add(Clase.A);
-				if(cbB.isSelected()) clases.add(Clase.B);
-				else if(cbC.isSelected()) clases.add(Clase.C);
-				else if(cbD.isSelected()) clases.add(Clase.D);
-				else if(cbE.isSelected()) clases.add(Clase.E);
-				else if(cbF.isSelected()) clases.add(Clase.F);
-				else if(cbG.isSelected()) clases.add(Clase.G);
+				Clase moto=null,otro=null;
+				
+				if(cbA.isSelected()) moto=Clase.A;
+				if(cbB.isSelected()) otro=Clase.B;
+				else if(cbC.isSelected()) otro=Clase.C;
+				else if(cbD.isSelected()) otro=Clase.D;
+				else if(cbE.isSelected()) otro=Clase.E;
+				else if(cbF.isSelected()) otro=Clase.F;
+				else if(cbG.isSelected()) otro=Clase.G;
 					
-				GestorLicencia.getInstance().crearLicencia(titularEncontrado,clases,tfObservaciones.getText());
+				GestorLicencia.getInstance().crearLicencia(titularEncontrado,moto,otro,tfObservaciones.getText());
 			}
 		});
 		confirmar.setBounds(638, 311, 103, 21);

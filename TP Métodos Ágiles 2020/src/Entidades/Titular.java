@@ -7,29 +7,21 @@ import javax.persistence.*;
 @Table(name="titular")
 public class Titular {
 	@Id
+	@Column(length=100)
 	private String dni;
-	
 	private String apellido;
-	
 	private String nombre;
-	
 	private String direccion;
-	
 	private String depto;
-
 	private String piso;
-
 	private Calendar fechaNacimiento;
-	
 	private GrupoSanguineo grupoSanguineo;
 	// Factor RH: POSITIVO = true ; NEGATIVO = false;
-	
 	private boolean factorRH;
 	// Donante: ES = true ; NO ES = false;
-	
 	private boolean esDonante;
 	@OneToOne
-	@JoinColumn(name="licencia")
+	@JoinColumn(name="idlicencia")
 	private Licencia licencia;
 	
 	public Titular() {

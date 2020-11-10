@@ -87,7 +87,7 @@ public class BuscarTitular extends JFrame{
 		buscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				dniTitular = buscar.getText();
+				dniTitular = tfBuscarDNI.getText();
 				titularEncontrado=GestorTitular.getInstance().buscarTitular(dniTitular);
 				actualizarDatos();
 				
@@ -200,6 +200,7 @@ public class BuscarTitular extends JFrame{
 			lblApellido.setText("");
 			lblNroDni.setText("");
 			lblFechaNacimiento.setText("");
+			lblLicencia.setText("");
 			
 			confirmar.setEnabled(false);
 		}

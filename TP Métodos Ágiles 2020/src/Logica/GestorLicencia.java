@@ -4,22 +4,20 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import BDD.GestorBDD;
 import Entidades.Clase;
 import Entidades.CostosLicencia;
 import Entidades.Licencia;
 import Entidades.Titular;
 
 public class GestorLicencia {
-
 	
 	private static GestorLicencia gestorLicencia;
 	
-	private GestorLicencia() {
-		
-	}
+	private GestorLicencia() {}
 	
 	public static GestorLicencia getInstance() {
 		if(gestorLicencia == null) {
@@ -28,13 +26,15 @@ public class GestorLicencia {
 		return gestorLicencia;
 	}
 	
-	public void crearLicencia(Titular titular, ArrayList<Clase> clases, String observaciones) {
+	public void crearLicencia(Titular titular, Clase moto,Clase otro, String observaciones) {
 		Calendar vigencia = GestorLicencia.getInstance().calcularVigencia(titular);
-		Licencia licencia = new Licencia(clases,vigencia,titular, observaciones);
+		Licencia licencia = new Licencia(moto,otro,vigencia,titular, observaciones);
+		titular.setLicencia(licencia);
 		titular.setLicencia(licencia);
 		
-		//Guardamos licencia
-		//Actualizamos titular
+		GestorBDD.getInstance().guardarLicencia(licencia);
+		GestorBDD.getInstance().actualizarLicenciaDeTitular(titular);
+		
 		System.out.println(licencia);
 	}
 	
@@ -62,7 +62,6 @@ public class GestorLicencia {
 		Period diferencia = Period.between(fechaNac, fechaAct);
 		
 		diferenciaMeses = Math.abs(diferencia.getMonths());
-					
 		
 		//VEMOS CUANTOS ANIOS CORRESPONDE SEGUN EDAD
 		if(edad<=21) {
@@ -84,9 +83,6 @@ public class GestorLicencia {
 			fechaVencimiento.add(Calendar.YEAR, cantidadAnios);			
 		else 
 			fechaVencimiento.add(Calendar.YEAR, cantidadAnios - 1);	
-		
-		
-		
 		
 		return fechaVencimiento;
 		

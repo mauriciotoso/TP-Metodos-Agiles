@@ -2,6 +2,7 @@ package Pantallas;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -9,12 +10,9 @@ import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -262,7 +260,7 @@ public class DarAltaTitular {
 		lblFechaDeNacimiento.setBounds(28, 230, 129, 14);
 		frame.getContentPane().add(lblFechaDeNacimiento);
 		
-		JComboBox<String> comboBoxDia = new JComboBox();
+		JComboBox<String> comboBoxDia = new JComboBox<String>();
 		comboBoxDia.setBounds(159, 226, 55, 22);
 		frame.getContentPane().add(comboBoxDia);
 		
@@ -271,7 +269,7 @@ public class DarAltaTitular {
 			comboBoxDia.addItem(i.toString());
 		}
 		
-		JComboBox<String> comboBoxMes = new JComboBox();
+		JComboBox<String> comboBoxMes = new JComboBox<String>();
 		comboBoxMes.setBounds(224, 226, 55, 22);
 		frame.getContentPane().add(comboBoxMes);
 		
@@ -280,7 +278,7 @@ public class DarAltaTitular {
 			comboBoxMes.addItem(i.toString());
 		}
 		
-		JComboBox<String> comboBoxAnyo = new JComboBox();
+		JComboBox<String> comboBoxAnyo = new JComboBox<String>();
 		comboBoxAnyo.setBounds(289, 226, 65, 22);
 		frame.getContentPane().add(comboBoxAnyo);
 		
@@ -496,7 +494,7 @@ public class DarAltaTitular {
 		frame.getContentPane().add(lblGrupoSanguneo);
 		
 		 String[] grupoS = new String[] {"A", "B", "AB", "O"};
-		JComboBox<String> comboBoxGrupoS = new JComboBox(grupoS);
+		JComboBox<String> comboBoxGrupoS = new JComboBox<String>(grupoS);
 		comboBoxGrupoS.setBounds(553, 186, 80, 22);
 		frame.getContentPane().add(comboBoxGrupoS);
 		
@@ -505,7 +503,7 @@ public class DarAltaTitular {
 		frame.getContentPane().add(lblFactorRh);
 		
 		String[] factorRH = new String[] {"Positivo","Negativo"};
-		JComboBox<String> comboBoxFactor = new JComboBox(factorRH);
+		JComboBox<String> comboBoxFactor = new JComboBox<String>(factorRH);
 		comboBoxFactor.setBounds(553, 225, 80, 22);
 		frame.getContentPane().add(comboBoxFactor);
 		
