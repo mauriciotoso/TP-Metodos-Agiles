@@ -26,10 +26,10 @@ public class GestorTitular {
 	}
 
 	public boolean verificarDNI(String dni) {
-		// se necesita persistencia
-		//ir a bdd a verificar esto 
+		boolean noExiste=true;
+		noExiste= GestorBDD.getInstance().verificarDNITitular(dni);
 		
-		return true;
+		return noExiste;
 	}
 	
 	public void crearTitular(String dni, String apellido, String nombre, String calle, String nro, String depto, String piso, Calendar fecha,
