@@ -78,4 +78,15 @@ public class GestorBDD {
 		session.update(titular);		
 		session.getTransaction().commit();
 	}
+	
+	public boolean verificarDNITitular (String dni) {
+		if(!session.isJoinedToTransaction()) session.beginTransaction();
+		Titular t = session.get(Titular.class, dni);
+		session.getTransaction().commit();
+		if(t!=null) {
+			return false;
+		}
+		
+		return true;
+	}
 }
