@@ -183,9 +183,11 @@ public class BuscarTitular extends JFrame{
 				confirmar.setText("Renovar licencia");
 				confirmar.setEnabled(true);confirmar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						//Ir a renovar licencia
 						
-						//dispose();
+						RenovarLicencia renovar = new RenovarLicencia(titularEncontrado);
+						renovar.setVisible(true);
+						
+						dispose();
 					}
 				});
 			}else{
