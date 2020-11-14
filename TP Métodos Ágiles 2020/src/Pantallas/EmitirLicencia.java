@@ -43,6 +43,7 @@ public class EmitirLicencia extends JFrame{
 	private Titular titularEncontrado;
 	private JCheckBox cbDonante;
 	private JEditorPane tfObservaciones;
+	private JButton imprimir;
 	
 	/**
 	 * Launch the application.
@@ -312,6 +313,16 @@ public class EmitirLicencia extends JFrame{
 		
 		confirmar.setEnabled(false);
 		
+		imprimir = new JButton("Imprimir");
+		imprimir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		imprimir.setBounds(124, 311, 85, 21);
+		panel.add(imprimir);
+		imprimir.setEnabled(false);
+		
+		
 		cbA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -441,6 +452,8 @@ public class EmitirLicencia extends JFrame{
 				aclaracion=aclaracion+".<html>";
 				
 				confirmar.setEnabled(true);
+				imprimir.setEnabled(true);
+				
 			}
 		}
 				

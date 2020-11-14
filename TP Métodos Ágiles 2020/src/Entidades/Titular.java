@@ -23,13 +23,14 @@ public class Titular {
 	@OneToOne
 	@JoinColumn(name="idlicencia")
 	private Licencia licencia;
+	private Sexo sexo;
 	
 	public Titular() {
 		
 	}
 	
 	public Titular(String dni, String apellido, String nombre, String direccion, String depto, String piso,
-			Calendar fechaNacimiento, GrupoSanguineo grupoSanguineo, boolean factorRH, boolean esDonante) {
+			Calendar fechaNacimiento, GrupoSanguineo grupoSanguineo, boolean factorRH, boolean esDonante, Sexo sexo) {
 		super();
 		this.dni = dni;
 		this.apellido = apellido;
@@ -41,10 +42,11 @@ public class Titular {
 		this.grupoSanguineo = grupoSanguineo;
 		this.factorRH = factorRH;
 		this.esDonante = esDonante;
+		this.sexo=sexo;
 	}
 	
 	public Titular(String dni, String apellido, String nombre, String direccion,
-			Calendar fechaNacimiento, GrupoSanguineo grupoSanguineo, boolean factorRH, boolean esDonante) {
+			Calendar fechaNacimiento, GrupoSanguineo grupoSanguineo, boolean factorRH, boolean esDonante,Sexo sexo) {
 		super();
 		this.dni = dni;
 		this.apellido = apellido;
@@ -56,8 +58,16 @@ public class Titular {
 		this.grupoSanguineo = grupoSanguineo;
 		this.factorRH = factorRH;
 		this.esDonante = esDonante;
+		this.sexo=sexo;
 	}
 	
+	public Sexo getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(Sexo sexo) {
+		this.sexo = sexo;
+	}
 
 	public Licencia getLicencia() {
 		return licencia;
