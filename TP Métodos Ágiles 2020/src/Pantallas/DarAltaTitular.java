@@ -91,18 +91,18 @@ public class DarAltaTitular {
 		frame.getContentPane().add(lblCrearTitular);
 		
 		JLabel lblDni = new JLabel("DNI*");
-		lblDni.setBounds(28, 70, 46, 14);
+		lblDni.setBounds(28, 73, 46, 14);
 		frame.getContentPane().add(lblDni);
 		
 		JLabel lblErrorDNI = new JLabel("DNI inv\u00E1lido");
 		lblErrorDNI.setForeground(Color.RED);
-		lblErrorDNI.setBounds(256, 67, 116, 14);
+		lblErrorDNI.setBounds(256, 70, 116, 14);
 		frame.getContentPane().add(lblErrorDNI);
 		lblErrorDNI.setVisible(false);
 		
 		JLabel lblDniunico = new JLabel("DNI ya en uso");
 		lblDniunico.setForeground(Color.RED);
-		lblDniunico.setBounds(256, 67, 129, 14);
+		lblDniunico.setBounds(256, 70, 129, 14);
 		frame.getContentPane().add(lblDniunico);
 		lblDniunico.setVisible(false);
 		// !!!!!!!!!!!
@@ -161,17 +161,17 @@ public class DarAltaTitular {
 			}		
 			});
 		
-		textField_DNI.setBounds(97, 64, 149, 20);
+		textField_DNI.setBounds(97, 67, 149, 20);
 		frame.getContentPane().add(textField_DNI);
 		textField_DNI.setColumns(10);
 		
 		JLabel lblApellido = new JLabel("Apellido*");
-		lblApellido.setBounds(28, 120, 62, 14);
+		lblApellido.setBounds(28, 108, 62, 14);
 		frame.getContentPane().add(lblApellido);
 		
 		JLabel lblerrorapellido = new JLabel("Apellido inv\u00E1lido");
 		lblerrorapellido.setForeground(Color.RED);
-		lblerrorapellido.setBounds(256, 117, 116, 14);
+		lblerrorapellido.setBounds(256, 108, 116, 14);
 		frame.getContentPane().add(lblerrorapellido);
 		lblerrorapellido.setVisible(false);
 		
@@ -207,17 +207,17 @@ public class DarAltaTitular {
 		}
 				);
 		
-		textField_Apellido.setBounds(97, 114, 149, 20);
+		textField_Apellido.setBounds(97, 105, 149, 20);
 		frame.getContentPane().add(textField_Apellido);
 		textField_Apellido.setColumns(10);
 		
 		JLabel lblNombre = new JLabel("Nombre*");
-		lblNombre.setBounds(28, 164, 62, 14);
+		lblNombre.setBounds(28, 150, 62, 14);
 		frame.getContentPane().add(lblNombre);
 		
 		JLabel lblErrornombre = new JLabel("Nombre inv\u00E1lido");
 		lblErrornombre.setForeground(Color.RED);
-		lblErrornombre.setBounds(256, 161, 116, 14);
+		lblErrornombre.setBounds(256, 147, 116, 14);
 		frame.getContentPane().add(lblErrornombre);
 		lblErrornombre.setVisible(false);
 		
@@ -252,7 +252,7 @@ public class DarAltaTitular {
 			}
 		});
 		
-		textField_Nombre.setBounds(97, 158, 149, 20);
+		textField_Nombre.setBounds(97, 144, 149, 20);
 		frame.getContentPane().add(textField_Nombre);
 		textField_Nombre.setColumns(10);
 		
@@ -493,8 +493,12 @@ public class DarAltaTitular {
 		lblGrupoSanguneo.setBounds(403, 190, 109, 14);
 		frame.getContentPane().add(lblGrupoSanguneo);
 		
-		 String[] grupoS = new String[] {"A", "B", "AB", "O"};
-		JComboBox<String> comboBoxGrupoS = new JComboBox<String>(grupoS);
+
+		JComboBox<String> comboBoxGrupoS = new JComboBox<String>();
+		comboBoxGrupoS.addItem("A");
+		comboBoxGrupoS.addItem("B");
+		comboBoxGrupoS.addItem("AB");
+		comboBoxGrupoS.addItem("O");
 		comboBoxGrupoS.setBounds(553, 186, 80, 22);
 		frame.getContentPane().add(comboBoxGrupoS);
 		
@@ -502,8 +506,10 @@ public class DarAltaTitular {
 		lblFactorRh.setBounds(403, 229, 109, 14);
 		frame.getContentPane().add(lblFactorRh);
 		
-		String[] factorRH = new String[] {"Positivo","Negativo"};
-		JComboBox<String> comboBoxFactor = new JComboBox<String>(factorRH);
+		
+		JComboBox<String> comboBoxFactor = new JComboBox<String>();
+		comboBoxFactor.addItem("POSITIVO");
+		comboBoxFactor.addItem("NEGATIVO");
 		comboBoxFactor.setBounds(553, 225, 80, 22);
 		frame.getContentPane().add(comboBoxFactor);
 		
@@ -516,6 +522,17 @@ public class DarAltaTitular {
 		lblErrorFecha.setBounds(28, 258, 174, 14);
 		frame.getContentPane().add(lblErrorFecha);
 		lblErrorFecha.setVisible(false);
+		
+		JComboBox<String> comboBoxSexo = new JComboBox<String>();
+		comboBoxSexo.setBounds(97, 182, 149, 22);
+		frame.getContentPane().add(comboBoxSexo);
+		comboBoxSexo.addItem("FEMENINO");
+		comboBoxSexo.addItem("MASCULINO");
+		comboBoxSexo.addItem("OTRO");
+		
+		JLabel lblSexo = new JLabel("Sexo*");
+		lblSexo.setBounds(28, 186, 62, 14);
+		frame.getContentPane().add(lblSexo);
 		
 		JButton btnNewButton = new JButton("Confirmar");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -571,7 +588,8 @@ public class DarAltaTitular {
 				if(confirmar) {
 					System.out.println("Todo ok, se crea el titular");
 					GestorTitular.getInstance().crearTitular(textField_DNI.getText(), textField_Apellido.getText(), textField_Nombre.getText(), textField_Calle.getText(), textField_nro.getText(), 
-							textField_depto.getText(),textField_piso.getText(),fecha,comboBoxGrupoS.getSelectedItem().toString(), comboBoxFactor.getSelectedItem().toString(),chckbxDonanteDeOrganos.isSelected());
+							textField_depto.getText(),textField_piso.getText(),fecha,comboBoxGrupoS.getSelectedItem().toString(), comboBoxFactor.getSelectedItem().toString(),chckbxDonanteDeOrganos.isSelected(),
+							comboBoxSexo.getSelectedItem().toString());
 				}else {
 					System.out.println("Hay algun error en algun lado(?");
 				}
@@ -591,6 +609,8 @@ public class DarAltaTitular {
 		lblCamposObligatorios.setFont(new Font("Tahoma", Font.ITALIC, 10));
 		lblCamposObligatorios.setBounds(126, 321, 251, 18);
 		frame.getContentPane().add(lblCamposObligatorios);
+		
+		
 		
 		
 		

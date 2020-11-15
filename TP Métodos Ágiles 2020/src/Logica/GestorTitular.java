@@ -33,7 +33,7 @@ public class GestorTitular {
 	}
 	
 	public void crearTitular(String dni, String apellido, String nombre, String calle, String nro, String depto, String piso, Calendar fecha,
-			String grupoSanguineo, String factorRH, boolean esDonante) {
+			String grupoSanguineo, String factorRH, boolean esDonante, String sexo) {
 		boolean factor;
 		String direccion = new String();
 		direccion += calle;
@@ -47,7 +47,7 @@ public class GestorTitular {
 		}else {
 			factor = false;
 		}
-		Titular titular = new Titular(dni, apellido, nombre, direccion, depto, piso, fecha,GrupoSanguineo.valueOf(grupoSanguineo),factor,esDonante);
+		Titular titular = new Titular(dni, apellido, nombre, direccion, depto, piso, fecha,GrupoSanguineo.valueOf(grupoSanguineo),factor,esDonante,Sexo.valueOf(sexo));
 		
 		GestorBDD.getInstance().guardarTitular(titular);
 		
