@@ -13,14 +13,28 @@ import Logica.GestorTitular;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.util.Calendar;
 
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import java.awt.Color;
 import javax.swing.JEditorPane;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.awt.event.ActionEvent;
 
 public class ImprimirPantalla {
 
@@ -52,12 +66,15 @@ public class ImprimirPantalla {
 	}
 	
 	public ImprimirPantalla() {
-		//Clase licenciaMoto, Clase licenciaOtro, Calendar fechaVencimiento,
-		//Titular titular, String observaciones
+		
+		/*
+		 * PARA EL TESTEO DE LA PANTALLA
+		 * 
 		Calendar fechaprueba = Calendar.getInstance();
 		Titular tit = new Titular("93457343", "ksjfk", "hola lskjh", "El Paracao 111", "A","11",fechaprueba , GrupoSanguineo.AB, true, true, Sexo.FEMENINO);
 		licencia = new Licencia(Clase.A,null,fechaprueba,tit, "hola uno dos tre alta observacion ahre skjfsl posdjflw wlkje");
 		licencia.setIdlicencia(123);
+		*/
 		initialize();
 	}
 
@@ -71,6 +88,38 @@ public class ImprimirPantalla {
 		frame.getContentPane().setLayout(null);
 		
 		JButton btnImprimirLicencia = new JButton("Imprimir Licencia");
+		btnImprimirLicencia.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Document document = new Document();
+				try {
+					PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\Pierotti\\Desktop\\iTextHelloWorld.pdf"));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (DocumentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				 
+				document.open();
+				com.itextpdf.text.Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+				Chunk chunk = new Chunk("Hello World", font);
+				 
+				try {
+					document.add(chunk);
+				} catch (DocumentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				document.close();
+				
+				//JOptionPane pane = new JOptionPane();
+				
+				JOptionPane.showMessageDialog(null, "La impresión ha comenzado", "Mensaje de éxito", JOptionPane.INFORMATION_MESSAGE);
+			}
+			
+			
+		});
 		btnImprimirLicencia.setBounds(605, 318, 148, 23);
 		frame.getContentPane().add(btnImprimirLicencia);
 		
@@ -246,5 +295,9 @@ public class ImprimirPantalla {
 		else {
 			grupoFactor.setText(licencia.getTitular().getGrupoSanguineo().toString()+"-");
 		}
+		
+		
+		
+		
 	}
 }
