@@ -52,8 +52,8 @@ public class Titular {
 		this.apellido = apellido;
 		this.nombre = nombre;
 		this.direccion = direccion;
-		this.depto = "-";
-		this.piso = "-";
+		this.depto = "";
+		this.piso = "";
 		this.fechaNacimiento = fechaNacimiento;
 		this.grupoSanguineo = grupoSanguineo;
 		this.factorRH = factorRH;
