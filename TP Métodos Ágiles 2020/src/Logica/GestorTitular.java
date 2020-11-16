@@ -53,4 +53,8 @@ public class GestorTitular {
 		
 	}
 	
+	public void actualizarTitular(Titular titularEncontrado ) {
+		GestorBDD.getInstance().actualizarLicenciaDeTitular(titularEncontrado);	
+	}
+	
 }

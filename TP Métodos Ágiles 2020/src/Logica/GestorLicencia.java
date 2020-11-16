@@ -132,4 +132,10 @@ public class GestorLicencia {
 		return (dateactual.after(datefv));
 	}
 	
+	
+	public void actualizarLicencia(Licencia licenciaEncontrada) {
+		GestorBDD.getInstance().actualizarLicencia(licenciaEncontrada);
+		
+	}
+	
 }
