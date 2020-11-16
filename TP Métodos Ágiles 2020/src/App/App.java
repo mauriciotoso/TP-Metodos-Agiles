@@ -8,10 +8,11 @@ public class App {
 
 	public static void main(String[] args) {
 		
-		Titular t = new Titular("100","Toso","Mauricio","Pasaje Parpal 3055","-","-",Calendar.getInstance(),GrupoSanguineo.A,true,true, Sexo.MASCULINO);
+		Titular t = new Titular("1000","Toso","Mauricio","Pasaje Parpal 3055","-","-",Calendar.getInstance(),GrupoSanguineo.A,true,true, Sexo.MASCULINO);
 		
 		Calendar vencimiento = Calendar.getInstance();
 		vencimiento.set(2020,10,30);
+		
 		Licencia l = new Licencia(null,Clase.B, vencimiento, t, "");
 		
 				

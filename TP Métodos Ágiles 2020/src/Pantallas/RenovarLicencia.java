@@ -49,9 +49,11 @@ public class RenovarLicencia extends JFrame{
 	private String depto;
 	private String piso;
 	private String nombre;
+	private String apellido;
 	private boolean deptoval;
 	private boolean pisoval;
 	private boolean nombreval;
+	private boolean apellidoval;
 	private JButton confirmar;
 	private Titular titularEncontrado;
 	private JCheckBox cbDonante;
@@ -226,6 +228,14 @@ public class RenovarLicencia extends JFrame{
 		tfCalle.setEnabled(false);
 		cbDonante.setEnabled(false);
 		
+		apellidoval = true;
+		nombreval = true;
+		calleval = true;
+		deptoval = true;
+		pisoval = true;
+		
+		
+		
 		JLabel lblSexo = new JLabel("Sexo");
 		lblSexo.setBounds(10, 79, 45, 13);
 		panelTitular.add(lblSexo);
@@ -304,12 +314,18 @@ public class RenovarLicencia extends JFrame{
 		
 		JLabel lblErrornombre = new JLabel("Nombre inv\u00E1lido");
 		lblErrornombre.setForeground(Color.RED);
-		lblErrornombre.setBounds(119, 26, 116, 14);
+		lblErrornombre.setBounds(99, 30, 116, 14);
 		panelTitular.add(lblErrornombre);
 		lblErrornombre.setVisible(false);
 	
 		
-		///ERROR PISO
+		
+		JLabel lblErrorapellido = new JLabel("Apellido inv\u00E1lido");
+		lblErrorapellido.setForeground(Color.RED);
+		lblErrorapellido.setBounds(309, 30, 116, 14);
+		panelTitular.add(lblErrorapellido);
+		lblErrorapellido.setVisible(false);
+	
 		
 		JLabel ErrorPiso = new JLabel("Piso inv\u00E1lido");
 		ErrorPiso.setBounds(260, 124, 50, 14);
@@ -321,7 +337,7 @@ public class RenovarLicencia extends JFrame{
 		JButton imprimir = new JButton("Imprimir");
 		imprimir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//implementar impirmir
+				//TODO IMPLEMENTAR IR A IMPRIMIR
 			}
 		});
 		imprimir.setBounds(125, 360, 85, 21);
@@ -431,6 +447,7 @@ public class RenovarLicencia extends JFrame{
 				depto = tfDepto.getText().replace(" ", "");
 				deptoval = true;
 				
+			
 				for(int i = 0; i<depto.length(); i++) {
 					if(!((Character.isLetterOrDigit(depto.charAt(i))) || (depto.charAt(i) >= 'á' &&  depto.charAt(i) <=  'ú') || depto.charAt(i)=='é' ))  {
 						
@@ -466,7 +483,7 @@ public class RenovarLicencia extends JFrame{
 				piso = tfPiso.getText().toLowerCase();
 				piso = tfPiso.getText().replace(" ", "");
 				pisoval = true;
-				
+			
 				for(int i = 0; i<piso.length(); i++) {
 					if(!((Character.isLetterOrDigit(piso.charAt(i))) || (piso.charAt(i) >= 'á' &&  piso.charAt(i) <=  'ú') || piso.charAt(i)=='é' ))  {
 						pisoval = false;
@@ -524,8 +541,42 @@ public class RenovarLicencia extends JFrame{
 			}
 		});
 		
+		//ERROR APELLIDO
+				tfApellido.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusLost(FocusEvent e) {
+						apellido = tfApellido.getText().toLowerCase().replace(" ", "");
+						apellidoval = true;
+						if(apellido.length()==0) { apellidoval = false;}
+						for(int i = 0; i<apellido.length(); i++) {
+							if(!((apellido.charAt(i) >= 'a' && apellido.charAt(i) <= 'z') || (apellido.charAt(i) >= 'á' &&  apellido.charAt(i) <=  'ú') || apellido.charAt(i)=='é' )) {
+								lblErrorapellido.setText("Nombre inválido");
+								lblErrorapellido.setVisible(true);
+								apellidoval = false;
+							}
+						}
+						if(apellidoval) {
+							lblErrorapellido.setVisible(false);
+						}else {
+							lblErrorapellido.setText("Apellido inválido");
+							lblErrorapellido.setVisible(true);
+						}
+					}
+				});
+			
+				tfApellido.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyTyped(KeyEvent e) {
+						if(tfApellido.getText().length()==40) {
+							e.consume();
+						}
+					}
+				});
 		
-		
+				
+				
+				
+		//TODO FALTA SEPARAR NUMERO DE CALLE EN INTERFAZ
 		/*
 		JLabel lblErrornro = new JLabel("N\u00FAmero inv\u00E1lido");
 		lblErrornro.setForeground(Color.RED);
@@ -573,8 +624,15 @@ public class RenovarLicencia extends JFrame{
 		
 		confirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				if(calleval && nombreval && pisoval && deptoval ) {
+						
+				if(calleval && nombreval && pisoval && deptoval && apellidoval) {
+					
+					if(tfPiso.getText().length()==0 || tfDepto.getText().length()==0) {
+						tfPiso.setText("-");
+						tfDepto.setText("-");
+					}
+						
+					
 					System.out.println("Todo ok, se crea el titular");
 
 					if(rbMasculino.isSelected()) {
@@ -609,7 +667,7 @@ public class RenovarLicencia extends JFrame{
 					
 				}else {
 					System.out.println("Hay algun error en algun lado(?");
-					
+					System.out.println("-calle " + calleval  + "-nombre " + nombreval + "-piso " + pisoval + "-depto "+  deptoval + "-apellido " + apellidoval);
 				}
 				
 			
