@@ -30,6 +30,7 @@ public class BuscarTitular extends JFrame{
 	private JLabel lblNroDni;
 	private JLabel lblFechaNacimiento;
 	private JButton confirmar;
+	private JButton crearTitular;
 	private JLabel lblLicencia;
 	/**
 	 * Launch the application.
@@ -111,9 +112,9 @@ public class BuscarTitular extends JFrame{
 		confirmar.setBounds(288, 152, 138, 21);
 		getContentPane().add(confirmar);
 		
-		JButton btnNewButton = new JButton("Crear titular");
-		btnNewButton.setBounds(105, 152, 109, 21);
-		getContentPane().add(btnNewButton);
+		crearTitular = new JButton("Crear titular");
+		crearTitular.setBounds(105, 152, 109, 21);
+		getContentPane().add(crearTitular);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 41, 416, 101);
@@ -196,6 +197,7 @@ public class BuscarTitular extends JFrame{
 				confirmar.setText("Confirmar");
 			}
 		}
+		crearTitular.setEnabled(false);
 	
 		}else {
 			lblNombre.setText("No existe el titular con el documento ingresado.");
@@ -205,6 +207,17 @@ public class BuscarTitular extends JFrame{
 			lblLicencia.setText("");
 			
 			confirmar.setEnabled(false);
+			//TODO Hacer que vaya a darDeAlta = tira error en darAltaTitular
+			
+			/*crearTitular.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					DarAltaTitular darAlta = new DarAltaTitular();
+					darAlta.setVisible(true);
+					dispose();
+				}
+			});*/
+			
+			
 		}
 	}
 }

@@ -20,7 +20,7 @@ public class Titular {
 	private boolean factorRH;
 	// Donante: ES = true ; NO ES = false;
 	private boolean esDonante;
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="idlicencia")
 	private Licencia licencia;
 	private Sexo sexo;
