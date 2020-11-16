@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 import Entidades.Clase;
+import Entidades.CostosLicencia;
 import Entidades.GrupoSanguineo;
 import Entidades.Licencia;
 import Entidades.Sexo;
@@ -16,7 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
@@ -27,6 +30,7 @@ import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.awt.Color;
@@ -40,6 +44,11 @@ public class ImprimirPantalla {
 
 	private JFrame frame;
 	private Licencia licencia;
+	private String dom="", dona="", grupoF="";
+	private String claseString;
+	private Calendar fechaemision;
+	private ArrayList<Clase> clasesLicencia;
+	
 
 	/**
 	 * Launch the application.
@@ -69,12 +78,12 @@ public class ImprimirPantalla {
 		
 		/*
 		 * PARA EL TESTEO DE LA PANTALLA
-		 * 
+		 */
 		Calendar fechaprueba = Calendar.getInstance();
 		Titular tit = new Titular("93457343", "ksjfk", "hola lskjh", "El Paracao 111", "A","11",fechaprueba , GrupoSanguineo.AB, true, true, Sexo.FEMENINO);
 		licencia = new Licencia(Clase.A,null,fechaprueba,tit, "hola uno dos tre alta observacion ahre skjfsl posdjflw wlkje");
 		licencia.setIdlicencia(123);
-		*/
+		
 		initialize();
 	}
 
@@ -87,12 +96,30 @@ public class ImprimirPantalla {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		if(licencia.getTitular().getPiso().compareTo("")==0) {
+			dom+= licencia.getTitular().getDireccion()+", Santa Fe";
+		}
+		else {
+			dom+=licencia.getTitular().getDireccion()+" piso: "+licencia.getTitular().getPiso()+
+					" depto: "+ licencia.getTitular().getDepto()+", Santa Fe";
+		}
+		
+		if(licencia.getTitular().isEsDonante())
+			dona+="SÍ";
+		else {
+			dona+="NO";
+		}
+		if(licencia.getTitular().isFactorRH())
+			grupoF+=licencia.getTitular().getGrupoSanguineo().toString()+"+";
+		else {
+			grupoF+=licencia.getTitular().getGrupoSanguineo().toString()+"-";
+		}
 		JButton btnImprimirLicencia = new JButton("Imprimir Licencia");
 		btnImprimirLicencia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Document document = new Document();
 				try {
-					PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\Pierotti\\Desktop\\iTextHelloWorld.pdf"));
+					PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\Pierotti\\Desktop\\Licencia"+licencia.getIdlicencia()+"Impresa.pdf"));
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -103,10 +130,25 @@ public class ImprimirPantalla {
 				 
 				document.open();
 				com.itextpdf.text.Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
-				Chunk chunk = new Chunk("Hello World", font);
-				 
+				//Chunk chunk = new Chunk("Licencia N°: "+licencia.getIdlicencia()+" Apellido: "+licencia.getTitular().getApellido(), font);
+				
+				Paragraph parrafo = new Paragraph("Licencia N°: "+licencia.getIdlicencia()+
+						"\nApellido: "+licencia.getTitular().getApellido()+
+						"\nNombre: "+licencia.getTitular().getNombre()+
+						"\nSexo: "+licencia.getTitular().getSexo().toString().substring(0, 1)+
+						"\nFecha de nacimiento: "+licencia.getTitular().getFechaNacimiento().get(Calendar.DAY_OF_MONTH)+"/"+
+						licencia.getTitular().getFechaNacimiento().get(Calendar.MONTH)+"/"+
+						licencia.getTitular().getFechaNacimiento().get(Calendar.YEAR)+
+						"\nDomicilio: "+dom+
+						"\nNacionalidad: Argentina"+
+						"\nClase: "+claseString+
+						"\n------------------------------------------------------"+
+						"\nObservaciones: "+licencia.getObservaciones()+
+						"\nDonante: "+dona+
+						"\nGrupo y factor: "+grupoF, font);
 				try {
-					document.add(chunk);
+					document.add(parrafo);
+				
 				} catch (DocumentException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -124,6 +166,49 @@ public class ImprimirPantalla {
 		frame.getContentPane().add(btnImprimirLicencia);
 		
 		JButton btnImprimirComprobante = new JButton("Imprimir Comprobante");
+		btnImprimirComprobante.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Document document = new Document();
+				try {
+					PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\Pierotti\\Desktop\\Comprobante"+licencia.getIdlicencia()+"Impresa.pdf"));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (DocumentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				 
+				document.open();
+				com.itextpdf.text.Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+				//Chunk chunk = new Chunk("Licencia N°: "+licencia.getIdlicencia()+" Apellido: "+licencia.getTitular().getApellido(), font);
+				
+				fechaemision = Calendar.getInstance();
+				clasesLicencia = new ArrayList<Clase>();
+				clasesLicencia.add(licencia.getLicenciaMoto());
+				clasesLicencia.add(licencia.getLicenciaOtro());
+				Paragraph parrafo = new Paragraph("Comprobante de licencia N°: "+licencia.getIdlicencia()+
+						"\nPrecio: "+"$80,00"+
+						"\nFecha de emisión: "+fechaemision.get(Calendar.DAY_OF_MONTH)+"/"+
+						fechaemision.get(Calendar.MONTH)+"/"+fechaemision.get(Calendar.YEAR)+
+						"\nHora de emisión: "+fechaemision.get(Calendar.HOUR_OF_DAY)+":"+fechaemision.get(Calendar.MINUTE)+
+						"\nDirección: ", font);
+				try {
+					document.add(parrafo);
+				
+				} catch (DocumentException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				document.close();
+				
+				//JOptionPane pane = new JOptionPane();
+				
+				JOptionPane.showMessageDialog(null, "La impresión ha comenzado", "Mensaje de éxito", JOptionPane.INFORMATION_MESSAGE);
+			}
+			
+			
+		});
 		btnImprimirComprobante.setBounds(421, 318, 174, 23);
 		frame.getContentPane().add(btnImprimirComprobante);
 		
@@ -237,7 +322,7 @@ public class ImprimirPantalla {
 		clase.setFont(new Font("Tahoma", Font.BOLD, 11));
 		clase.setBounds(44, 161, 74, 14);
 		panel.add(clase);
-		String claseString = new String("");
+		claseString="";
 		if(licencia.getLicenciaMoto()!=null) claseString+= licencia.getLicenciaMoto().toString();
 		if(licencia.getLicenciaOtro()!=null) {
 			if(claseString.isEmpty()) claseString+= licencia.getLicenciaOtro().toString();

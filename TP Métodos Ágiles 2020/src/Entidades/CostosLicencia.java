@@ -32,7 +32,7 @@ public class CostosLicencia {
     }
 	
 			
-	public static Integer getCostoLicencia(ArrayList<Clase> clases, Calendar fechaNacimiento, String DNI) { //Clase=nombre enumerado
+	public Integer getCostoLicencia(ArrayList<Clase> clases, Calendar fechaNacimiento, String DNI) { //Clase=nombre enumerado
 		Integer costoTotal=0, edad, posicion, i;
 		
 		edad = calcularEdad(fechaNacimiento);		
