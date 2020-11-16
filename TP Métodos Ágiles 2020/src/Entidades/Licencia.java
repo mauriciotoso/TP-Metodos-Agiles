@@ -14,7 +14,7 @@ public class Licencia {
 	private Clase licenciaMoto;
 	private Clase licenciaOtro;
 	private Calendar fechaVencimiento;
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="dni")
 	private Titular titular;
 	private String observaciones;
