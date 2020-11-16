@@ -78,12 +78,12 @@ public class ImprimirPantalla {
 		
 		/*
 		 * PARA EL TESTEO DE LA PANTALLA
-		 */
+		 
 		Calendar fechaprueba = Calendar.getInstance();
 		Titular tit = new Titular("93457343", "ksjfk", "hola lskjh", "El Paracao 111", "A","11",fechaprueba , GrupoSanguineo.AB, true, true, Sexo.FEMENINO);
 		licencia = new Licencia(Clase.A,null,fechaprueba,tit, "hola uno dos tre alta observacion ahre skjfsl posdjflw wlkje");
-		licencia.setIdlicencia(123);
-		
+		licencia.setIdlicencia(3);
+		*/
 		initialize();
 	}
 
@@ -130,7 +130,7 @@ public class ImprimirPantalla {
 				 
 				document.open();
 				com.itextpdf.text.Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
-				//Chunk chunk = new Chunk("Licencia N°: "+licencia.getIdlicencia()+" Apellido: "+licencia.getTitular().getApellido(), font);
+				
 				
 				Paragraph parrafo = new Paragraph("Licencia N°: "+licencia.getIdlicencia()+
 						"\nApellido: "+licencia.getTitular().getApellido()+
@@ -181,18 +181,21 @@ public class ImprimirPantalla {
 				 
 				document.open();
 				com.itextpdf.text.Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
-				//Chunk chunk = new Chunk("Licencia N°: "+licencia.getIdlicencia()+" Apellido: "+licencia.getTitular().getApellido(), font);
+				
 				
 				fechaemision = Calendar.getInstance();
 				clasesLicencia = new ArrayList<Clase>();
-				clasesLicencia.add(licencia.getLicenciaMoto());
-				clasesLicencia.add(licencia.getLicenciaOtro());
+				if(licencia.getLicenciaMoto()!=null) {
+				clasesLicencia.add(licencia.getLicenciaMoto());}
+				if(licencia.getLicenciaOtro()!=null) {
+				clasesLicencia.add(licencia.getLicenciaOtro());}
+				System.out.println("El dni del titular a pasar es: "+licencia.getTitular().getDni());
 				Paragraph parrafo = new Paragraph("Comprobante de licencia N°: "+licencia.getIdlicencia()+
-						"\nPrecio: "+"$80,00"+
+						"\nPrecio: $"+CostosLicencia.getInstance().getCostoLicencia(clasesLicencia, licencia.getTitular().getFechaNacimiento(), licencia.getTitular().getDni())+
 						"\nFecha de emisión: "+fechaemision.get(Calendar.DAY_OF_MONTH)+"/"+
-						fechaemision.get(Calendar.MONTH)+"/"+fechaemision.get(Calendar.YEAR)+
+						(fechaemision.get(Calendar.MONTH)+1)+"/"+fechaemision.get(Calendar.YEAR)+
 						"\nHora de emisión: "+fechaemision.get(Calendar.HOUR_OF_DAY)+":"+fechaemision.get(Calendar.MINUTE)+
-						"\nDirección: ", font);
+						"\nDirección: Salvador Caputto 3800, Santa Fe", font);
 				try {
 					document.add(parrafo);
 				
