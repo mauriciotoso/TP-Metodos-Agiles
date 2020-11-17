@@ -40,8 +40,8 @@ public class GestorTitular {
 		direccion +=" ";
 		direccion +=nro;
 		GrupoSanguineo.valueOf(grupoSanguineo);
-		if(depto.isEmpty()) depto+="-";
-		if(piso.isEmpty()) piso+="-";
+		if(depto.isEmpty()) depto+="";
+		if(piso.isEmpty()) piso+="";
 		if(factorRH.compareTo("POSITIVO")==0) {
 			factor = true;
 		}else {

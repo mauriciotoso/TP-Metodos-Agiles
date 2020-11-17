@@ -40,9 +40,17 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.awt.event.ActionEvent;
 
-public class ImprimirPantalla {
+public class ImprimirPantalla extends JFrame{
 
-	private JFrame frame;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	
+	JFrame frame;
 	private Licencia licencia;
 	private String dom="", dona="", grupoF="";
 	private String claseString;
@@ -71,7 +79,7 @@ public class ImprimirPantalla {
 	 */
 	public ImprimirPantalla(Licencia li) {
 		licencia = li;
-		
+		initialize();
 	}
 	
 	public ImprimirPantalla() {
@@ -91,7 +99,9 @@ public class ImprimirPantalla {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		frame = new JFrame();
+		frame.setTitle("Imprimir Licencia");
 		frame.setBounds(100, 100, 779, 391);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -137,7 +147,7 @@ public class ImprimirPantalla {
 						"\nNombre: "+licencia.getTitular().getNombre()+
 						"\nSexo: "+licencia.getTitular().getSexo().toString().substring(0, 1)+
 						"\nFecha de nacimiento: "+licencia.getTitular().getFechaNacimiento().get(Calendar.DAY_OF_MONTH)+"/"+
-						licencia.getTitular().getFechaNacimiento().get(Calendar.MONTH)+"/"+
+						(licencia.getTitular().getFechaNacimiento().get(Calendar.MONTH)+1)+"/"+
 						licencia.getTitular().getFechaNacimiento().get(Calendar.YEAR)+
 						"\nDomicilio: "+dom+
 						"\nNacionalidad: Argentina"+
@@ -189,7 +199,7 @@ public class ImprimirPantalla {
 				clasesLicencia.add(licencia.getLicenciaMoto());}
 				if(licencia.getLicenciaOtro()!=null) {
 				clasesLicencia.add(licencia.getLicenciaOtro());}
-				System.out.println("El dni del titular a pasar es: "+licencia.getTitular().getDni());
+				//System.out.println("El dni del titular a pasar es: "+licencia.getTitular().getDni());
 				Paragraph parrafo = new Paragraph("Comprobante de licencia N°: "+licencia.getIdlicencia()+
 						"\nPrecio: $"+CostosLicencia.getInstance().getCostoLicencia(clasesLicencia, licencia.getTitular().getFechaNacimiento(), licencia.getTitular().getDni())+
 						"\nFecha de emisión: "+fechaemision.get(Calendar.DAY_OF_MONTH)+"/"+
@@ -216,6 +226,13 @@ public class ImprimirPantalla {
 		frame.getContentPane().add(btnImprimirComprobante);
 		
 		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EmitirLicencia emitir = new EmitirLicencia();
+				emitir.setVisible(true);
+				dispose();
+			}
+		});
 		btnVolver.setBounds(10, 318, 89, 23);
 		frame.getContentPane().add(btnVolver);
 		

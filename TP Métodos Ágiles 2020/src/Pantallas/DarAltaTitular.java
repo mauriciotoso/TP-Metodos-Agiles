@@ -20,9 +20,17 @@ import Logica.GestorTitular;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-public class DarAltaTitular {
+public class DarAltaTitular extends JFrame {
 
-	private JFrame frame;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	
+	JFrame frame;
 	private JTextField textField_DNI;
 	private String dni;
 	private boolean dnival;
@@ -80,7 +88,9 @@ public class DarAltaTitular {
 	 */
 	private void initialize() {
 		confirmar= true;
+		
 		frame = new JFrame();
+		frame.setTitle("Dar de Alta a Titular");
 		frame.setBounds(100, 100, 779, 391);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -602,6 +612,13 @@ public class DarAltaTitular {
 		frame.getContentPane().add(btnNewButton);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BuscarTitular buscar = new BuscarTitular();
+				buscar.setVisible(true);
+				dispose();
+			}
+		});
 		btnCancelar.setBounds(10, 319, 89, 23);
 		frame.getContentPane().add(btnCancelar);
 		

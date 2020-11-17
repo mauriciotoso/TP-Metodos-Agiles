@@ -316,6 +316,10 @@ public class EmitirLicencia extends JFrame{
 		imprimir = new JButton("Imprimir");
 		imprimir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Licencia licencia = titularEncontrado.getLicencia();
+				ImprimirPantalla imprimirLic = new ImprimirPantalla(licencia);
+				imprimirLic.frame.setVisible(true);
+				dispose();
 			}
 		});
 		imprimir.setBounds(124, 311, 85, 21);

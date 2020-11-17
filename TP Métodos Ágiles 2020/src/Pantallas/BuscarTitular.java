@@ -113,6 +113,13 @@ public class BuscarTitular extends JFrame{
 		getContentPane().add(confirmar);
 		
 		crearTitular = new JButton("Crear titular");
+		crearTitular.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DarAltaTitular daraltatitular = new DarAltaTitular();
+				daraltatitular.frame.setVisible(true);
+				dispose();
+			}
+		});
 		crearTitular.setBounds(105, 152, 109, 21);
 		getContentPane().add(crearTitular);
 		
