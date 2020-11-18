@@ -43,10 +43,13 @@ public class GestorLicencia {
 		
 		Calendar fechaActual, fechaVencimiento;
 		Integer diferenciaMeses, cantidadAnios;
-		Calendar fechaNacimiento=titular.getFechaNacimiento();
-		int anioOriginal=fechaNacimiento.get(Calendar.YEAR);
-		int mesOriginal=fechaNacimiento.get(Calendar.MONTH);
-		int diaOriginal=fechaNacimiento.get(Calendar.DATE);
+		Calendar fechaNacimiento = Calendar.getInstance();
+		
+		int anioOriginal=titular.getFechaNacimiento().get(Calendar.YEAR);
+		int mesOriginal=titular.getFechaNacimiento().get(Calendar.MONTH);
+		int diaOriginal=titular.getFechaNacimiento().get(Calendar.DATE);
+		
+		fechaNacimiento.set(anioOriginal,mesOriginal+1,diaOriginal);
 		
 		fechaActual = Calendar.getInstance();
 		Integer edad = CostosLicencia.calcularEdad(fechaNacimiento);
@@ -89,8 +92,6 @@ public class GestorLicencia {
 			fechaVencimiento.add(Calendar.YEAR, cantidadAnios);			
 		else 
 			fechaVencimiento.add(Calendar.YEAR, cantidadAnios - 1);	
-		
-		fechaNacimiento.set(anioOriginal,mesOriginal,diaOriginal);
 		
 		System.out.println(titular+" finCalcularvigencia");
 		
