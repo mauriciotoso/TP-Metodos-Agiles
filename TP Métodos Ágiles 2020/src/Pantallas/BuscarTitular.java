@@ -32,6 +32,7 @@ public class BuscarTitular extends JFrame{
 	private JButton confirmar;
 	private JButton crearTitular;
 	private JLabel lblLicencia;
+	private int pantalla;
 	/**
 	 * Launch the application.
 	 */
@@ -39,7 +40,7 @@ public class BuscarTitular extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BuscarTitular window = new BuscarTitular();
+					BuscarTitular window = new BuscarTitular(-1);
 					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,8 +52,10 @@ public class BuscarTitular extends JFrame{
 	/**
 	 * Create the application.
 	 */
-	public BuscarTitular() {
+	
+	public BuscarTitular(int pantalla) {
 		initialize();
+		this.pantalla=pantalla;
 	}
 
 	/**
@@ -100,8 +103,14 @@ public class BuscarTitular extends JFrame{
 		JButton cancelar = new JButton("Cancelar");
 		cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EmitirLicencia emitir = new EmitirLicencia();
-				emitir.setVisible(true);
+				if(pantalla==1) {
+					EmitirLicencia emitir = new EmitirLicencia();
+					emitir.setVisible(true);
+				}else {
+					RenovarLicencia renovar = new RenovarLicencia();
+					renovar.setVisible(true);
+				}
+				
 				dispose();
 			}
 		});
@@ -115,8 +124,8 @@ public class BuscarTitular extends JFrame{
 		crearTitular = new JButton("Crear titular");
 		crearTitular.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DarAltaTitular daraltatitular = new DarAltaTitular();
-				daraltatitular.frame.setVisible(true);
+				DarAltaTitular daraltatitular = new DarAltaTitular(pantalla);
+				daraltatitular.setVisible(true);
 				dispose();
 			}
 		});

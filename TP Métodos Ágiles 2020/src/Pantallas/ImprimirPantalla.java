@@ -2,31 +2,19 @@ package Pantallas;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
-
-import Entidades.Clase;
-import Entidades.CostosLicencia;
-import Entidades.GrupoSanguineo;
-import Entidades.Licencia;
-import Entidades.Sexo;
-import Entidades.Titular;
-import Logica.GestorTitular;
-
+import Entidades.*;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
-
 import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.FontFactory;
@@ -56,7 +44,7 @@ public class ImprimirPantalla extends JFrame{
 	private String claseString;
 	private Calendar fechaemision;
 	private ArrayList<Clase> clasesLicencia;
-	
+	private String ruta="C:\\Users\\Clide\\Desktop\\";
 
 	/**
 	 * Launch the application.
@@ -105,7 +93,8 @@ public class ImprimirPantalla extends JFrame{
 		frame.setBounds(100, 100, 779, 391);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+		frame.setLocationRelativeTo(null);
+
 		if(licencia.getTitular().getPiso().compareTo("")==0) {
 			dom+= licencia.getTitular().getDireccion()+", Santa Fe";
 		}
@@ -129,7 +118,7 @@ public class ImprimirPantalla extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				Document document = new Document();
 				try {
-					PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\Pierotti\\Desktop\\Licencia"+licencia.getIdlicencia()+"Impresa.pdf"));
+					PdfWriter.getInstance(document, new FileOutputStream(ruta+licencia.getIdlicencia()+"Impresa.pdf"));
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -180,7 +169,7 @@ public class ImprimirPantalla extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				Document document = new Document();
 				try {
-					PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\Pierotti\\Desktop\\Comprobante"+licencia.getIdlicencia()+"Impresa.pdf"));
+					PdfWriter.getInstance(document, new FileOutputStream(ruta+licencia.getIdlicencia()+"Impresa.pdf"));
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -225,15 +214,15 @@ public class ImprimirPantalla extends JFrame{
 		btnImprimirComprobante.setBounds(421, 318, 174, 23);
 		frame.getContentPane().add(btnImprimirComprobante);
 		
-		JButton btnVolver = new JButton("Volver");
+		JButton btnVolver = new JButton("Volver al Men\u00FA");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EmitirLicencia emitir = new EmitirLicencia();
-				emitir.setVisible(true);
-				dispose();
+				Menu menu = new Menu();
+				menu.frmMen.setVisible(true);
+				frame.dispose();
 			}
 		});
-		btnVolver.setBounds(10, 318, 89, 23);
+		btnVolver.setBounds(10, 318, 123, 23);
 		frame.getContentPane().add(btnVolver);
 		
 		JLabel lblTitulo = new JLabel("Datos a imprimir en licencia");

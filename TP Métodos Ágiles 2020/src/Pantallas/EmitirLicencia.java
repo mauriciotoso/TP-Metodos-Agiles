@@ -43,7 +43,6 @@ public class EmitirLicencia extends JFrame{
 	private Titular titularEncontrado;
 	private JCheckBox cbDonante;
 	private JEditorPane tfObservaciones;
-	private JButton imprimir;
 	
 	/**
 	 * Launch the application.
@@ -76,7 +75,7 @@ public class EmitirLicencia extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
+		System.out.println(titularEncontrado);
 		this.setTitle("Emitir Licencia");
 		this.setBounds(100, 100, 779, 391);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,7 +90,7 @@ public class EmitirLicencia extends JFrame{
 		buscarTitular.setBounds(243, 9, 117, 21);
 		buscarTitular.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BuscarTitular buscarTit = new BuscarTitular();
+				BuscarTitular buscarTit = new BuscarTitular(1);
 				buscarTit.setVisible(true);
 				dispose();
 			}
@@ -230,12 +229,21 @@ public class EmitirLicencia extends JFrame{
 		panel.add(cbB);
 		
 		JButton cancelar = new JButton("Cancelar");
+		cancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Menu menu = new Menu();
+				menu.frmMen.setVisible(true);
+				dispose();
+			}
+		});
 		cancelar.setBounds(29, 311, 85, 21);
 		panel.add(cancelar);
 		
 		confirmar = new JButton("Confirmar");
 		confirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.out.println(titularEncontrado);
 				
 				Clase moto=null,otro=null;
 				
@@ -248,6 +256,12 @@ public class EmitirLicencia extends JFrame{
 				else if(cbG.isSelected()) otro=Clase.G;
 					
 				GestorLicencia.getInstance().crearLicencia(titularEncontrado,moto,otro,tfObservaciones.getText());
+				
+				
+				Licencia licencia = titularEncontrado.getLicencia();
+				ImprimirPantalla imprimirLic = new ImprimirPantalla(licencia);
+				imprimirLic.frame.setVisible(true);
+				dispose();
 			}
 		});
 		confirmar.setBounds(638, 311, 103, 21);
@@ -312,19 +326,6 @@ public class EmitirLicencia extends JFrame{
 		actualizarAclaracion();
 		
 		confirmar.setEnabled(false);
-		
-		imprimir = new JButton("Imprimir");
-		imprimir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Licencia licencia = titularEncontrado.getLicencia();
-				ImprimirPantalla imprimirLic = new ImprimirPantalla(licencia);
-				imprimirLic.frame.setVisible(true);
-				dispose();
-			}
-		});
-		imprimir.setBounds(124, 311, 85, 21);
-		panel.add(imprimir);
-		imprimir.setEnabled(false);
 		
 		
 		cbA.addActionListener(new ActionListener() {
@@ -456,7 +457,6 @@ public class EmitirLicencia extends JFrame{
 				aclaracion=aclaracion+".<html>";
 				
 				confirmar.setEnabled(true);
-				imprimir.setEnabled(true);
 				
 			}
 		}
@@ -465,6 +465,8 @@ public class EmitirLicencia extends JFrame{
 	}
 	
 	private void actualizarDatos() {
+		System.out.println(titularEncontrado);
+		
 		tfNombre.setText(titularEncontrado.getNombre());
 		tfApellido.setText(titularEncontrado.getApellido());;
 		tfTipoDoc.setText("DNI");

@@ -30,7 +30,7 @@ public class DarAltaTitular extends JFrame {
 	 * 
 	 */
 	
-	JFrame frame;
+	//JFrame frame;
 	private JTextField textField_DNI;
 	private String dni;
 	private boolean dnival;
@@ -57,9 +57,8 @@ public class DarAltaTitular extends JFrame {
 	private String mes;
 	private String anyo;
 	private Calendar fecha;
-	
 	private boolean confirmar;
-
+	private int pantalla;
 	/**
 	 * Launch the application.
 	 */
@@ -67,8 +66,8 @@ public class DarAltaTitular extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DarAltaTitular window = new DarAltaTitular();
-					window.frame.setVisible(true);
+					DarAltaTitular window = new DarAltaTitular(-1);
+					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -79,8 +78,9 @@ public class DarAltaTitular extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public DarAltaTitular() {
+	public DarAltaTitular(int pantalla) {
 		initialize();
+		this.pantalla=pantalla;
 	}
 
 	/**
@@ -89,31 +89,31 @@ public class DarAltaTitular extends JFrame {
 	private void initialize() {
 		confirmar= true;
 		
-		frame = new JFrame();
-		frame.setTitle("Dar de Alta a Titular");
-		frame.setBounds(100, 100, 779, 391);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		setTitle("Dar de Alta a Titular");
+		setBounds(100, 100, 779, 391);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setLayout(null);
+		setLocationRelativeTo(null);
 		
 		JLabel lblCrearTitular = new JLabel("Crear titular");
 		lblCrearTitular.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCrearTitular.setBounds(10, 26, 80, 14);
-		frame.getContentPane().add(lblCrearTitular);
+		getContentPane().add(lblCrearTitular);
 		
 		JLabel lblDni = new JLabel("DNI*");
 		lblDni.setBounds(28, 73, 46, 14);
-		frame.getContentPane().add(lblDni);
+		getContentPane().add(lblDni);
 		
 		JLabel lblErrorDNI = new JLabel("DNI inv\u00E1lido");
 		lblErrorDNI.setForeground(Color.RED);
 		lblErrorDNI.setBounds(256, 70, 116, 14);
-		frame.getContentPane().add(lblErrorDNI);
+		getContentPane().add(lblErrorDNI);
 		lblErrorDNI.setVisible(false);
 		
 		JLabel lblDniunico = new JLabel("DNI ya en uso");
 		lblDniunico.setForeground(Color.RED);
 		lblDniunico.setBounds(256, 70, 129, 14);
-		frame.getContentPane().add(lblDniunico);
+		getContentPane().add(lblDniunico);
 		lblDniunico.setVisible(false);
 		// !!!!!!!!!!!
 		
@@ -172,17 +172,17 @@ public class DarAltaTitular extends JFrame {
 			});
 		
 		textField_DNI.setBounds(97, 67, 149, 20);
-		frame.getContentPane().add(textField_DNI);
+		getContentPane().add(textField_DNI);
 		textField_DNI.setColumns(10);
 		
 		JLabel lblApellido = new JLabel("Apellido*");
 		lblApellido.setBounds(28, 108, 62, 14);
-		frame.getContentPane().add(lblApellido);
+		getContentPane().add(lblApellido);
 		
 		JLabel lblerrorapellido = new JLabel("Apellido inv\u00E1lido");
 		lblerrorapellido.setForeground(Color.RED);
 		lblerrorapellido.setBounds(256, 108, 116, 14);
-		frame.getContentPane().add(lblerrorapellido);
+		getContentPane().add(lblerrorapellido);
 		lblerrorapellido.setVisible(false);
 		
 		textField_Apellido = new JTextField();
@@ -218,17 +218,17 @@ public class DarAltaTitular extends JFrame {
 				);
 		
 		textField_Apellido.setBounds(97, 105, 149, 20);
-		frame.getContentPane().add(textField_Apellido);
+		getContentPane().add(textField_Apellido);
 		textField_Apellido.setColumns(10);
 		
 		JLabel lblNombre = new JLabel("Nombre*");
 		lblNombre.setBounds(28, 150, 62, 14);
-		frame.getContentPane().add(lblNombre);
+		getContentPane().add(lblNombre);
 		
 		JLabel lblErrornombre = new JLabel("Nombre inv\u00E1lido");
 		lblErrornombre.setForeground(Color.RED);
 		lblErrornombre.setBounds(256, 147, 116, 14);
-		frame.getContentPane().add(lblErrornombre);
+		getContentPane().add(lblErrornombre);
 		lblErrornombre.setVisible(false);
 		
 		textField_Nombre = new JTextField();
@@ -263,16 +263,16 @@ public class DarAltaTitular extends JFrame {
 		});
 		
 		textField_Nombre.setBounds(97, 144, 149, 20);
-		frame.getContentPane().add(textField_Nombre);
+		getContentPane().add(textField_Nombre);
 		textField_Nombre.setColumns(10);
 		
 		JLabel lblFechaDeNacimiento = new JLabel("Fecha de nacimiento*");
 		lblFechaDeNacimiento.setBounds(28, 230, 129, 14);
-		frame.getContentPane().add(lblFechaDeNacimiento);
+		getContentPane().add(lblFechaDeNacimiento);
 		
 		JComboBox<String> comboBoxDia = new JComboBox<String>();
 		comboBoxDia.setBounds(159, 226, 55, 22);
-		frame.getContentPane().add(comboBoxDia);
+		getContentPane().add(comboBoxDia);
 		
 		comboBoxDia.addItem("Día");
 		for (Integer i = 1; i<32; i++) {
@@ -281,7 +281,7 @@ public class DarAltaTitular extends JFrame {
 		
 		JComboBox<String> comboBoxMes = new JComboBox<String>();
 		comboBoxMes.setBounds(224, 226, 55, 22);
-		frame.getContentPane().add(comboBoxMes);
+		getContentPane().add(comboBoxMes);
 		
 		comboBoxMes.addItem("Mes");
 		for (Integer i = 1; i<13; i++) {
@@ -290,7 +290,7 @@ public class DarAltaTitular extends JFrame {
 		
 		JComboBox<String> comboBoxAnyo = new JComboBox<String>();
 		comboBoxAnyo.setBounds(289, 226, 65, 22);
-		frame.getContentPane().add(comboBoxAnyo);
+		getContentPane().add(comboBoxAnyo);
 		
 		comboBoxAnyo.addItem("Año");
 		for (Integer i = 2020; i>1919; i--) {
@@ -302,16 +302,16 @@ public class DarAltaTitular extends JFrame {
 		JLabel lblDireccion = new JLabel("Direcci\u00F3n");
 		lblDireccion.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblDireccion.setBounds(403, 46, 58, 14);
-		frame.getContentPane().add(lblDireccion);
+		getContentPane().add(lblDireccion);
 		
 		JLabel lblCalle = new JLabel("Calle*");
 		lblCalle.setBounds(413, 76, 46, 14);
-		frame.getContentPane().add(lblCalle);
+		getContentPane().add(lblCalle);
 		
 		JLabel lblErrorcalle = new JLabel("Calle inv\u00E1lida");
 		lblErrorcalle.setForeground(Color.RED);
 		lblErrorcalle.setBounds(454, 100, 143, 14);
-		frame.getContentPane().add(lblErrorcalle);
+		getContentPane().add(lblErrorcalle);
 		lblErrorcalle.setVisible(false);
 		
 		textField_Calle = new JTextField();
@@ -350,18 +350,18 @@ public class DarAltaTitular extends JFrame {
 		});
 		
 		textField_Calle.setBounds(454, 73, 160, 20);
-		frame.getContentPane().add(textField_Calle);
+		getContentPane().add(textField_Calle);
 		textField_Calle.setColumns(10);
 		
 		JLabel lblN = new JLabel("Nro.*");
 		
 		lblN.setBounds(624, 76, 46, 14);
-		frame.getContentPane().add(lblN);
+		getContentPane().add(lblN);
 		
 		JLabel lblErrornro = new JLabel("N\u00FAmero inv\u00E1lido");
 		lblErrornro.setForeground(Color.RED);
 		lblErrornro.setBounds(634, 100, 104, 14);
-		frame.getContentPane().add(lblErrornro);
+		getContentPane().add(lblErrornro);
 		lblErrornro.setVisible(false);
 		
 		textField_nro = new JTextField();
@@ -400,17 +400,17 @@ public class DarAltaTitular extends JFrame {
 		});
 		
 		textField_nro.setBounds(663, 73, 46, 20);
-		frame.getContentPane().add(textField_nro);
+		getContentPane().add(textField_nro);
 		textField_nro.setColumns(10);
 		
 		JLabel lblPiso = new JLabel("Piso");
 		lblPiso.setBounds(419, 125, 46, 14);
-		frame.getContentPane().add(lblPiso);
+		getContentPane().add(lblPiso);
 		
 		JLabel ErrorPiso = new JLabel("Piso inv\u00E1lido");
 		ErrorPiso.setForeground(Color.RED);
 		ErrorPiso.setBounds(454, 150, 80, 14);
-		frame.getContentPane().add(ErrorPiso);
+		getContentPane().add(ErrorPiso);
 		ErrorPiso.setVisible(false);
 		
 		textField_piso = new JTextField();
@@ -447,18 +447,18 @@ public class DarAltaTitular extends JFrame {
 		});
 		
 		textField_piso.setBounds(454, 122, 65, 20);
-		frame.getContentPane().add(textField_piso);
+		getContentPane().add(textField_piso);
 		textField_piso.setColumns(10);
 		
 		
 		JLabel lblDpto = new JLabel("Dpto.");
 		lblDpto.setBounds(535, 123, 46, 14);
-		frame.getContentPane().add(lblDpto);
+		getContentPane().add(lblDpto);
 		
 		JLabel lblErrordepto = new JLabel("Depto inv\u00E1lido");
 		lblErrordepto.setForeground(Color.RED);
 		lblErrordepto.setBounds(587, 150, 83, 14);
-		frame.getContentPane().add(lblErrordepto);
+		getContentPane().add(lblErrordepto);
 		lblErrordepto.setVisible(false);
 		
 		textField_depto = new JTextField();
@@ -496,12 +496,12 @@ public class DarAltaTitular extends JFrame {
 		
 		
 		textField_depto.setBounds(587, 122, 46, 20);
-		frame.getContentPane().add(textField_depto);
+		getContentPane().add(textField_depto);
 		textField_depto.setColumns(10);
 		
 		JLabel lblGrupoSanguneo = new JLabel("Grupo Sangu\u00EDneo*");
 		lblGrupoSanguneo.setBounds(403, 190, 109, 14);
-		frame.getContentPane().add(lblGrupoSanguneo);
+		getContentPane().add(lblGrupoSanguneo);
 		
 
 		JComboBox<String> comboBoxGrupoS = new JComboBox<String>();
@@ -510,39 +510,39 @@ public class DarAltaTitular extends JFrame {
 		comboBoxGrupoS.addItem("AB");
 		comboBoxGrupoS.addItem("O");
 		comboBoxGrupoS.setBounds(553, 186, 80, 22);
-		frame.getContentPane().add(comboBoxGrupoS);
+		getContentPane().add(comboBoxGrupoS);
 		
  		JLabel lblFactorRh = new JLabel("Factor RH*");
 		lblFactorRh.setBounds(403, 229, 109, 14);
-		frame.getContentPane().add(lblFactorRh);
+		getContentPane().add(lblFactorRh);
 		
 		
 		JComboBox<String> comboBoxFactor = new JComboBox<String>();
 		comboBoxFactor.addItem("POSITIVO");
 		comboBoxFactor.addItem("NEGATIVO");
 		comboBoxFactor.setBounds(553, 225, 80, 22);
-		frame.getContentPane().add(comboBoxFactor);
+		getContentPane().add(comboBoxFactor);
 		
 		JCheckBox chckbxDonanteDeOrganos = new JCheckBox("Donante de \u00F3rganos");
 		chckbxDonanteDeOrganos.setBounds(403, 267, 149, 23);
-		frame.getContentPane().add(chckbxDonanteDeOrganos);
+		getContentPane().add(chckbxDonanteDeOrganos);
 		
 		JLabel lblErrorFecha = new JLabel("Fecha inv\u00E1lida");
 		lblErrorFecha.setForeground(Color.RED);
 		lblErrorFecha.setBounds(28, 258, 174, 14);
-		frame.getContentPane().add(lblErrorFecha);
+		getContentPane().add(lblErrorFecha);
 		lblErrorFecha.setVisible(false);
 		
 		JComboBox<String> comboBoxSexo = new JComboBox<String>();
 		comboBoxSexo.setBounds(97, 182, 149, 22);
-		frame.getContentPane().add(comboBoxSexo);
+		getContentPane().add(comboBoxSexo);
 		comboBoxSexo.addItem("FEMENINO");
 		comboBoxSexo.addItem("MASCULINO");
 		comboBoxSexo.addItem("OTRO");
 		
 		JLabel lblSexo = new JLabel("Sexo*");
 		lblSexo.setBounds(28, 186, 62, 14);
-		frame.getContentPane().add(lblSexo);
+		getContentPane().add(lblSexo);
 		
 		JButton btnNewButton = new JButton("Confirmar");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -600,6 +600,14 @@ public class DarAltaTitular extends JFrame {
 					GestorTitular.getInstance().crearTitular(textField_DNI.getText(), textField_Apellido.getText(), textField_Nombre.getText(), textField_Calle.getText(), textField_nro.getText(), 
 							textField_depto.getText(),textField_piso.getText(),fecha,comboBoxGrupoS.getSelectedItem().toString(), comboBoxFactor.getSelectedItem().toString(),chckbxDonanteDeOrganos.isSelected(),
 							comboBoxSexo.getSelectedItem().toString());
+					if(pantalla==0) {
+						Menu menu = new Menu();
+						menu.frmMen.setVisible(true);
+					}else {
+						BuscarTitular buscar = new BuscarTitular(pantalla);
+						buscar.setVisible(true);
+					}
+					dispose();
 				}else {
 					System.out.println("Hay algun error en algun lado(?");
 				}
@@ -609,42 +617,29 @@ public class DarAltaTitular extends JFrame {
 		});
 		
 		btnNewButton.setBounds(624, 319, 129, 23);
-		frame.getContentPane().add(btnNewButton);
+		getContentPane().add(btnNewButton);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BuscarTitular buscar = new BuscarTitular();
-				buscar.setVisible(true);
+				if(pantalla==0) {
+					Menu menu = new Menu();
+					menu.frmMen.setVisible(true);
+				}else {
+					BuscarTitular buscar = new BuscarTitular(pantalla);
+					buscar.setVisible(true);
+				}
+				
 				dispose();
 			}
 		});
 		btnCancelar.setBounds(10, 319, 89, 23);
-		frame.getContentPane().add(btnCancelar);
+		getContentPane().add(btnCancelar);
 		
 		JLabel lblCamposObligatorios = new JLabel("*: Campos obligatorios");
 		lblCamposObligatorios.setFont(new Font("Tahoma", Font.ITALIC, 10));
 		lblCamposObligatorios.setBounds(126, 321, 251, 18);
-		frame.getContentPane().add(lblCamposObligatorios);
-		
-		
-		
-		
-		
-	
-		//
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		getContentPane().add(lblCamposObligatorios);
 		
 	}
 }

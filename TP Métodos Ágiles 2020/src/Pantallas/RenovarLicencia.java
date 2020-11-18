@@ -2,23 +2,20 @@ package Pantallas;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.*;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
-
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
-
-import BDD.GestorBDD;
 import Entidades.*;
 import Logica.GestorLicencia;
 import Logica.GestorTitular;
-
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JCheckBox;
@@ -108,7 +105,7 @@ public class RenovarLicencia extends JFrame{
 		buscarTitular.setBounds(336, 9, 117, 21);
 		buscarTitular.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BuscarTitular buscarTit = new BuscarTitular();
+				BuscarTitular buscarTit = new BuscarTitular(2);
 				buscarTit.setVisible(true);
 				dispose();
 			}
@@ -205,17 +202,17 @@ public class RenovarLicencia extends JFrame{
 		panelTitular.add(tfCalle);
 		
 		JButton cancelar = new JButton("Cancelar");
+		cancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Menu menu = new Menu();
+				menu.frmMen.setVisible(true);
+				dispose();
+			}
+		});
 		cancelar.setBounds(30, 360, 85, 21);
 		panel.add(cancelar);
 		
 		confirmar = new JButton("Confirmar");
-		confirmar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				//logica renovar licencia
-				
-			}
-		});
 		confirmar.setBounds(350, 360, 103, 21);
 		panel.add(confirmar);
 		
@@ -670,7 +667,9 @@ public class RenovarLicencia extends JFrame{
 					System.out.println("-calle " + calleval  + "-nombre " + nombreval + "-piso " + pisoval + "-depto "+  deptoval + "-apellido " + apellidoval);
 				}
 				
-			
+				Menu menu = new Menu();
+				menu.frmMen.setVisible(true);
+				dispose();
 				
 			}
 		});

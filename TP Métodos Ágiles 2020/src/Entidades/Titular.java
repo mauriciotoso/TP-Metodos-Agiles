@@ -1,5 +1,6 @@
 package Entidades;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.persistence.*;
 
@@ -141,7 +142,7 @@ public class Titular {
 
 	@Override
 	public String toString() {
-		return "Titular [dni=" + dni + ", apellido=" + apellido + ", nombre=" + nombre + "]";
+		return "Titular [dni=" + dni + ", nombre=" + apellido + ", " + nombre + ", fecha:="+new SimpleDateFormat("dd/MM/yyyy").format(fechaNacimiento.getTime())+"]";
 	}
 
 	
