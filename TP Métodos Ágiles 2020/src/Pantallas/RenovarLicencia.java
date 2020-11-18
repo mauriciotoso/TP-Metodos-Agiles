@@ -330,16 +330,6 @@ public class RenovarLicencia extends JFrame{
 		ErrorPiso.setForeground(Color.RED);
 		ErrorPiso.setVisible(false);
 		
-		
-		JButton imprimir = new JButton("Imprimir");
-		imprimir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//TODO IMPLEMENTAR IR A IMPRIMIR
-			}
-		});
-		imprimir.setBounds(125, 360, 85, 21);
-		panel.add(imprimir);
-		
 		if(titularEncontrado!=null) {
 			
 			tfNombre.setEnabled(true);
@@ -390,7 +380,6 @@ public class RenovarLicencia extends JFrame{
 			tfPiso.setEnabled(false);
 			tfDepto.setEnabled(false);
 			
-			imprimir.setEnabled(false);
 			confirmar.setEnabled(false);
 		}
 		
@@ -667,8 +656,9 @@ public class RenovarLicencia extends JFrame{
 					System.out.println("-calle " + calleval  + "-nombre " + nombreval + "-piso " + pisoval + "-depto "+  deptoval + "-apellido " + apellidoval);
 				}
 				
-				Menu menu = new Menu();
-				menu.frmMen.setVisible(true);
+				Licencia licencia = titularEncontrado.getLicencia();
+				ImprimirPantalla imprimirLic = new ImprimirPantalla(licencia);
+				imprimirLic.frame.setVisible(true);
 				dispose();
 				
 			}
