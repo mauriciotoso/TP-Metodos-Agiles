@@ -162,4 +162,18 @@ public class GestorLicencia {
 		
 		return licenciasExpiradas;
 	}
+	
+	public ArrayList<Licencia> getLicenciasVigentes(){
+		ArrayList<Licencia> licencias = (ArrayList<Licencia>) GestorBDD.getInstance().getLicencias();
+		ArrayList<Licencia> licenciasVigentes= new ArrayList<>(); 
+		
+		for(Licencia l:licencias) {
+			if(GestorLicencia.getInstance().vencida(l)==false) {
+				licenciasVigentes.add(l);
+			}
+		}
+		
+		return licenciasVigentes;
+	}
+	
 }

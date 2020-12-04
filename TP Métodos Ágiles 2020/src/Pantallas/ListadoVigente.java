@@ -19,7 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 
-public class ListadoExpirado {
+public class ListadoVigente {
 
 	public JFrame frame;
 
@@ -30,7 +30,7 @@ public class ListadoExpirado {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListadoExpirado window = new ListadoExpirado();
+					ListadoVigente window = new ListadoVigente();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,7 +42,7 @@ public class ListadoExpirado {
 	/**
 	 * Create the application.
 	 */
-	public ListadoExpirado() {
+	public ListadoVigente() {
 		initialize();
 	}
 
@@ -51,12 +51,12 @@ public class ListadoExpirado {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setTitle("Listado de licencias vencidas");
+		frame.setTitle("Listado de licencias vigentes");
 		frame.setBounds(100, 100, 639, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		
-		ArrayList<Licencia> listaLicencias = GestorLicencia.getInstance().getLicenciasVencidas();
+		ArrayList<Licencia> listaLicencias = GestorLicencia.getInstance().getLicenciasVigentes();
 		
 		String[][] lista= new String[listaLicencias.size()][5];
 		String[] columnas={"ID de Licencia","Apellido","Nombre", "Fecha de Expiración","Clases"};
@@ -107,7 +107,7 @@ public class ListadoExpirado {
 		JLabel aclaracion = new JLabel("Para ordenar por un campo en espec\u00EDfico seleccione su respectiva columna");
 		aclaracion.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 12));
 		aclaracion.setBounds(156, 329, 444, 16);
-		frame.getContentPane().add(aclaracion);			
+		frame.getContentPane().add(aclaracion);		
 		
 	}
 }
