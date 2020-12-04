@@ -44,7 +44,7 @@ public class Menu {
 	private void initialize() {
 		frmMen = new JFrame();
 		frmMen.setTitle("Men\u00FA");
-		frmMen.setBounds(100, 100, 407, 271);
+		frmMen.setBounds(100, 100, 407, 341);
 		frmMen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMen.getContentPane().setLayout(null);
 		frmMen.setLocationRelativeTo(null);
@@ -69,7 +69,7 @@ public class Menu {
 				frmMen.dispose();
 			}
 		});
-		emitirLicencia.setBounds(230, 96, 133, 29);
+		emitirLicencia.setBounds(214, 96, 149, 29);
 		frmMen.getContentPane().add(emitirLicencia);
 		
 		JButton renovarLicencia = new JButton("Renovar Licencia");
@@ -81,7 +81,7 @@ public class Menu {
 			}
 			
 		});
-		renovarLicencia.setBounds(230, 144, 133, 29);
+		renovarLicencia.setBounds(214, 144, 149, 29);
 		frmMen.getContentPane().add(renovarLicencia);
 		
 		JLabel lblNewLabel = new JLabel("Gesti\u00F3n de Titular");
@@ -95,7 +95,7 @@ public class Menu {
 		lblGestinDeLicencia.setToolTipText("");
 		lblGestinDeLicencia.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGestinDeLicencia.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblGestinDeLicencia.setBounds(194, 32, 197, 29);
+		lblGestinDeLicencia.setBounds(182, 32, 197, 29);
 		frmMen.getContentPane().add(lblGestinDeLicencia);
 		
 		JButton cerrar = new JButton("Cerrar");
@@ -104,7 +104,18 @@ public class Menu {
 				frmMen.dispose();
 			}
 		});
-		cerrar.setBounds(26, 195, 80, 26);
+		cerrar.setBounds(12, 264, 80, 26);
 		frmMen.getContentPane().add(cerrar);
+		
+		JButton ListadoExpirado = new JButton("Licencias Expiradas");
+		ListadoExpirado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ListadoExpirado le= new ListadoExpirado();
+				le.frame.setVisible(true);
+				frmMen.dispose();
+			}
+		});
+		ListadoExpirado.setBounds(214, 190, 149, 29);
+		frmMen.getContentPane().add(ListadoExpirado);
 	}
 }

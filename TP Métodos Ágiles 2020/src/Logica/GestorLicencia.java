@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -149,4 +150,16 @@ public class GestorLicencia {
 		
 	}
 	
+	public ArrayList<Licencia> getLicenciasVencidas(){
+		ArrayList<Licencia> licencias = (ArrayList<Licencia>) GestorBDD.getInstance().getLicencias();
+		ArrayList<Licencia> licenciasExpiradas = new ArrayList<>(); 
+		
+		for(Licencia l:licencias) {
+			if(GestorLicencia.getInstance().vencida(l)==true) {
+				licenciasExpiradas.add(l);
+			}
+		}
+		
+		return licenciasExpiradas;
+	}
 }
