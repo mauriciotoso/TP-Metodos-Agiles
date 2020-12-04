@@ -41,6 +41,7 @@ public class Menu {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+
 	private void initialize() {
 		frmMen = new JFrame();
 		frmMen.setTitle("Men\u00FA");
@@ -117,5 +118,18 @@ public class Menu {
 		});
 		ListadoExpirado.setBounds(214, 190, 149, 29);
 		frmMen.getContentPane().add(ListadoExpirado);
+		
+		JButton licenciaVigente = new JButton("Licencias Vigentes");
+		licenciaVigente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				ListadoVigente lv= new ListadoVigente();
+				lv.frame.setVisible(true);
+				frmMen.dispose();
+
+			}
+		});
+		licenciaVigente.setBounds(214, 231, 149, 29);
+		frmMen.getContentPane().add(licenciaVigente);
 	}
 }
