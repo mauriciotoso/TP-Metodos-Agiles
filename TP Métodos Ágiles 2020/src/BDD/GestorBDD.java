@@ -4,6 +4,9 @@ import java.util.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+import com.mysql.cj.Query;
+
 import Entidades.*;
 
 public class GestorBDD {
@@ -95,4 +98,33 @@ public class GestorBDD {
 		
 		return true;
 	}
+	
+	
+	public boolean verificarUsuario (String user) {
+		if(!session.isJoinedToTransaction()) session.beginTransaction();
+		String query = "FROM Usuario u WHERE u.usuario = '" + user + "'" ;
+		
+		@SuppressWarnings("unchecked")
+		org.hibernate.query.Query q =  session.createQuery(query);
+		
+		List<Usuario> usuarios = q.getResultList();
+				
+		session.getTransaction().commit();
+		if(!(usuarios.size() == 0)) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+
+	
+	public void guardarUsuario(Usuario user) {
+		if(!session.isJoinedToTransaction()) session.beginTransaction();
+		session.save(user);		
+		session.getTransaction().commit();
+	}
+	
+	
+	
 }

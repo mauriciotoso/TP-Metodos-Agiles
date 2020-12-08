@@ -176,4 +176,11 @@ public class GestorLicencia {
 		return licenciasVigentes;
 	}
 	
+	public void crearCopia(Licencia licencia) {
+		licencia.actualizarCopia();
+		GestorBDD.getInstance().actualizarLicencia(licencia);
+		
+		
+	}
+	
 }
