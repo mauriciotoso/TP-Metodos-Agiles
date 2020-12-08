@@ -59,7 +59,7 @@ public class Menu {
 				frmMen.dispose();
 			}
 		});
-		altaTitular.setBounds(31, 97, 133, 26);
+		altaTitular.setBounds(27, 97, 149, 29);
 		frmMen.getContentPane().add(altaTitular);
 		
 		JButton emitirLicencia = new JButton("Emitir Licencia");
@@ -73,17 +73,17 @@ public class Menu {
 		emitirLicencia.setBounds(214, 96, 149, 29);
 		frmMen.getContentPane().add(emitirLicencia);
 		
-		JButton renovarLicencia = new JButton("Renovar Licencia");
-		renovarLicencia.addActionListener(new ActionListener() {
+		JButton modificarTitular = new JButton("Modificar Titular");
+		modificarTitular.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				RenovarLicencia renovar= new RenovarLicencia();
-				renovar.setVisible(true);
+				ModificarTitular modificar= new ModificarTitular();
+				modificar.setVisible(true);
 				frmMen.dispose();
 			}
 			
 		});
-		renovarLicencia.setBounds(214, 144, 149, 29);
-		frmMen.getContentPane().add(renovarLicencia);
+		modificarTitular.setBounds(27, 136, 149, 29);
+		frmMen.getContentPane().add(modificarTitular);
 		
 		JLabel lblNewLabel = new JLabel("Gesti\u00F3n de Titular");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -131,5 +131,9 @@ public class Menu {
 		});
 		licenciaVigente.setBounds(214, 231, 149, 29);
 		frmMen.getContentPane().add(licenciaVigente);
+		
+		JButton renovarLicencia_1 = new JButton("Renovar Licencia");
+		renovarLicencia_1.setBounds(214, 136, 149, 29);
+		frmMen.getContentPane().add(renovarLicencia_1);
 	}
 }

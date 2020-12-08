@@ -56,5 +56,20 @@ public class GestorTitular {
 	public void actualizarTitular(Titular titularEncontrado ) {
 		GestorBDD.getInstance().actualizarLicenciaDeTitular(titularEncontrado);	
 	}
+
+	public void actualizarTitular(Titular titular, String apellido, String nombre, String sexo, String direccion, String piso,
+			String depto, boolean esDonante) {
+		Titular titularModificado = titular;
+		titularModificado.setApellido(apellido);
+		titularModificado.setNombre(nombre);
+		titularModificado.setSexo(Sexo.valueOf(sexo));
+		titularModificado.setDireccion(direccion);
+		titularModificado.setPiso(piso);
+		titularModificado.setDepto(depto);
+		titularModificado.setEsDonante(esDonante);
+		
+		GestorBDD.getInstance().actualizarTitular(titularModificado);
+		
+	}
 	
 }

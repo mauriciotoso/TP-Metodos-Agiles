@@ -87,6 +87,8 @@ public class BuscarTitular extends JFrame{
 		lblDNI.setBounds(15, 10, 173, 18);
 		getContentPane().add(lblDNI);
 		
+		
+		
 		JButton buscar = new JButton("Buscar");
 		buscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -167,8 +169,8 @@ public class BuscarTitular extends JFrame{
 		lblLicencia.setBounds(194, 57, 212, 14);
 		panel.add(lblLicencia);
 		
-		
 		confirmar.setEnabled(false);
+		
 	}
 	
 	private void actualizarDatos() {
@@ -180,40 +182,56 @@ public class BuscarTitular extends JFrame{
 		lblFechaNacimiento.setText("Fecha Nacimiento: "+new SimpleDateFormat("dd/MM/yyyy").format(titularEncontrado.getFechaNacimiento().getTime()));
 		confirmar.setEnabled(true);
 		boolean vencida=GestorLicencia.getInstance().vencida(titularEncontrado.getLicencia());
-		if(titularEncontrado.getLicencia()==null||vencida) {
-			confirmar.setText("Emitir licencia");
 
-			if(vencida) lblLicencia.setText("Licencia: Vencida.");
-			else lblLicencia.setText("Licencia: No posee.");
-			
+		if(vencida) lblLicencia.setText("Licencia: Vencida.");
+		else lblLicencia.setText("Licencia: No posee.");
+		if(pantalla == 10) {
 			confirmar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					EmitirLicencia emitir = new EmitirLicencia(titularEncontrado);
-					emitir.setVisible(true);
+					ModificarTitular modificarTitular = new ModificarTitular(titularEncontrado);
+					modificarTitular.setVisible(true);
 					
 					dispose();
 				}
 			});
-		}else{
-			if(GestorLicencia.getInstance().enRangoRenovacion(titularEncontrado.getLicencia())) {
-				lblLicencia.setText("Licencia: En rango de renovación.");
-				confirmar.setText("Renovar licencia");
-				confirmar.setEnabled(true);confirmar.addActionListener(new ActionListener() {
+		}else {
+
+			if(titularEncontrado.getLicencia()==null||vencida) {
+				confirmar.setText("Emitir licencia");
+
+				
+				confirmar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
-						RenovarLicencia renovar = new RenovarLicencia(titularEncontrado);
-						renovar.setVisible(true);
+						EmitirLicencia emitir = new EmitirLicencia(titularEncontrado);
+						emitir.setVisible(true);
 						
 						dispose();
 					}
 				});
 			}else{
-				lblLicencia.setText("Licencia: Vigente.");
-				confirmar.setEnabled(false);				
-				confirmar.setText("Confirmar");
+				if(GestorLicencia.getInstance().enRangoRenovacion(titularEncontrado.getLicencia())) {
+					lblLicencia.setText("Licencia: En rango de renovación.");
+					confirmar.setText("Renovar licencia");
+					confirmar.setEnabled(true);
+					confirmar.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							
+							RenovarLicencia renovar = new RenovarLicencia(titularEncontrado);
+							renovar.setVisible(true);
+							
+							dispose();
+						}
+					});
+				}else{
+					lblLicencia.setText("Licencia: Vigente.");
+					confirmar.setEnabled(false);				
+					confirmar.setText("Confirmar");
+				}
 			}
+			crearTitular.setEnabled(false);
 		}
-		crearTitular.setEnabled(false);
+		
+		
 	
 		}else {
 			lblNombre.setText("No existe el titular con el documento ingresado.");

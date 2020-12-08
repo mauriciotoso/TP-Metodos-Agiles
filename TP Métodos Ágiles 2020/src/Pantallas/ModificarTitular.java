@@ -1,36 +1,35 @@
 package Pantallas;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.Calendar;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-import java.awt.Color;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import javax.swing.border.EmptyBorder;
+
+import Entidades.Titular;
 import Logica.GestorTitular;
+
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.Calendar;
 
-public class DarAltaTitular extends JFrame {
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	/**
-	 * 
-	 */
+public class ModificarTitular extends JFrame {
+
+	private JPanel contentPane;
 	
-	//JFrame frame;
 	private JTextField textField_DNI;
 	private String dni;
 	private boolean dnival;
@@ -44,7 +43,6 @@ public class DarAltaTitular extends JFrame {
 	private JTextField textField_Calle;
 	private String calle;
 	private boolean calleval;
-	private JTextField textField_nro;
 	private String nro;
 	private boolean nroval;
 	private JTextField textField_piso;
@@ -59,6 +57,8 @@ public class DarAltaTitular extends JFrame {
 	private Calendar fecha;
 	private boolean confirmar;
 	private int pantalla;
+	private Titular titular;
+
 	/**
 	 * Launch the application.
 	 */
@@ -66,8 +66,8 @@ public class DarAltaTitular extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DarAltaTitular window = new DarAltaTitular(-1);
-					window.setVisible(true);
+					ModificarTitular frame = new ModificarTitular();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -76,104 +76,51 @@ public class DarAltaTitular extends JFrame {
 	}
 
 	/**
-	 * Create the application.
+	 * Create the frame.
 	 */
-	public DarAltaTitular(int pantalla) {
+	public ModificarTitular() {
 		initialize();
-		this.pantalla=pantalla;
 	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		confirmar= true;
-		
-		setTitle("Dar de Alta a Titular");
-		setBounds(100, 100, 779, 391);
+	
+	public ModificarTitular(Titular titularEncontrado) {
+		this.titular = titularEncontrado;
+		initialize();
+	}
+	
+	public void initialize() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setLayout(null);
-		setLocationRelativeTo(null);
+		setBounds(100, 100, 779, 391);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
-		JLabel lblCrearTitular = new JLabel("Crear titular");
-		lblCrearTitular.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCrearTitular.setBounds(10, 26, 80, 14);
-		getContentPane().add(lblCrearTitular);
+		JButton btnBuscar = new JButton("Buscar Titular");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BuscarTitular buscar = new BuscarTitular(10);
+				buscar.setVisible(true);
+				dispose();
+			}
+		});
+		btnBuscar.setBounds(226, 19, 115, 23);
+		contentPane.add(btnBuscar);
+		
+		JLabel lblSeleccioneTitular_2 = new JLabel("Seleccione un titular existente");
+		lblSeleccioneTitular_2.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblSeleccioneTitular_2.setBounds(31, 23, 195, 13);
+		contentPane.add(lblSeleccioneTitular_2);
 		
 		JLabel lblDni = new JLabel("DNI*");
 		lblDni.setBounds(28, 73, 46, 14);
 		getContentPane().add(lblDni);
 		
-		JLabel lblErrorDNI = new JLabel("DNI inv\u00E1lido");
-		lblErrorDNI.setForeground(Color.RED);
-		lblErrorDNI.setBounds(256, 70, 116, 14);
-		getContentPane().add(lblErrorDNI);
-		lblErrorDNI.setVisible(false);
-		
-		JLabel lblDniunico = new JLabel("DNI ya en uso");
-		lblDniunico.setForeground(Color.RED);
-		lblDniunico.setBounds(256, 70, 129, 14);
-		getContentPane().add(lblDniunico);
-		lblDniunico.setVisible(false);
-		// !!!!!!!!!!!
-		
-		// VALIDAR CON GESTOR DNI UNICO
-		
-		// !!!!!!!!!!!
 		textField_DNI = new JTextField();
-		textField_DNI.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				
-					dnival = true;
-					if(textField_DNI.getText().length()<7) {
-						dnival = false;
-					}
-					dni = textField_DNI.getText();
-					for(int i = 0; i<dni.length(); i++) {
-						if(!(Character.isDigit(dni.charAt(i)))) {
-							dnival = false;
-						}
-					}
-					if(!dnival) {
-						lblErrorDNI.setText("DNI inválido");
-						lblDniunico.setVisible(false);
-						lblErrorDNI.setVisible(true);
-						confirmar = false;
-					}
-					else {
-						lblErrorDNI.setVisible(false);
-						confirmar = true;
-					}
-				
-				dniUnico = GestorTitular.getInstance().verificarDNI(textField_DNI.getText());
-				
-				if(!dniUnico) {
-					//lblDniunico.setText("El DNI ya existe");
-					lblErrorDNI.setVisible(false);
-					lblDniunico.setVisible(true);
-					confirmar = false;
-				}else {
-					lblDniunico.setVisible(false);
-					confirmar = true;
-				}
-			}
-		
-				
-			}
-		);
-		textField_DNI.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				if(textField_DNI.getText().length()==8) {
-					e.consume();
-				}
-			}		
-			});
 		
 		textField_DNI.setBounds(97, 67, 149, 20);
 		getContentPane().add(textField_DNI);
 		textField_DNI.setColumns(10);
+		textField_DNI.setEditable(false);
 		
 		JLabel lblApellido = new JLabel("Apellido*");
 		lblApellido.setBounds(28, 108, 62, 14);
@@ -221,6 +168,7 @@ public class DarAltaTitular extends JFrame {
 		getContentPane().add(textField_Apellido);
 		textField_Apellido.setColumns(10);
 		
+		
 		JLabel lblNombre = new JLabel("Nombre*");
 		lblNombre.setBounds(28, 150, 62, 14);
 		getContentPane().add(lblNombre);
@@ -266,6 +214,7 @@ public class DarAltaTitular extends JFrame {
 		getContentPane().add(textField_Nombre);
 		textField_Nombre.setColumns(10);
 		
+		
 		JLabel lblFechaDeNacimiento = new JLabel("Fecha de nacimiento*");
 		lblFechaDeNacimiento.setBounds(28, 230, 129, 14);
 		getContentPane().add(lblFechaDeNacimiento);
@@ -279,6 +228,8 @@ public class DarAltaTitular extends JFrame {
 			comboBoxDia.addItem(i.toString());
 		}
 		
+		comboBoxDia.setEnabled(false);
+		
 		JComboBox<String> comboBoxMes = new JComboBox<String>();
 		comboBoxMes.setBounds(224, 226, 55, 22);
 		getContentPane().add(comboBoxMes);
@@ -287,6 +238,8 @@ public class DarAltaTitular extends JFrame {
 		for (Integer i = 1; i<13; i++) {
 			comboBoxMes.addItem(i.toString());
 		}
+		
+		comboBoxMes.setEnabled(false);
 		
 		JComboBox<String> comboBoxAnyo = new JComboBox<String>();
 		comboBoxAnyo.setBounds(289, 226, 65, 22);
@@ -297,6 +250,7 @@ public class DarAltaTitular extends JFrame {
 			comboBoxAnyo.addItem(i.toString());
 		}
 		
+		comboBoxAnyo.setEnabled(false);
 		
 		
 		JLabel lblDireccion = new JLabel("Direcci\u00F3n");
@@ -304,13 +258,13 @@ public class DarAltaTitular extends JFrame {
 		lblDireccion.setBounds(403, 46, 58, 14);
 		getContentPane().add(lblDireccion);
 		
-		JLabel lblCalle = new JLabel("Calle*");
-		lblCalle.setBounds(413, 76, 46, 14);
+		JLabel lblCalle = new JLabel("Calle y nro.*");
+		lblCalle.setBounds(413, 76, 72, 14);
 		getContentPane().add(lblCalle);
 		
 		JLabel lblErrorcalle = new JLabel("Calle inv\u00E1lida");
 		lblErrorcalle.setForeground(Color.RED);
-		lblErrorcalle.setBounds(454, 100, 143, 14);
+		lblErrorcalle.setBounds(495, 97, 143, 14);
 		getContentPane().add(lblErrorcalle);
 		lblErrorcalle.setVisible(false);
 		
@@ -349,59 +303,10 @@ public class DarAltaTitular extends JFrame {
 			}
 		});
 		
-		textField_Calle.setBounds(454, 73, 160, 20);
+		textField_Calle.setBounds(495, 70, 195, 20);
 		getContentPane().add(textField_Calle);
 		textField_Calle.setColumns(10);
 		
-		JLabel lblN = new JLabel("Nro.*");
-		
-		lblN.setBounds(624, 76, 46, 14);
-		getContentPane().add(lblN);
-		
-		JLabel lblErrornro = new JLabel("N\u00FAmero inv\u00E1lido");
-		lblErrornro.setForeground(Color.RED);
-		lblErrornro.setBounds(634, 100, 104, 14);
-		getContentPane().add(lblErrornro);
-		lblErrornro.setVisible(false);
-		
-		textField_nro = new JTextField();
-		textField_nro.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				nro = textField_nro.getText();
-				nroval = true;
-				
-				if(nro.length()==0) { nroval = false;}
-				
-				for(int i = 0; i<nro.length(); i++) {
-					if(!(Character.isDigit(nro.charAt(i)))){
-						nroval = false;
-					}
-				}
-				if(!nroval) {
-					lblErrornro.setText("Número inválido");
-					lblErrornro.setVisible(true);
-					confirmar = false;
-				}
-				else {
-					lblErrornro.setVisible(false);
-					confirmar = true;
-				}
-			}
-		});
-		
-		textField_nro.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				if(textField_nro.getText().length()==6) {
-					e.consume();
-				}	
-			}
-		});
-		
-		textField_nro.setBounds(663, 73, 46, 20);
-		getContentPane().add(textField_nro);
-		textField_nro.setColumns(10);
 		
 		JLabel lblPiso = new JLabel("Piso");
 		lblPiso.setBounds(419, 125, 46, 14);
@@ -449,6 +354,7 @@ public class DarAltaTitular extends JFrame {
 		textField_piso.setBounds(454, 122, 65, 20);
 		getContentPane().add(textField_piso);
 		textField_piso.setColumns(10);
+		
 		
 		
 		JLabel lblDpto = new JLabel("Dpto.");
@@ -499,6 +405,7 @@ public class DarAltaTitular extends JFrame {
 		getContentPane().add(textField_depto);
 		textField_depto.setColumns(10);
 		
+		
 		JLabel lblGrupoSanguneo = new JLabel("Grupo Sangu\u00EDneo*");
 		lblGrupoSanguneo.setBounds(403, 190, 109, 14);
 		getContentPane().add(lblGrupoSanguneo);
@@ -512,7 +419,9 @@ public class DarAltaTitular extends JFrame {
 		comboBoxGrupoS.setBounds(553, 186, 117, 22);
 		getContentPane().add(comboBoxGrupoS);
 		
- 		JLabel lblFactorRh = new JLabel("Factor RH*");
+		comboBoxGrupoS.setEnabled(false);
+ 		
+		JLabel lblFactorRh = new JLabel("Factor RH*");
 		lblFactorRh.setBounds(403, 229, 109, 14);
 		getContentPane().add(lblFactorRh);
 		
@@ -523,15 +432,13 @@ public class DarAltaTitular extends JFrame {
 		comboBoxFactor.setBounds(553, 225, 117, 22);
 		getContentPane().add(comboBoxFactor);
 		
+		
+		comboBoxFactor.setEnabled(false);
+		
 		JCheckBox chckbxDonanteDeOrganos = new JCheckBox("Donante de \u00F3rganos");
 		chckbxDonanteDeOrganos.setBounds(403, 267, 149, 23);
 		getContentPane().add(chckbxDonanteDeOrganos);
-		
-		JLabel lblErrorFecha = new JLabel("Fecha inv\u00E1lida");
-		lblErrorFecha.setForeground(Color.RED);
-		lblErrorFecha.setBounds(28, 258, 174, 14);
-		getContentPane().add(lblErrorFecha);
-		lblErrorFecha.setVisible(false);
+			
 		
 		JComboBox<String> comboBoxSexo = new JComboBox<String>();
 		comboBoxSexo.setBounds(97, 182, 149, 22);
@@ -540,43 +447,34 @@ public class DarAltaTitular extends JFrame {
 		comboBoxSexo.addItem("MASCULINO");
 		comboBoxSexo.addItem("OTRO");
 		
+		
 		JLabel lblSexo = new JLabel("Sexo*");
 		lblSexo.setBounds(28, 186, 62, 14);
 		getContentPane().add(lblSexo);
+		
+		if(titular != null) {
+			comboBoxSexo.setSelectedItem(titular.getSexo().toString());
+			if(titular.isEsDonante()) chckbxDonanteDeOrganos.setSelected(true);	
+			if(titular.isFactorRH()) {
+				comboBoxFactor.setSelectedItem("POSITIVO");
+			}else { comboBoxFactor.setSelectedItem("NEGATIVO");}
+			comboBoxGrupoS.setSelectedItem(titular.getGrupoSanguineo().toString());
+			textField_piso.setText(titular.getPiso());
+			textField_depto.setText(titular.getDepto());
+			textField_Calle.setText(titular.getDireccion());
+			comboBoxAnyo.setSelectedItem(Integer.toString(titular.getFechaNacimiento().get(Calendar.YEAR)));
+			textField_DNI.setText(titular.getDni());
+			textField_Apellido.setText(titular.getApellido());
+			textField_Nombre.setText(titular.getNombre());
+			comboBoxDia.setSelectedItem(Integer.toString(titular.getFechaNacimiento().get(Calendar.DAY_OF_MONTH)));
+			comboBoxMes.setSelectedItem(Integer.toString(titular.getFechaNacimiento().get(Calendar.MONTH)+1));
+		}
 		
 		JButton btnNewButton = new JButton("Confirmar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				
-				dia = comboBoxDia.getSelectedItem().toString();
-				mes = comboBoxMes.getSelectedItem().toString();
-				anyo = comboBoxAnyo.getSelectedItem().toString();
-				lblErrorFecha.setVisible(false);
-				
-				if(dia.compareTo("Día")==0 || mes.compareTo("Mes")==0 || anyo.compareTo("Año")==0) {
-					lblErrorFecha.setVisible(true);
-					confirmar = false;
-				
-				}else{
-				
-					try {
-					
-						fecha = Calendar.getInstance();
-						fecha.setLenient(false);
-						fecha.set(Integer.parseInt(anyo),Integer.parseInt(mes)-1, Integer.parseInt(dia));
-						confirmar = true;
-						System.out.println("dia= "+fecha.get(Calendar.DAY_OF_MONTH)+" mes= "+fecha.get(Calendar.MONTH)+" año= "+fecha.get(Calendar.YEAR));
-					}catch(Exception a) {
-						confirmar= false;
-						lblErrorFecha.setVisible(true);	
-					}
-				}
-				
-				if(textField_DNI.getText().length()==0) {
-					confirmar = false;
-					lblErrorDNI.setVisible(true);
-				}
 				if(textField_Apellido.getText().length()==0) {
 					confirmar = false;
 					lblerrorapellido.setVisible(true);
@@ -589,23 +487,15 @@ public class DarAltaTitular extends JFrame {
 					confirmar = false;
 					lblErrorcalle.setVisible(true);
 				}
-				if(textField_nro.getText().length()==0) {
-					confirmar = false;
-					lblErrornro.setVisible(true);
-				}
-					
 				
 				if(confirmar) {
-					System.out.println("Todo ok, se crea el titular");
-					GestorTitular.getInstance().crearTitular(textField_DNI.getText(), textField_Apellido.getText(), textField_Nombre.getText(), textField_Calle.getText(), textField_nro.getText(), 
-							textField_depto.getText(),textField_piso.getText(),fecha,comboBoxGrupoS.getSelectedItem().toString(), comboBoxFactor.getSelectedItem().toString(),chckbxDonanteDeOrganos.isSelected(),
-							comboBoxSexo.getSelectedItem().toString());
+					System.out.println("Todo ok, se actualiza el titular");
+					GestorTitular.getInstance().actualizarTitular(titular, textField_Apellido.getText(), textField_Nombre.getText(),
+							comboBoxSexo.getSelectedItem().toString(), textField_Calle.getText(), textField_piso.getText(), textField_depto.getText(),
+							chckbxDonanteDeOrganos.isSelected());
 					if(pantalla==0) {
 						Menu menu = new Menu();
 						menu.frmMen.setVisible(true);
-					}else {
-						BuscarTitular buscar = new BuscarTitular(pantalla);
-						buscar.setVisible(true);
 					}
 					dispose();
 				}else {
@@ -625,9 +515,6 @@ public class DarAltaTitular extends JFrame {
 				if(pantalla==0) {
 					Menu menu = new Menu();
 					menu.frmMen.setVisible(true);
-				}else {
-					BuscarTitular buscar = new BuscarTitular(pantalla);
-					buscar.setVisible(true);
 				}
 				
 				dispose();
@@ -640,6 +527,5 @@ public class DarAltaTitular extends JFrame {
 		lblCamposObligatorios.setFont(new Font("Tahoma", Font.ITALIC, 10));
 		lblCamposObligatorios.setBounds(126, 321, 251, 18);
 		getContentPane().add(lblCamposObligatorios);
-		
 	}
 }

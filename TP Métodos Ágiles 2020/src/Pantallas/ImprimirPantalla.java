@@ -44,7 +44,7 @@ public class ImprimirPantalla extends JFrame{
 	private String claseString;
 	private Calendar fechaemision;
 	private ArrayList<Clase> clasesLicencia;
-	private String ruta="C:\\Users\\Clide\\Desktop\\";
+	private String ruta="C:\\Users\\Pierotti\\Desktop\\";
 
 	/**
 	 * Launch the application.
@@ -118,7 +118,7 @@ public class ImprimirPantalla extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				Document document = new Document();
 				try {
-					PdfWriter.getInstance(document, new FileOutputStream(ruta+licencia.getIdlicencia()+"Impresa.pdf"));
+					PdfWriter.getInstance(document, new FileOutputStream(ruta+licencia.getIdlicencia()+"Licencia.pdf"));
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -169,7 +169,7 @@ public class ImprimirPantalla extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				Document document = new Document();
 				try {
-					PdfWriter.getInstance(document, new FileOutputStream(ruta+licencia.getIdlicencia()+"Impresa.pdf"));
+					PdfWriter.getInstance(document, new FileOutputStream(ruta+licencia.getIdlicencia()+"Comprobante.pdf"));
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

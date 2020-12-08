@@ -95,4 +95,11 @@ public class GestorBDD {
 		
 		return true;
 	}
+
+	public void actualizarTitular(Titular titularModificado) {
+		if(!session.isJoinedToTransaction()) session.beginTransaction();
+		session.update(titularModificado);		
+		session.getTransaction().commit();
+		
+	}
 }
