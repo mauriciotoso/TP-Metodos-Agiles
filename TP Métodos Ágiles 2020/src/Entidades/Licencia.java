@@ -18,6 +18,7 @@ public class Licencia {
 	@JoinColumn(name="dni")
 	private Titular titular;
 	private String observaciones;
+	private Integer copia;
 
 	public Licencia() {}
 	
@@ -29,6 +30,7 @@ public class Licencia {
 		this.fechaVencimiento = fechaVencimiento;
 		this.titular = titular;
 		this.observaciones = observaciones;
+		this.copia=0;
 	}
 
 	public int getIdlicencia() {
@@ -49,6 +51,14 @@ public class Licencia {
 
 	public Clase getLicenciaOtro() {
 		return licenciaOtro;
+	}
+	
+	public Integer getCopia() {
+		return this.copia;
+	}
+	
+	public Integer setCopia(Integer nro) {
+		return this.copia=nro;
 	}
 
 	public void setLicenciaOtro(Clase licenciaOtro) {
@@ -78,12 +88,18 @@ public class Licencia {
 	public void setTitular(Titular titular) {
 		this.titular = titular;
 	}
+	
 
 	@Override
 	public String toString() {
 		return "Licencia [idlicencia=" + idlicencia + ", licenciaMoto=" + licenciaMoto + ", licenciaOtro="
 				+ licenciaOtro + ", fechaVencimiento=" + new SimpleDateFormat("dd/MM/yyyy").format(fechaVencimiento.getTime())+ ", titular=" + titular + ", observaciones="
 				+ observaciones + "]";
+	}
+	
+	public void actualizarCopia() {
+		this.copia = this.copia+1;
+		
 	}
 	
 }
