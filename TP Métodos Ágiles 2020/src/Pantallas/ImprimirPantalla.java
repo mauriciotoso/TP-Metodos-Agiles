@@ -144,7 +144,8 @@ public class ImprimirPantalla extends JFrame{
 						"\n------------------------------------------------------"+
 						"\nObservaciones: "+licencia.getObservaciones()+
 						"\nDonante: "+dona+
-						"\nGrupo y factor: "+grupoF, font);
+						"\nGrupo y factor: "+grupoF+
+						"\nCopia N°: "+Integer.toString(licencia.getCopia()), font);
 				try {
 					document.add(parrafo);
 				
@@ -384,6 +385,17 @@ public class ImprimirPantalla extends JFrame{
 		grupoFactor.setFont(new Font("Tahoma", Font.BOLD, 11));
 		grupoFactor.setBounds(92, 135, 83, 14);
 		panel_1.add(grupoFactor);
+		
+		JLabel lblCopia = new JLabel("Copia N°:");
+		lblCopia.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblCopia.setBounds(10, 160, 56, 14);
+		panel_1.add(lblCopia);
+		
+		JLabel lblNroCopia = new JLabel("nro");
+		lblNroCopia.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNroCopia.setBounds(63, 160, 46, 14);
+		panel_1.add(lblNroCopia);
+		lblNroCopia.setText(Integer.toString(licencia.getCopia()));
 		if(licencia.getTitular().isFactorRH())
 			grupoFactor.setText(licencia.getTitular().getGrupoSanguineo().toString()+"+");
 		else {

@@ -133,9 +133,16 @@ public class Menu {
 		frmMen.getContentPane().add(licenciaVigente);
 		
 
-		JButton renovarLicencia_1 = new JButton("Renovar Licencia");
-		renovarLicencia_1.setBounds(214, 136, 149, 29);
-		frmMen.getContentPane().add(renovarLicencia_1);
+		JButton renovarLicencia = new JButton("Renovar Licencia");
+		renovarLicencia.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RenovarLicencia renovar= new RenovarLicencia();
+				renovar.setVisible(true);
+				frmMen.dispose();
+			}
+		});
+		renovarLicencia.setBounds(214, 136, 149, 29);
+		frmMen.getContentPane().add(renovarLicencia);
 
 		
 		
@@ -143,11 +150,11 @@ public class Menu {
 		gestionUsuario.setToolTipText("");
 		gestionUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		gestionUsuario.setFont(new Font("Tahoma", Font.BOLD, 15));
-		gestionUsuario.setBounds(7, 152, 197, 29);
+		gestionUsuario.setBounds(0, 176, 197, 29);
 		frmMen.getContentPane().add(gestionUsuario);
 		
 		JButton altaUsuario = new JButton("Alta Usuario");
-		altaUsuario.setBounds(31, 194, 133, 26);
+		altaUsuario.setBounds(27, 221, 149, 29);
 		frmMen.getContentPane().add(altaUsuario);
 		altaUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
