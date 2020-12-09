@@ -3,6 +3,8 @@ package Pantallas;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import BDD.GestorBDD;
+import Entidades.Usuario;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -10,8 +12,12 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-public class Menu {
+public class Menu extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JFrame frmMen;
 
 	/**
@@ -43,6 +49,15 @@ public class Menu {
 	 */
 
 	private void initialize() {
+	
+		/*
+		 * DESCOMENTAR LA PRIMERA VEZ A EJECUTAR PARA QUE SE GUARDE EL USUARIO ADMIN.
+		 */
+		//Usuario usuarioAdmin = new Usuario("admin", "administrador");
+		//GestorBDD.getInstance().guardarUsuario(usuarioAdmin);
+		/*
+		 * DESPUES VOLVER A COMENTAR.
+		 */
 		frmMen = new JFrame();
 		frmMen.setTitle("Men\u00FA");
 		frmMen.setBounds(100, 100, 407, 380);
@@ -168,9 +183,22 @@ public class Menu {
 		
 		
 		
-		JButton crearCopia = new JButton("Crear Copia Licencia");
+		JButton crearCopia = new JButton("Generar Copia");
 		crearCopia.setBounds(214, 276, 149, 29);
 		frmMen.getContentPane().add(crearCopia);
+		
+		JButton btnModificarUsuario = new JButton("Modificar Usuario");
+		btnModificarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Usuario usuarioAdminEncontrado = new Usuario();
+				usuarioAdminEncontrado = GestorBDD.getInstance().getUsuario(1);
+				ModificarUsuario modificarUs = new ModificarUsuario(usuarioAdminEncontrado);
+				modificarUs.setVisible(true);
+				frmMen.dispose();
+			}
+		});
+		btnModificarUsuario.setBounds(27, 261, 149, 29);
+		frmMen.getContentPane().add(btnModificarUsuario);
 		crearCopia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				

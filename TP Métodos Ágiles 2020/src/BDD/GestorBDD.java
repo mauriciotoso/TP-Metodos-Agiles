@@ -132,6 +132,21 @@ public class GestorBDD {
 		session.save(user);		
 		session.getTransaction().commit();
 	}
+
+	public void actualizarUsuario(Usuario usuarioActualizado) {
+		if(!session.isJoinedToTransaction()) session.beginTransaction();
+		session.update(usuarioActualizado);		
+		session.getTransaction().commit();
+		
+	}
+
+	public Usuario getUsuario(Integer id) {
+		if(!session.isJoinedToTransaction()) session.beginTransaction();
+		Usuario us = session.get(Usuario.class, id);
+		session.getTransaction().commit();
+		
+		return us;
+	}
 	
 	
 	

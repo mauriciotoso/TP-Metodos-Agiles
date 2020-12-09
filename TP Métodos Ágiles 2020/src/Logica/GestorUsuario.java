@@ -31,4 +31,11 @@ public class GestorUsuario {
 		
 	}
 
+	public void actualizarUsuario(Usuario usuario, String contraseniaNueva) {
+		
+		usuario.setContrasenia(contraseniaNueva);
+		GestorBDD.getInstance().actualizarUsuario(usuario);
+		
+	}
+
 }

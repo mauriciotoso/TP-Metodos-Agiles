@@ -8,6 +8,8 @@ import Logica.GestorLicencia;
 import Logica.GestorTitular;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Window;
+
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -108,9 +110,16 @@ public class BuscarTitular extends JFrame{
 				if(pantalla==1) {
 					EmitirLicencia emitir = new EmitirLicencia();
 					emitir.setVisible(true);
-				}else {
+				}else if(pantalla == 10) {
+					ModificarTitular modificarT = new ModificarTitular();
+					modificarT.setVisible(true);
+				}
+				else if (pantalla == 2) {
 					RenovarLicencia renovar = new RenovarLicencia();
 					renovar.setVisible(true);
+				} else {
+					Menu menu = new Menu();
+					menu.setVisible(true);
 				}
 				
 				dispose();
