@@ -45,7 +45,7 @@ public class Menu {
 	private void initialize() {
 		frmMen = new JFrame();
 		frmMen.setTitle("Men\u00FA");
-		frmMen.setBounds(100, 100, 407, 341);
+		frmMen.setBounds(100, 100, 407, 380);
 		frmMen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMen.getContentPane().setLayout(null);
 		frmMen.setLocationRelativeTo(null);
@@ -105,7 +105,7 @@ public class Menu {
 				frmMen.dispose();
 			}
 		});
-		cerrar.setBounds(12, 264, 80, 26);
+		cerrar.setBounds(10, 307, 80, 26);
 		frmMen.getContentPane().add(cerrar);
 		
 		JButton ListadoExpirado = new JButton("Licencias Expiradas");
@@ -132,8 +132,51 @@ public class Menu {
 		licenciaVigente.setBounds(214, 231, 149, 29);
 		frmMen.getContentPane().add(licenciaVigente);
 		
+
 		JButton renovarLicencia_1 = new JButton("Renovar Licencia");
 		renovarLicencia_1.setBounds(214, 136, 149, 29);
 		frmMen.getContentPane().add(renovarLicencia_1);
+
+		
+		
+		JLabel gestionUsuario = new JLabel("Gesti\u00F3n de Usuario");
+		gestionUsuario.setToolTipText("");
+		gestionUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		gestionUsuario.setFont(new Font("Tahoma", Font.BOLD, 15));
+		gestionUsuario.setBounds(7, 152, 197, 29);
+		frmMen.getContentPane().add(gestionUsuario);
+		
+		JButton altaUsuario = new JButton("Alta Usuario");
+		altaUsuario.setBounds(31, 194, 133, 26);
+		frmMen.getContentPane().add(altaUsuario);
+		altaUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				DarAltaUsuario aU= new DarAltaUsuario();
+				aU.setVisible(true);
+				frmMen.dispose();
+
+			}
+		});
+		
+		
+		
+		JButton crearCopia = new JButton("Crear Copia Licencia");
+		crearCopia.setBounds(214, 276, 149, 29);
+		frmMen.getContentPane().add(crearCopia);
+		crearCopia.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				CopiaLicencia cl= new CopiaLicencia();
+				cl.setVisible(true);
+				frmMen.dispose();
+
+			}
+		});
+		
+		
+		
+		
+
 	}
 }

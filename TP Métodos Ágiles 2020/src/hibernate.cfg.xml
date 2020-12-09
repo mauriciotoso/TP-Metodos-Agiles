@@ -38,7 +38,7 @@
 
 <mapping class="Entidades.Licencia"/>
 <mapping class="Entidades.Titular"/>
-
+<mapping class="Entidades.Usuario"/>
     
 </session-factory>
 
