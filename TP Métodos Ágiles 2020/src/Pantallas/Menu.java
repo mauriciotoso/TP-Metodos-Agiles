@@ -53,8 +53,8 @@ public class Menu extends JFrame{
 		/*
 		 * DESCOMENTAR LA PRIMERA VEZ A EJECUTAR PARA QUE SE GUARDE EL USUARIO ADMIN.
 		 */
-		//Usuario usuarioAdmin = new Usuario("admin", "administrador");
-		//GestorBDD.getInstance().guardarUsuario(usuarioAdmin);
+		Usuario usuarioAdmin = new Usuario("admin", "administrador");
+		GestorBDD.getInstance().guardarUsuario(usuarioAdmin);
 		/*
 		 * DESPUES VOLVER A COMENTAR.
 		 */

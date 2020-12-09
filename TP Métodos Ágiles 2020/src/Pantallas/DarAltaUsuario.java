@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
@@ -39,11 +40,13 @@ public class DarAltaUsuario extends JFrame {
 	private boolean dnival;
 	private Boolean usuarioUnico; 
 	
-	private JTextField textField_Contrasenia;
-	private String contrasenia;
+	private JPasswordField passwordField_Contrasenia;
+	private char[] contrasenia;
 	private boolean contraseniaval;
-	private JTextField textField_Contrasenia2;
-	private String contrasenia2;
+	private JPasswordField passwordField_Contrasenia2;
+	private char[] contrasenia2;
+	private String contrasenia2String;
+	private String contraseniaString;
 	private boolean contrasenia2val;
 	private boolean confirmar;
 
@@ -132,13 +135,12 @@ public class DarAltaUsuario extends JFrame {
 					usuarioUnico = GestorUsuario.getInstance().verificarUsuario(textField_Usuario.getText());
 				
 					if(!usuarioUnico) {
-						//lblDniunico.setText("El DNI ya existe");
-						//lblUsuarioError.setVisible(false);
+						
 						lblUsuarioExistente.setVisible(true);
 						confirmar = false;
 					}else {
 						lblUsuarioExistente.setVisible(false);
-						//lblUsuarioError.setVisible(false);
+						
 						confirmar = true;
 					}
 				}
@@ -148,14 +150,7 @@ public class DarAltaUsuario extends JFrame {
 			}
 		);
 		
-		/*textField_Usuario.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				if(textField_Usuario.getText().length()==8) {
-					e.consume();
-				}
-			}		
-			});*/
+
 		
 		textField_Usuario.setBounds(154, 73, 162, 20);
 		getContentPane().add(textField_Usuario);
@@ -171,13 +166,14 @@ public class DarAltaUsuario extends JFrame {
 		getContentPane().add(lblContraseniaError);
 		lblContraseniaError.setVisible(false);
 		
-		textField_Contrasenia = new JTextField();
-		textField_Contrasenia.addFocusListener(new FocusAdapter() {
+		passwordField_Contrasenia = new JPasswordField();
+		passwordField_Contrasenia.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				contrasenia = textField_Contrasenia.getText();
+				contrasenia = passwordField_Contrasenia.getPassword();
+				contraseniaString = new String(contrasenia);
 				contraseniaval = true;
-				if(contrasenia.length()<8 || contrasenia.length()>20 ) {
+				if(contraseniaString.length()<8 || contraseniaString.length()>20 ) {
 					contraseniaval = false;
 					
 					lblContraseniaError.setVisible(true);
@@ -190,20 +186,11 @@ public class DarAltaUsuario extends JFrame {
 			
 		});
 		
-		//TODO PREG
-		textField_Contrasenia.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				if(textField_Contrasenia.getText().length()==30) {
-					e.consume();
-				}
-			}
-		}
-		);
 		
-		textField_Contrasenia.setBounds(154, 124, 162, 20);
-		getContentPane().add(textField_Contrasenia);
-		textField_Contrasenia.setColumns(10);
+		
+		passwordField_Contrasenia.setBounds(154, 124, 162, 20);
+		getContentPane().add(passwordField_Contrasenia);
+		passwordField_Contrasenia.setColumns(10);
 		
 		JLabel lblContrasenia2 = new JLabel("Repita la Contrase\u00F1a*");
 		lblContrasenia2.setBounds(28, 176, 185, 14);
@@ -215,13 +202,19 @@ public class DarAltaUsuario extends JFrame {
 		getContentPane().add(lblContrasenia2Error);
 		lblContrasenia2Error.setVisible(false);
 		
-		textField_Contrasenia2 = new JTextField();
-		textField_Contrasenia2.addFocusListener(new FocusAdapter() {
+		passwordField_Contrasenia2 = new JPasswordField();
+		passwordField_Contrasenia2.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				contrasenia2 = textField_Contrasenia2.getText();
+				contrasenia2 = passwordField_Contrasenia2.getPassword();
 				contrasenia2val = true;
-				if(!contrasenia2.equals(contrasenia)) { 
+				
+				contrasenia2String = new String(contrasenia2);
+				
+				
+				
+				if(!contrasenia2String.equals(contraseniaString)) { 
+					
 					contrasenia2val = false;
 					lblContrasenia2Error.setVisible(true);
 					confirmar = false;
@@ -231,17 +224,9 @@ public class DarAltaUsuario extends JFrame {
 			}
 		});
 	
-		textField_Contrasenia2.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				if(textField_Contrasenia2.getText().length()==40) {
-					e.consume();
-				}
-			}
-		});
-		
-		textField_Contrasenia2.setBounds(154, 171, 162, 20);
-		getContentPane().add(textField_Contrasenia2);
+	
+		passwordField_Contrasenia2.setBounds(154, 171, 162, 20);
+		getContentPane().add(passwordField_Contrasenia2);
 		
 		
 		
@@ -254,11 +239,11 @@ public class DarAltaUsuario extends JFrame {
 					confirmar = false;
 					lblUsuarioError.setVisible(true);
 				}
-				if(textField_Contrasenia.getText().length()==0) {
+				if(contraseniaString.length()==0) {
 					confirmar = false;
 					lblContraseniaError.setVisible(true);
 				}
-				if(textField_Contrasenia2.getText().length()==0) {
+				if(contrasenia2String.length()==0) {
 					confirmar = false;
 					lblContrasenia2Error.setVisible(true);
 				}
@@ -266,7 +251,7 @@ public class DarAltaUsuario extends JFrame {
 								
 				if(confirmar) {
 					System.out.println("Todo ok, se crea el usuario");
-					GestorUsuario.getInstance().guardarUsuario(textField_Usuario.getText(), textField_Contrasenia.getText());
+					GestorUsuario.getInstance().guardarUsuario(textField_Usuario.getText(), contraseniaString);
 					
 					JOptionPane.showMessageDialog(null, "Usuario creado", "Mensaje de éxito", JOptionPane.INFORMATION_MESSAGE);
 					Menu menu = new Menu();
