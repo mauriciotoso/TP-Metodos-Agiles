@@ -93,7 +93,7 @@ public class GestorLicencia {
 		
 		return fechaVencimiento;
 		
-}
+	}
 
 	public boolean enRangoRenovacion(Licencia licencia){
 		

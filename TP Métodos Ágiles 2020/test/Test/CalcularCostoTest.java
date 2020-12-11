@@ -19,7 +19,7 @@ import BDD.GestorBDD;
 import Entidades.*;
 import Entidades.CostosLicencia;
 
-public class Calcular_costo_Test {
+public class CalcularCostoTest {
     
     public CostosLicencia costosLicencia;
     
@@ -51,7 +51,7 @@ public class Calcular_costo_Test {
     String dni5;
     String dni6;
     
-    public Calcular_costo_Test() {
+    public CalcularCostoTest() {
     	
     }
     

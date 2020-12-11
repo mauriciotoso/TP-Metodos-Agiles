@@ -14,7 +14,7 @@ import Logica.*;
 import static org.junit.Assert.*;
 
 
-public class Calcular_vigencia_Test {
+public class CalcularVigenciaTest {
     
     
     public GestorLicencia gestorLicencia;
@@ -36,7 +36,7 @@ public class Calcular_vigencia_Test {
 
     Date actual;
     
-    public Calcular_vigencia_Test() {
+    public CalcularVigenciaTest() {
     }
 
     @SuppressWarnings("deprecation")
