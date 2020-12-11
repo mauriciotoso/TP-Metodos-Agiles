@@ -28,7 +28,6 @@ public class GestorLicencia {
 	}
 	
 	public void crearLicencia(Titular titular, Clase moto,Clase otro, String observaciones) {
-		System.out.println(titular+" crearlicencia");
 		
 		Calendar vigencia = GestorLicencia.getInstance().calcularVigencia(titular);
 		Licencia licencia = new Licencia(moto,otro,vigencia,titular, observaciones);
@@ -37,7 +36,6 @@ public class GestorLicencia {
 		GestorBDD.getInstance().guardarLicencia(licencia);
 		GestorBDD.getInstance().actualizarLicenciaDeTitular(titular);
 		
-		System.out.println(licencia);
 	}
 	
 	public Calendar calcularVigencia(Titular titular) {
@@ -54,7 +52,6 @@ public class GestorLicencia {
 		
 		fechaActual = Calendar.getInstance();
 		Integer edad = CostosLicencia.calcularEdad(fechaNacimiento);
-		System.out.println(titular + " calcularvigencia");
 		
 		//CALCULAMOS LOS MESES DE DIFERENCIA ENTRE HOY Y EL CUMPLEAï¿½OS
 		if(fechaNacimiento.get(Calendar.MONTH) < fechaActual.get(Calendar.MONTH))
@@ -72,7 +69,7 @@ public class GestorLicencia {
 		Period diferencia = Period.between(fechaNac, fechaAct);
 		
 		diferenciaMeses = Math.abs(diferencia.getMonths());
-		
+		System.out.println(diferenciaMeses);
 		//VEMOS CUANTOS ANIOS CORRESPONDE SEGUN EDAD
 		if(edad<=21) {
 			if(titular.getLicencia()==null) //Buscamos al titular y dsps su licencia
@@ -86,15 +83,13 @@ public class GestorLicencia {
 		}else if(edad <= 70) {
 			cantidadAnios = 3;
 		}else {
-			cantidadAnios = 3;//Aca no deberia ser 1 año??
+			cantidadAnios = 1;//Aca no deberia ser 1 año??
 		}
 		
 		if(diferenciaMeses <= 6) 
 			fechaVencimiento.add(Calendar.YEAR, cantidadAnios);			
 		else 
 			fechaVencimiento.add(Calendar.YEAR, cantidadAnios - 1);	
-		
-		System.out.println(titular+" finCalcularvigencia");
 		
 		return fechaVencimiento;
 		
