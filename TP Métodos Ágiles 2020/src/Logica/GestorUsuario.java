@@ -46,16 +46,18 @@ public class GestorUsuario {
 		
 	}
 
-	public void actualizarUsuario(Usuario usuario, String contraseniaNueva) {
+	public void actualizarUsuario(Usuario usuario, String nom, String ap, String mail) {
 		
-		usuario.setContrasenia(contraseniaNueva);
+		usuario.setNombre(nom);
+		usuario.setApellido(ap);
+		usuario.setEmail(mail);
 		GestorBDD.getInstance().actualizarUsuario(usuario);
 		
 	}
 
-	public Usuario getUsuario(String usuarioABuscar) {
+	public Usuario getUsuario(String usuarioLegajo) {
 		
-		return GestorBDD.getInstance().getUsuario(usuarioABuscar);
+		return GestorBDD.getInstance().getUsuario(usuarioLegajo);
 	}
 
 }

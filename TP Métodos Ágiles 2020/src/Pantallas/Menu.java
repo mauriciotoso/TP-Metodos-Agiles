@@ -50,14 +50,6 @@ public class Menu extends JFrame{
 
 	private void initialize() {
 	
-		/*
-		 * DESCOMENTAR LA PRIMERA VEZ A EJECUTAR PARA QUE SE GUARDE EL USUARIO ADMIN.
-		 */
-		/*Usuario usuarioAdmin = new Usuario("admin", "administrador");
-		GestorBDD.getInstance().guardarUsuario(usuarioAdmin);
-		/*
-		 * DESPUES VOLVER A COMENTAR.
-		 */
 		frmMen = new JFrame();
 		frmMen.setTitle("Men\u00FA");
 		frmMen.setBounds(100, 100, 407, 380);
@@ -190,9 +182,8 @@ public class Menu extends JFrame{
 		JButton btnModificarUsuario = new JButton("Modificar Usuario");
 		btnModificarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Usuario usuarioAdminEncontrado = new Usuario();
-				usuarioAdminEncontrado = GestorBDD.getInstance().getUsuario(1);
-				ModificarUsuario modificarUs = new ModificarUsuario(usuarioAdminEncontrado);
+
+				ModificarUsuario modificarUs = new ModificarUsuario();
 				modificarUs.setVisible(true);
 				frmMen.dispose();
 			}

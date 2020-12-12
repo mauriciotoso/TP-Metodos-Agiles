@@ -181,21 +181,28 @@ public class GestorBDD {
 		return us;
 	}
 
-	public Usuario getUsuario(String usuarioABuscar) {
+	public Usuario getUsuario(String usuarioLegajo) {
 		if(!session.isJoinedToTransaction()) session.beginTransaction();
-		String query = "FROM Usuario u WHERE u.usuario = '" + usuarioABuscar + "'" ;
+		System.out.println(usuarioLegajo);
+		String query = "FROM Usuario u WHERE u.legajo='" + usuarioLegajo + "'" ;
 		
 		@SuppressWarnings("unchecked")
 		org.hibernate.query.Query q =  session.createQuery(query);
 		
 		List<Usuario> usuarios = q.getResultList();
-				
+		System.out.println(usuarios.toString());
+		
+		System.out.println("LISTA SIZE: "+usuarios.size());
 		session.getTransaction().commit();
+		
 		if(!(usuarios.size() == 0)) {
-			return null;
+			Usuario usFinal = new Usuario();
+			usFinal = usuarios.get(q.getFirstResult());		
+			System.out.println(usFinal.toString());
+			return usFinal;
 		}
 		
-		return usuarios.get(0);
+		return null;
 	}
 	
 	

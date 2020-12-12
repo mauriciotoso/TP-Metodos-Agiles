@@ -119,18 +119,11 @@ public class DarAltaUsuario extends JFrame {
 		lblNombre.setBounds(28, 73, 88, 14);
 		getContentPane().add(lblNombre);
 		
-		JLabel lblNombreError = new JLabel("Debe contener entre 3 y 20 caracteres");
+		JLabel lblNombreError = new JLabel("Nombre inválido");
 		lblNombreError.setForeground(Color.RED);
-		lblNombreError.setBounds(99, 100, 264, 14);
+		lblNombreError.setBounds(99, 98, 185, 14);
 		getContentPane().add(lblNombreError);
 		lblNombreError.setVisible(false);
-		
-		JLabel lblNombreExistente = new JLabel("El nombre de Nombre ya existe");
-		lblNombreExistente.setForeground(Color.RED);
-		lblNombreExistente.setBounds(154, 97, 251, 20);
-		getContentPane().add(lblNombreExistente);
-		lblNombreExistente.setVisible(false);
-		
 		
 		textField_Nombre = new JTextField();
 		textField_Nombre.addFocusListener(new FocusAdapter() {
@@ -170,7 +163,7 @@ public class DarAltaUsuario extends JFrame {
 		
 		//CONTRASEÑA
 		JLabel lblContrasenia = new JLabel("Contrase\u00F1a*");
-		lblContrasenia.setBounds(307, 124, 106, 14);
+		lblContrasenia.setBounds(294, 124, 106, 14);
 		getContentPane().add(lblContrasenia);
 		
 		JLabel lblContrasenia2Error = new JLabel("Las contrase\u00F1as no coinciden");
@@ -225,7 +218,7 @@ public class DarAltaUsuario extends JFrame {
 		
 		//CONTRASEÑA2
 		JLabel lblContrasenia2 = new JLabel("Repita la Contrase\u00F1a*");
-		lblContrasenia2.setBounds(307, 184, 185, 14);
+		lblContrasenia2.setBounds(294, 177, 185, 14);
 		getContentPane().add(lblContrasenia2);
 		
 		
@@ -315,7 +308,7 @@ public class DarAltaUsuario extends JFrame {
 		
 		//EMAIL
 		JLabel lblEmail = new JLabel("Email*");
-		lblEmail.setBounds(307, 73, 88, 14);
+		lblEmail.setBounds(294, 73, 88, 14);
 		getContentPane().add(lblEmail);
 		
 		JLabel lblEmailError = new JLabel("Email no válido");
@@ -534,7 +527,7 @@ public class DarAltaUsuario extends JFrame {
 
 		});
 		
-		btnNewButton.setBounds(489, 310, 129, 23);
+		btnNewButton.setBounds(487, 314, 129, 23);
 		getContentPane().add(btnNewButton);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -547,7 +540,7 @@ public class DarAltaUsuario extends JFrame {
 				dispose();
 			}
 		});
-		btnCancelar.setBounds(10, 310, 89, 23);
+		btnCancelar.setBounds(10, 314, 89, 23);
 		getContentPane().add(btnCancelar);
 		
 		JLabel lblCamposObligatorios = new JLabel("*: Campos obligatorios");

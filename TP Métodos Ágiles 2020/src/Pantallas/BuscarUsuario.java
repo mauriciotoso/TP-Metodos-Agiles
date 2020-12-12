@@ -28,8 +28,8 @@ public class BuscarUsuario extends JFrame {
 	private JPanel contentPane;
 	private JTextField textFieldBuscador;
 	private Usuario user;
-	private String usuarioABuscar;
-	private JLabel lblUserfound, lblNombreus, lblApellidous, lblDnius, lblEmailus, lblLegajous;
+	private String usuarioLegajo;
+	private JLabel lblNombreus, lblApellidous, lblDnius, lblEmailus, lblLegajous, lblNoExiste;
 	private JButton btnConfirmar;
 
 	/**
@@ -61,32 +61,33 @@ public class BuscarUsuario extends JFrame {
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 		
-		JLabel lblUser = new JLabel("Nombre de usuario:");
+		JLabel lblUser = new JLabel("N° de legajo:");
 		lblUser.setToolTipText("");
 		lblUser.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblUser.setBounds(10, 14, 173, 18);
 		contentPane.add(lblUser);
 		
 		textFieldBuscador = new JTextField();
-		textFieldBuscador.setBounds(170, 12, 159, 20);
+		textFieldBuscador.setBounds(111, 15, 159, 20);
 		contentPane.add(textFieldBuscador);
 		textFieldBuscador.setColumns(10);
 		textFieldBuscador.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textFieldBuscador.getText().length()==20) e.consume();
+				if(!Character.isDigit(e.getKeyChar())) e.consume();
+				if (textFieldBuscador.getText().length()==5) e.consume();
 			}
 		});
 		
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				usuarioABuscar = textFieldBuscador.getText();
-				user = GestorUsuario.getInstance().getUsuario(usuarioABuscar);
+				usuarioLegajo = textFieldBuscador.getText();
+				user = GestorUsuario.getInstance().getUsuario(usuarioLegajo);
 				actualizarDatos();
 			}
 		});
-		btnBuscar.setBounds(339, 12, 85, 21);
+		btnBuscar.setBounds(280, 15, 85, 21);
 		contentPane.add(btnBuscar);
 		
 		JPanel panel = new JPanel();
@@ -108,12 +109,6 @@ public class BuscarUsuario extends JFrame {
 		lblApellido.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblApellido.setBounds(10, 59, 66, 14);
 		panel.add(lblApellido);
-		
-		lblUserfound = new JLabel("userFound");
-		lblUserfound.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblUserfound.setBounds(209, 12, 195, 14);
-		panel.add(lblUserfound);
-		lblUserfound.setVisible(false);
 		
 		JLabel lblDni = new JLabel("DNI:");
 		lblDni.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -160,6 +155,12 @@ public class BuscarUsuario extends JFrame {
 		panel.add(lblLegajous);
 		lblLegajous.setVisible(false);
 		
+		lblNoExiste = new JLabel("No existe el usuario ingresado");
+		lblNoExiste.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNoExiste.setBounds(209, 12, 195, 14);
+		panel.add(lblNoExiste);
+		lblNoExiste.setVisible(false);
+		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -186,24 +187,23 @@ public class BuscarUsuario extends JFrame {
 	
 	public void actualizarDatos() {
 		if (user != null) {
-			lblUserfound.setText(user.getUsuario());
-			lblNombreus.setText("");
-			lblApellidous.setText("");
-			lblDnius.setText("");
-			lblEmailus.setText("");
-			lblLegajous.setText("");
 			
-			lblUserfound.setVisible(true);
+			lblNombreus.setText(user.getNombre());
+			lblApellidous.setText(user.getApellido());
+			lblDnius.setText(user.getDni());
+			lblEmailus.setText(user.getEmail());
+			lblLegajous.setText(user.getLegajo());
+			
+			
 			lblNombreus.setVisible(true);
 			lblApellidous.setVisible(true);
 			lblDnius.setVisible(true);
 			lblEmailus.setVisible(true);
 			lblLegajous.setVisible(true);
-			
+			lblNoExiste.setVisible(false);
 			btnConfirmar.setEnabled(true);
 		}else {
-			lblUserfound.setText("No existe el usuario ingresado");
-			lblUserfound.setVisible(true);
+			lblNoExiste.setVisible(true);
 			lblNombreus.setText("");
 			lblApellidous.setText("");
 			lblDnius.setText("");

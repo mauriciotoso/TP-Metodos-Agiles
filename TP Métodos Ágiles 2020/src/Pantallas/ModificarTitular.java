@@ -95,6 +95,7 @@ public class ModificarTitular extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
+		setTitle("Modificar Titular");
 		
 		JButton btnBuscar = new JButton("Buscar Titular");
 		btnBuscar.addActionListener(new ActionListener() {
