@@ -98,7 +98,7 @@ public class GestorBDD {
 		
 		return true;
 	}
-
+	
 
 	public void actualizarTitular(Titular titularModificado) {
 		if(!session.isJoinedToTransaction()) session.beginTransaction();
@@ -108,9 +108,9 @@ public class GestorBDD {
 	}
 	
 	
-	public boolean verificarUsuario (String user) {
+	public boolean verificarDNIUsuario(String dni) {
 		if(!session.isJoinedToTransaction()) session.beginTransaction();
-		String query = "FROM Usuario u WHERE u.usuario = '" + user + "'" ;
+		String query = "FROM Usuario u WHERE u.dni = '" + dni + "'" ;
 		
 		@SuppressWarnings("unchecked")
 		org.hibernate.query.Query q =  session.createQuery(query);
@@ -125,6 +125,39 @@ public class GestorBDD {
 		return true;
 	}
 	
+	public boolean verificarLegajoUsuario(String legajo) {
+		if(!session.isJoinedToTransaction()) session.beginTransaction();
+		String query = "FROM Usuario u WHERE u.legajo = '" + legajo + "'" ;
+		
+		@SuppressWarnings("unchecked")
+		org.hibernate.query.Query q =  session.createQuery(query);
+		
+		List<Usuario> usuarios = q.getResultList();
+				
+		session.getTransaction().commit();
+		if(!(usuarios.size() == 0)) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public boolean verificarEmailUsuario(String email) {
+		if(!session.isJoinedToTransaction()) session.beginTransaction();
+		String query = "FROM Usuario u WHERE u.email = '" + email + "'" ;
+		
+		@SuppressWarnings("unchecked")
+		org.hibernate.query.Query q =  session.createQuery(query);
+		
+		List<Usuario> usuarios = q.getResultList();
+				
+		session.getTransaction().commit();
+		if(!(usuarios.size() == 0)) {
+			return false;
+		}
+		
+		return true;
+	}
 
 	
 	public void guardarUsuario(Usuario user) {

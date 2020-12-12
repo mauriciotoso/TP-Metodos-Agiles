@@ -98,7 +98,7 @@ public class ModificarUsuario extends JFrame {
 		getContentPane().add(textField_Usuario);
 		textField_Usuario.setColumns(10);
 		textField_Usuario.setEditable(false);
-		textField_Usuario.setText(usuario.getUsuario());
+		textField_Usuario.setText(usuario.getNombre());
 		
 		JLabel lblContrasenia = new JLabel("Nueva contrase\u00F1a*");
 		lblContrasenia.setBounds(28, 127, 168, 14);
