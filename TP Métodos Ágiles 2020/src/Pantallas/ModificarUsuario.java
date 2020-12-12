@@ -99,7 +99,6 @@ public class ModificarUsuario extends JFrame {
 		textField_Usuario.setColumns(10);
 		textField_Usuario.setEditable(false);
 		
-		
 		JLabel lblContrasenia = new JLabel("Nueva contrase\u00F1a*");
 		lblContrasenia.setBounds(28, 127, 168, 14);
 		getContentPane().add(lblContrasenia);
@@ -212,7 +211,7 @@ public class ModificarUsuario extends JFrame {
 					contrasenia = new String(password);
 					GestorUsuario.getInstance().actualizarUsuario(usuario, contrasenia);
 					
-					JOptionPane.showMessageDialog(null, "Usuario actualizado correctamente.", "Mensaje de éxito", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Usuario actualizado correctamente.", "Mensaje de Ã©xito", JOptionPane.INFORMATION_MESSAGE);
 					Menu menu = new Menu();
 					menu.frmMen.setVisible(true);
 					dispose();

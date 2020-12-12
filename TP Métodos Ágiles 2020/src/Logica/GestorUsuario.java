@@ -16,17 +16,32 @@ public class GestorUsuario {
 		return gestorUsuario;
 	}
 	
-	public Boolean verificarUsuario(String nombreUsuario) {
+
+	
+	public boolean verificarDNI(String dni) {
 		boolean noExiste=true;
-		
-		
-		noExiste= GestorBDD.getInstance().verificarUsuario(nombreUsuario);
+		noExiste= GestorBDD.getInstance().verificarDNIUsuario(dni);
 		
 		return noExiste;
 	}
 	
-	public void guardarUsuario(String user, String contrasenia) {
-		Usuario usuario = new Usuario(user, contrasenia);
+	public boolean verificarLegajo(String legajo) {
+		boolean noExiste=true;
+		noExiste= GestorBDD.getInstance().verificarLegajoUsuario(legajo);
+		
+		return noExiste;
+	}
+	public boolean verificarEmail(String email) {
+		boolean noExiste=true;
+		noExiste= GestorBDD.getInstance().verificarEmailUsuario(email);
+		
+		return noExiste;
+	}
+	
+	
+	
+	public void guardarUsuario(String nombre, String apellido, String dni, String legajo, String email, String contrasenia) {
+		Usuario usuario = new Usuario(nombre, apellido, dni, legajo, email, contrasenia);
 		GestorBDD.getInstance().guardarUsuario(usuario);
 		
 	}
