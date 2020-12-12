@@ -98,7 +98,7 @@ public class ModificarUsuario extends JFrame {
 		getContentPane().add(textField_Usuario);
 		textField_Usuario.setColumns(10);
 		textField_Usuario.setEditable(false);
-		textField_Usuario.setText(usuario.getUsuario());
+		
 		
 		JLabel lblContrasenia = new JLabel("Nueva contrase\u00F1a*");
 		lblContrasenia.setBounds(28, 127, 168, 14);
@@ -243,6 +243,10 @@ public class ModificarUsuario extends JFrame {
 		lblCamposObligatorios.setFont(new Font("Tahoma", Font.ITALIC, 10));
 		lblCamposObligatorios.setBounds(5, 243, 142, 20);
 		getContentPane().add(lblCamposObligatorios);
+		
+		if(usuario != null) {
+			textField_Usuario.setText(usuario.getUsuario());
+		}
 		
 	}
 	}
