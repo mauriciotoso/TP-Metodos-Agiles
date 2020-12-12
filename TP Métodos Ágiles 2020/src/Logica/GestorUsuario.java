@@ -53,4 +53,9 @@ public class GestorUsuario {
 		
 	}
 
+	public Usuario getUsuario(String usuarioABuscar) {
+		
+		return GestorBDD.getInstance().getUsuario(usuarioABuscar);
+	}
+
 }

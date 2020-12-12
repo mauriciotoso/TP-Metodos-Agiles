@@ -180,6 +180,23 @@ public class GestorBDD {
 		
 		return us;
 	}
+
+	public Usuario getUsuario(String usuarioABuscar) {
+		if(!session.isJoinedToTransaction()) session.beginTransaction();
+		String query = "FROM Usuario u WHERE u.usuario = '" + usuarioABuscar + "'" ;
+		
+		@SuppressWarnings("unchecked")
+		org.hibernate.query.Query q =  session.createQuery(query);
+		
+		List<Usuario> usuarios = q.getResultList();
+				
+		session.getTransaction().commit();
+		if(!(usuarios.size() == 0)) {
+			return null;
+		}
+		
+		return usuarios.get(0);
+	}
 	
 	
 	
