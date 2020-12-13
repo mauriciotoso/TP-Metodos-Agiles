@@ -33,26 +33,25 @@ public class DarAltaTitular extends JFrame {
 	//JFrame frame;
 	private JTextField textField_DNI;
 	private String dni;
-	private boolean dnival;
-	private boolean dniUnico;
+	private boolean dnival,deptoval, pisoval, dniUnico, calleval, nroval, apellidoval, nombreval, fechaval;
+	
 	private JTextField textField_Apellido;
 	private String apellido;
-	private boolean apellidoval;
+	
 	private JTextField textField_Nombre;
 	private String nombre;
-	private boolean nombreval;
+	
 	private JTextField textField_Calle;
 	private String calle;
-	private boolean calleval;
+	
 	private JTextField textField_nro;
 	private String nro;
-	private boolean nroval;
 	private JTextField textField_piso;
 	private String piso;
-	private boolean pisoval;
+	
 	private JTextField textField_depto;
 	private String depto;
-	private boolean deptoval;
+
 	private String dia;
 	private String mes;
 	private String anyo;
@@ -152,10 +151,10 @@ public class DarAltaTitular extends JFrame {
 					//lblDniunico.setText("El DNI ya existe");
 					lblErrorDNI.setVisible(false);
 					lblDniunico.setVisible(true);
-					confirmar = false;
+					dniUnico = false;
 				}else {
 					lblDniunico.setVisible(false);
-					confirmar = true;
+					dniUnico = true;
 				}
 			}
 		
@@ -197,13 +196,17 @@ public class DarAltaTitular extends JFrame {
 						lblerrorapellido.setText("Apellido inválido");
 						lblerrorapellido.setVisible(true);
 						apellidoval = false;
-						confirmar = false;
+						
 					}
 				}
 				if(apellidoval) {
 					lblerrorapellido.setVisible(false);
 					confirmar = true;
+				}else {
+					confirmar = false;
+					lblerrorapellido.setVisible(true);
 				}
+					
 			}
 			
 		});
@@ -249,7 +252,9 @@ public class DarAltaTitular extends JFrame {
 				if(nombreval) {
 					lblErrornombre.setVisible(false);
 					confirmar = true;
-				}
+				}else {
+					lblErrornombre.setVisible(true);
+					confirmar = false;}
 			}
 		});
 	
@@ -429,7 +434,7 @@ public class DarAltaTitular extends JFrame {
 				if(pisoval) {
 					ErrorPiso.setVisible(false);
 					confirmar = true;
-			}
+				}
 				else {
 					ErrorPiso.setText("Piso inválido");
 					ErrorPiso.setVisible(true);
@@ -477,7 +482,7 @@ public class DarAltaTitular extends JFrame {
 				if(deptoval) {
 					lblErrordepto.setVisible(false);
 					confirmar = true;
-			}
+				}
 				else {
 					lblErrordepto.setText("Piso inválido");
 					lblErrordepto.setVisible(true);
@@ -556,7 +561,7 @@ public class DarAltaTitular extends JFrame {
 				
 				if(dia.compareTo("Día")==0 || mes.compareTo("Mes")==0 || anyo.compareTo("Año")==0) {
 					lblErrorFecha.setVisible(true);
-					confirmar = false;
+					fechaval = false;
 				
 				}else{
 				
@@ -565,37 +570,37 @@ public class DarAltaTitular extends JFrame {
 						fecha = Calendar.getInstance();
 						fecha.setLenient(false);
 						fecha.set(Integer.parseInt(anyo),Integer.parseInt(mes)-1, Integer.parseInt(dia));
-						confirmar = true;
+						fechaval = true;
 						System.out.println("dia= "+fecha.get(Calendar.DAY_OF_MONTH)+" mes= "+fecha.get(Calendar.MONTH)+" año= "+fecha.get(Calendar.YEAR));
 					}catch(Exception a) {
-						confirmar= false;
+						fechaval= false;
 						lblErrorFecha.setVisible(true);	
 					}
 				}
 				
 				if(textField_DNI.getText().length()==0) {
-					confirmar = false;
+					dnival = false;
 					lblErrorDNI.setVisible(true);
 				}
 				if(textField_Apellido.getText().length()==0) {
-					confirmar = false;
+					apellidoval = false;
 					lblerrorapellido.setVisible(true);
 				}
 				if(textField_Nombre.getText().length()==0) {
-					confirmar = false;
+					nombreval = false;
 					lblErrornombre.setVisible(true);
 				}
 				if(textField_Calle.getText().length()==0) {
-					confirmar = false;
+					calleval = false;
 					lblErrorcalle.setVisible(true);
 				}
 				if(textField_nro.getText().length()==0) {
-					confirmar = false;
+					nroval = false;
 					lblErrornro.setVisible(true);
 				}
-					
 				
-				if(confirmar) {
+				
+				if(dnival && deptoval && pisoval && dniUnico && calleval && nroval && apellidoval && nombreval && fechaval) {
 					System.out.println("Todo ok, se crea el titular");
 					GestorTitular.getInstance().crearTitular(textField_DNI.getText(), textField_Apellido.getText(), textField_Nombre.getText(), textField_Calle.getText(), textField_nro.getText(), 
 							textField_depto.getText(),textField_piso.getText(),fecha,comboBoxGrupoS.getSelectedItem().toString(), comboBoxFactor.getSelectedItem().toString(),chckbxDonanteDeOrganos.isSelected(),

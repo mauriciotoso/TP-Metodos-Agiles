@@ -31,24 +31,19 @@ public class ModificarUsuario extends JFrame {
 	private JPanel contentPane;
 	
 
-	private boolean dnival;
-	private Boolean usuarioUnico;
+	
 	private JPasswordField textField_Contrasenia;
 	private JTextField textField_Usuario;
 	private char[] password, password2;
-	private String contrasenia;
-	private boolean contraseniaval;
-	private String contrasenia2;
-	private boolean contrasenia2val;
 	private boolean confirmar;
 	private Usuario usuario;
 	private JTextField textFieldNombreUs;
 	private JTextField textFieldApellidoUs;
 	private JTextField textFieldDniUs;
 	private JTextField textFieldEmailUs;
-	private boolean nombreval, apellidoval;
-	private String nombre, apellido;
-	private boolean emailval;
+	private boolean nombreval, apellidoval, emailval;
+	private String nombre, apellido, contrasenia;
+	
 	private String email;
 
 
@@ -203,7 +198,13 @@ public class ModificarUsuario extends JFrame {
 				if(nombreval) {
 					lblErrorNombre.setVisible(false);
 					confirmar = true;
+				}else {
+					confirmar = false;
+					lblErrorNombre.setVisible(true);
 				}
+					
+				
+				System.out.println("CONFIRMAR NOMBRE FINAL: "+confirmar);
 			}
 			
 		});
@@ -240,7 +241,11 @@ public class ModificarUsuario extends JFrame {
 				if(apellidoval) {
 					lblErrorApellido.setVisible(false);
 					confirmar = true;
+				}else {
+					confirmar = false;
+					lblErrorApellido.setVisible(true);
 				}
+				
 			}
 			
 		});
@@ -268,14 +273,17 @@ public class ModificarUsuario extends JFrame {
 				emailval = true;
 				if(email.length()==0   || !(validarEmail(email))) {
 					emailval = false;
-					}
+				
+				}
 			
 				if(emailval) {
 					lblEmailInvlido.setVisible(false);
 					confirmar = true;
-				}else
+					System.out.println("CONFIRMAR dentro del if email: "+confirmar);
+				}else {
 					lblEmailInvlido.setVisible(true);
-					confirmar = false;
+					confirmar = false;}
+					
 			}
 			
 		});
@@ -305,21 +313,24 @@ public class ModificarUsuario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			
 				if(textFieldNombreUs.getText().length()==0) {
-					confirmar = false;
-					System.out.println("chequea nombre null");
+					nombreval = false;
 					lblErrorNombre.setVisible(true);
 				}
 				
 				if(textFieldApellidoUs.getText().length()==0) {
-					confirmar = false;
+					apellidoval = false;
+				
 					lblErrorApellido.setVisible(true);
 				}
 				if(textFieldEmailUs.getText().length()==0) {
-					confirmar = false;
+					emailval = false;
+					
 					lblEmailInvlido.setVisible(true);
 				}
-				System.out.println("CONFIRMAR: "+confirmar);			
-				if(confirmar) {
+				
+				
+				System.out.println("apellido " + apellidoval + "nombre: " + nombreval + "email" + emailval);
+				if(apellidoval &&  nombreval &&  emailval ) {
 					System.out.println("Todo ok, se actualiza el usuario");
 					password = textField_Contrasenia.getPassword();
 					contrasenia = new String(password);
@@ -331,6 +342,8 @@ public class ModificarUsuario extends JFrame {
 					menu.frmMen.setVisible(true);
 					dispose();
 					
+				}else {
+					System.out.println("Hubo problemas");
 				}
 				
 			}

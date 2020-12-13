@@ -48,22 +48,22 @@ public class DarAltaUsuario extends JFrame {
 	
 	private JPasswordField passwordField_Contrasenia;
 	private char[] contrasenia;
-	private boolean contraseniaval;
+
 	private JPasswordField passwordField_Contrasenia2;
 	private char[] contrasenia2;
 	private String contrasenia2String;
 	private String contraseniaString;
-	private boolean contrasenia2val;
-	private boolean apellidoval;
+	private boolean contrasenia2val, contraseniaval, apellidoval, nombreval, legajoval, emailval, dnival;
+	
 	private String apellido;
-	private boolean nombreval;
+
 	private String nombre;
-	private boolean legajoval;
+
 	private String legajo;
-	private boolean dnival;
-	private boolean dniUnico;
+	
+	private boolean dniUnico, legajoUnico, emailUnico;
 	private String dni;
-	private boolean emailval;
+	
 	private String email;
 	private boolean confirmar;
 	private JTextField textField_Apellido;
@@ -311,6 +311,13 @@ public class DarAltaUsuario extends JFrame {
 		lblEmail.setBounds(294, 73, 88, 14);
 		getContentPane().add(lblEmail);
 		
+		
+		JLabel lblEmailUnicoError = new JLabel("El Email ya existe");
+		lblEmailUnicoError.setBounds(423, 99, 129, 13);
+		getContentPane().add(lblEmailUnicoError);
+		lblEmailUnicoError.setVisible(false);
+		lblEmailUnicoError.setForeground(Color.RED);
+		
 		JLabel lblEmailError = new JLabel("Email no válido");
 		lblEmailError.setBounds(423, 97, 162, 13);
 		getContentPane().add(lblEmailError);
@@ -333,11 +340,24 @@ public class DarAltaUsuario extends JFrame {
 				if(emailval) {
 					lblEmailError.setVisible(false);
 					confirmar = true;
-				}else
+				}else {
 					lblEmailError.setVisible(true);
-					confirmar = false;
-			}
+					confirmar = false; }
 			
+			
+			dniUnico = GestorUsuario.getInstance().verificarEmail(textField_Email.getText());
+			
+			if(!dniUnico) {
+				
+				lblEmailError.setVisible(false);
+				lblEmailUnicoError.setVisible(true);
+				emailUnico = false;
+			}else {
+				lblEmailUnicoError.setVisible(false);
+				emailUnico= true;
+			}
+		
+		}
 		});
 		
 
@@ -400,10 +420,10 @@ public class DarAltaUsuario extends JFrame {
 					
 					lblDNIError.setVisible(false);
 					lblDniunico.setVisible(true);
-					confirmar = false;
+					dniUnico = false;
 				}else {
 					lblDniunico.setVisible(false);
-					confirmar = true;
+					dniUnico= true;
 				}
 			}
 		
@@ -428,6 +448,14 @@ public class DarAltaUsuario extends JFrame {
 		textField_Legajo.setColumns(10);
 		textField_Legajo.setBounds(99, 229, 162, 20);
 		getContentPane().add(textField_Legajo);
+		
+		
+		
+		JLabel lblLegajoUnicoError = new JLabel("El legajo ya existe");
+		lblLegajoUnicoError.setBounds(99, 259, 138, 13);
+		getContentPane().add(lblLegajoUnicoError);
+		lblLegajoUnicoError.setVisible(false);
+		lblLegajoUnicoError.setForeground(Color.RED);
 	
 		
 		JLabel lblLegajoError = new JLabel("Debe contener 5 caracteres");
@@ -455,6 +483,19 @@ public class DarAltaUsuario extends JFrame {
 					lblLegajoError.setVisible(true);
 					confirmar = false;
 				}
+				
+				legajoUnico = GestorUsuario.getInstance().verificarLegajo(textField_Legajo.getText());
+				
+				if(!legajoUnico) {
+					
+					lblLegajoError.setVisible(false);
+					lblLegajoUnicoError.setVisible(true);
+					legajoUnico = false;
+				}else {
+					lblLegajoUnicoError.setVisible(false);
+					legajoUnico = true;
+				}
+				
 			}
 			
 		});
@@ -473,46 +514,46 @@ public class DarAltaUsuario extends JFrame {
 		JButton btnNewButton = new JButton("Confirmar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("ENTRA A CONFIRMAR");
+				
 				
 				if(textField_Nombre.getText().length()==0) {
-					confirmar = false;
+					nombreval = false;
 					System.out.println("chequea nombre null");
 					lblNombreError.setVisible(true);
 				}
 				
 				if(textField_Apellido.getText().length()==0) {
-					confirmar = false;
+					apellidoval = false;
 					lblApellidoError.setVisible(true);
 				}
 				if(textField_Email.getText().length()==0) {
-					confirmar = false;
+					emailval = false;
 					lblEmailError.setVisible(true);
 				}
 				if(textField_Legajo.getText().length()==0) {
-					confirmar = false;
+					legajoval = false;
 					lblLegajoError.setVisible(true);
 				}
 				
 				if(textField_Dni.getText().length()==0) {
-					confirmar = false;
+					dnival = false;
 					lblDNIError.setVisible(true);
 				}
 
 				if(passwordField_Contrasenia.getPassword().length==0) {
-					confirmar = false;
+					contraseniaval = false;
 					System.out.println("chequea password1 null");
 					lblContraseniaError.setVisible(true);
 				}
 				if(passwordField_Contrasenia2.getPassword().length==0) {
-					confirmar = false;
+					contrasenia2val = false;
 					System.out.println("chequea password2 null");
 					lblContrasenia2Error.setVisible(true);
 				}
 				
 				
 								
-				if(confirmar) {
+				if(contrasenia2val && contraseniaval && apellidoval && nombreval && legajoval && emailval && dnival && dniUnico && legajoUnico && emailUnico) {
 					System.out.println("Todo ok, se crea el usuario");
 					GestorUsuario.getInstance().guardarUsuario(textField_Nombre.getText(),textField_Apellido.getText(), textField_Dni.getText(), textField_Legajo.getText(), textField_Email.getText(), contraseniaString);
 					
@@ -550,12 +591,12 @@ public class DarAltaUsuario extends JFrame {
 		
 	
 		
+	
+		
 	}
 	
 	public static boolean validarEmail(String email) {
 	    final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
 	    return EMAIL_REGEX.matcher(email).matches();
 	}
-	
-	
 }

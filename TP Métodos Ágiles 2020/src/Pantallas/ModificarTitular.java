@@ -31,26 +31,25 @@ public class ModificarTitular extends JFrame {
 	private JPanel contentPane;
 	
 	private JTextField textField_DNI;
-	private String dni;
-	private boolean dnival;
-	private boolean dniUnico;
+	
+
 	private JTextField textField_Apellido;
 	private String apellido;
-	private boolean apellidoval;
+	private boolean apellidoval, calleval, nroval, pisoval, deptoval, nombreval;
 	private JTextField textField_Nombre;
 	private String nombre;
-	private boolean nombreval;
+	
 	private JTextField textField_Calle;
 	private String calle;
-	private boolean calleval;
+	
 	private String nro;
-	private boolean nroval;
+
 	private JTextField textField_piso;
 	private String piso;
-	private boolean pisoval;
+
 	private JTextField textField_depto;
 	private String depto;
-	private boolean deptoval;
+
 	private String dia;
 	private String mes;
 	private String anyo;
@@ -478,19 +477,19 @@ public class ModificarTitular extends JFrame {
 				
 				
 				if(textField_Apellido.getText().length()==0) {
-					confirmar = false;
+					apellidoval = false;
 					lblerrorapellido.setVisible(true);
 				}
 				if(textField_Nombre.getText().length()==0) {
-					confirmar = false;
+					nombreval = false;
 					lblErrornombre.setVisible(true);
 				}
 				if(textField_Calle.getText().length()==0) {
-					confirmar = false;
+					calleval = false;
 					lblErrorcalle.setVisible(true);
 				}
 				
-				if(confirmar) {
+				if(apellidoval && calleval && nroval && pisoval && deptoval && nombreval) {
 					System.out.println("Todo ok, se actualiza el titular");
 					GestorTitular.getInstance().actualizarTitular(titular, textField_Apellido.getText(), textField_Nombre.getText(),
 							comboBoxSexo.getSelectedItem().toString(), textField_Calle.getText(), textField_piso.getText(), textField_depto.getText(),
