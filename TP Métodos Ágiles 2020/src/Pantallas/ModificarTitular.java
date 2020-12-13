@@ -36,6 +36,7 @@ public class ModificarTitular extends JFrame {
 	private JTextField textField_Apellido;
 	private String apellido;
 	private boolean apellidoval, calleval, nroval, pisoval, deptoval, nombreval;
+	private boolean confirmar;
 	private JTextField textField_Nombre;
 	private String nombre;
 	
@@ -54,7 +55,7 @@ public class ModificarTitular extends JFrame {
 	private String mes;
 	private String anyo;
 	private Calendar fecha;
-	private boolean confirmar;
+
 	private int pantalla;
 	private Titular titular;
 
@@ -87,6 +88,15 @@ public class ModificarTitular extends JFrame {
 	}
 	
 	public void initialize() {
+		confirmar = true;
+		apellidoval = true;
+		calleval= true;
+		nroval = true;
+		pisoval = true;
+		deptoval = true;
+		nombreval = true;
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 779, 391);
 		contentPane = new JPanel();

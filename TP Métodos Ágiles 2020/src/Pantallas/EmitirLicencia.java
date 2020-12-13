@@ -259,7 +259,7 @@ public class EmitirLicencia extends JFrame{
 				
 				
 				Licencia licencia = titularEncontrado.getLicencia();
-				ImprimirPantalla imprimirLic = new ImprimirPantalla(licencia);
+				ImprimirPantalla imprimirLic = new ImprimirPantalla(licencia, 1);
 				imprimirLic.frame.setVisible(true);
 				dispose();
 			}
@@ -436,6 +436,10 @@ public class EmitirLicencia extends JFrame{
 				if(cbA.isSelected()) {
 					aclaracion=aclaracion+" A";
 				}
+				if(cbB.isSelected() && !cbA.isSelected()) {
+					aclaracion=aclaracion+" B";
+				}
+				
 				if(cbB.isSelected()&&cbA.isSelected()) {
 					aclaracion=aclaracion+" y B";
 				}

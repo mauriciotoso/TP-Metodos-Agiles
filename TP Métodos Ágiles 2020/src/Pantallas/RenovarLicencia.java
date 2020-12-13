@@ -58,6 +58,7 @@ public class RenovarLicencia extends JFrame{
 	private JTextField tfFechaVencimiento;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JTextField tfClases;
+	private Calendar nuevaFecha;
 	
 	/**
 	 * Launch the application.
@@ -354,6 +355,14 @@ public class RenovarLicencia extends JFrame{
 			tfCalle.setText(titularEncontrado.getDireccion());
 			tfPiso.setText(titularEncontrado.getPiso());
 			tfDepto.setText(titularEncontrado.getDepto());
+			tfNroDoc.setText(titularEncontrado.getDni());
+			tfTipoDoc.setText("DNI");
+			
+			
+			nuevaFecha = GestorLicencia.getInstance().calcularVigencia(titularEncontrado);
+			tfFechaVencimiento.setText(new SimpleDateFormat("dd/MM/yyyy").format(nuevaFecha.getTime()));
+			
+			
 			cbDonante.setSelected(titularEncontrado.isEsDonante());
 			
 			String clases ="";
@@ -644,8 +653,6 @@ public class RenovarLicencia extends JFrame{
 					titularEncontrado.getLicencia().setObservaciones((tfObservaciones.getText()));
 					titularEncontrado.getLicencia().setFechaVencimiento(GestorLicencia.getInstance().calcularVigencia(titularEncontrado));
 					
-					Calendar nuevaFecha = GestorLicencia.getInstance().calcularVigencia(titularEncontrado);
-					tfFechaVencimiento.setText(new SimpleDateFormat("dd/MM/yyyy").format(nuevaFecha.getTime()));
 					
 					titularEncontrado.setLicencia(titularEncontrado.getLicencia());
 					GestorLicencia.getInstance().actualizarLicencia(titularEncontrado.getLicencia());
@@ -658,7 +665,7 @@ public class RenovarLicencia extends JFrame{
 				}
 				
 				Licencia licencia = titularEncontrado.getLicencia();
-				ImprimirPantalla imprimirLic = new ImprimirPantalla(licencia);
+				ImprimirPantalla imprimirLic = new ImprimirPantalla(licencia, 5);
 				imprimirLic.frame.setVisible(true);
 				dispose();
 				

@@ -86,6 +86,10 @@ public class ModificarUsuario extends JFrame {
 		setLocationRelativeTo(null);
 		
 		confirmar= true;
+		apellidoval = true;
+		nombreval=true;
+		emailval = true;
+		
 		contentPane.setLayout(null);
 		
 		JLabel lblCrearTitular = new JLabel("Modificar Usuario");
@@ -114,8 +118,6 @@ public class ModificarUsuario extends JFrame {
 		getContentPane().add(textField_Contrasenia);
 		textField_Contrasenia.setColumns(10);
 		textField_Contrasenia.setEditable(false);
-		
-		
 		
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -204,7 +206,7 @@ public class ModificarUsuario extends JFrame {
 				}
 					
 				
-				System.out.println("CONFIRMAR NOMBRE FINAL: "+confirmar);
+				System.out.println(" NOMBRE FINAL: "+ nombreval);
 			}
 			
 		});
@@ -245,7 +247,7 @@ public class ModificarUsuario extends JFrame {
 					confirmar = false;
 					lblErrorApellido.setVisible(true);
 				}
-				
+				System.out.println(" APELLIDO FINAL: " + emailval);
 			}
 			
 		});
@@ -275,7 +277,7 @@ public class ModificarUsuario extends JFrame {
 					emailval = false;
 				
 				}
-			
+				
 				if(emailval) {
 					lblEmailInvlido.setVisible(false);
 					confirmar = true;
@@ -283,7 +285,8 @@ public class ModificarUsuario extends JFrame {
 				}else {
 					lblEmailInvlido.setVisible(true);
 					confirmar = false;}
-					
+			
+				System.out.println(" EMAIL FINAL: " + emailval);
 			}
 			
 		});
@@ -319,7 +322,7 @@ public class ModificarUsuario extends JFrame {
 				
 				if(textFieldApellidoUs.getText().length()==0) {
 					apellidoval = false;
-				
+					System.out.println("ENTRO AL IF APELLIDO: " + apellidoval);
 					lblErrorApellido.setVisible(true);
 				}
 				if(textFieldEmailUs.getText().length()==0) {
@@ -329,7 +332,8 @@ public class ModificarUsuario extends JFrame {
 				}
 				
 				
-				System.out.println("apellido " + apellidoval + "nombre: " + nombreval + "email" + emailval);
+				System.out.println("apellido " + apellidoval + " nombre: " + nombreval + " email: " + emailval);
+				
 				if(apellidoval &&  nombreval &&  emailval ) {
 					System.out.println("Todo ok, se actualiza el usuario");
 					password = textField_Contrasenia.getPassword();

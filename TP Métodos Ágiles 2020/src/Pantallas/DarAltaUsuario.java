@@ -54,18 +54,15 @@ public class DarAltaUsuario extends JFrame {
 	private String contrasenia2String;
 	private String contraseniaString;
 	private boolean contrasenia2val, contraseniaval, apellidoval, nombreval, legajoval, emailval, dnival;
+	private boolean dniUnico, legajoUnico, emailUnico;
+	private boolean confirmar;
 	
 	private String apellido;
-
 	private String nombre;
-
 	private String legajo;
-	
-	private boolean dniUnico, legajoUnico, emailUnico;
 	private String dni;
-	
 	private String email;
-	private boolean confirmar;
+	
 	private JTextField textField_Apellido;
 	private JTextField textField_Email;
 	private JTextField textField_Dni;
@@ -100,6 +97,17 @@ public class DarAltaUsuario extends JFrame {
 	 */
 	private void initialize() {
 		confirmar= true;
+		emailval = true;
+		contrasenia2val = true;
+		contraseniaval = true; 
+		apellidoval = true; 
+		nombreval = true; 
+		legajoval = true; 
+		emailval = true;
+		dnival = true;
+		dniUnico= true;
+		legajoUnico= true;
+		emailUnico = true;
 		
 		setTitle("Dar de Alta Usuario");
 		setBounds(100, 100, 642, 387);
@@ -393,7 +401,7 @@ public class DarAltaUsuario extends JFrame {
 			public void focusLost(FocusEvent e) {
 				
 					dnival = true;
-					if(textField_Dni.getText().length()<7) {
+					if(textField_Dni.getText().length()<7 ) {
 						dnival = false;
 					}
 					dni = textField_Dni.getText();

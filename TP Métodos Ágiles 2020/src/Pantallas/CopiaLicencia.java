@@ -30,6 +30,7 @@ public class CopiaLicencia extends JFrame{
 	private JLabel lblFechaNacimiento;
 	private JButton crearCopia;
 	private JLabel lblLicencia;
+	private JButton imprimir ;
 	
 	/**
 	 * Launch the application.
@@ -110,7 +111,7 @@ public class CopiaLicencia extends JFrame{
 		getContentPane().add(cancelar);
 		
 		crearCopia = new JButton("Crear Copia");
-	    crearCopia.setBounds(288, 152, 138, 21);
+	    crearCopia.setBounds(303, 152, 123, 21);
 		getContentPane().add(crearCopia);
 		
 		JPanel panel = new JPanel();
@@ -155,6 +156,11 @@ public class CopiaLicencia extends JFrame{
 		
 		
 		crearCopia.setEnabled(false);
+		
+		imprimir = new JButton("Imprimir Copia");
+		imprimir.setEnabled(false);
+		imprimir.setBounds(170, 152, 123, 21);
+		getContentPane().add(imprimir);
 	}
 	
 	private void actualizarDatos() {
@@ -166,6 +172,7 @@ public class CopiaLicencia extends JFrame{
 		lblNroCopia.setText("Copia Nro: " + titularEncontrado.getLicencia().getCopia());
 		lblFechaNacimiento.setText("Fecha Nacimiento: "+new SimpleDateFormat("dd/MM/yyyy").format(titularEncontrado.getFechaNacimiento().getTime()));
 		crearCopia.setEnabled(true);
+		imprimir.setEnabled(false);
 		
 		boolean vencida=GestorLicencia.getInstance().vencida(titularEncontrado.getLicencia());
 		
@@ -179,6 +186,7 @@ public class CopiaLicencia extends JFrame{
 		}else{
 				lblLicencia.setText("Licencia: Vigente.");
 				crearCopia.setEnabled(true);
+				
 				crearCopia.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						
@@ -186,6 +194,17 @@ public class CopiaLicencia extends JFrame{
 						JOptionPane.showMessageDialog(null, "Copia realizada", "Mensaje de éxito", JOptionPane.INFORMATION_MESSAGE);
 						lblNroCopia.setText("Copia Nro: " + titularEncontrado.getLicencia().getCopia());
 						//dispose();
+						imprimir.setEnabled(true);
+					}
+				});
+				imprimir.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+					System.out.println("ENTRA A IMPRIMIR");	
+					
+					ImprimirPantalla imprimirP = new ImprimirPantalla(titularEncontrado.getLicencia(), 6);
+					imprimirP.frame.setVisible(true);
+					dispose();
+					
 					}
 				});
 		
@@ -200,6 +219,7 @@ public class CopiaLicencia extends JFrame{
 			lblLicencia.setText("");
 			lblNroCopia.setText("");
 			crearCopia.setEnabled(false);
+			imprimir.setEnabled(false);
 		
 			
 		}

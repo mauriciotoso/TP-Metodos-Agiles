@@ -34,6 +34,7 @@ public class DarAltaTitular extends JFrame {
 	private JTextField textField_DNI;
 	private String dni;
 	private boolean dnival,deptoval, pisoval, dniUnico, calleval, nroval, apellidoval, nombreval, fechaval;
+	private boolean confirmar;
 	
 	private JTextField textField_Apellido;
 	private String apellido;
@@ -56,7 +57,7 @@ public class DarAltaTitular extends JFrame {
 	private String mes;
 	private String anyo;
 	private Calendar fecha;
-	private boolean confirmar;
+	
 	private int pantalla;
 	/**
 	 * Launch the application.
@@ -87,6 +88,16 @@ public class DarAltaTitular extends JFrame {
 	 */
 	private void initialize() {
 		confirmar= true;
+		dnival = true;
+		deptoval= true;
+		pisoval = true;
+		dniUnico = true;
+		calleval = true;
+		nroval = true;
+		apellidoval = true;
+		nombreval = true;
+		fechaval = true;
+		
 		
 		setTitle("Dar de Alta a Titular");
 		setBounds(100, 100, 779, 391);

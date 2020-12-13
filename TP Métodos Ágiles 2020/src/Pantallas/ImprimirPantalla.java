@@ -14,6 +14,8 @@ import java.util.Calendar;
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+import javax.swing.filechooser.FileSystemView;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -44,7 +46,9 @@ public class ImprimirPantalla extends JFrame{
 	private String claseString;
 	private Calendar fechaemision;
 	private ArrayList<Clase> clasesLicencia;
-	private String ruta="C:\\Users\\Pierotti\\Desktop\\";
+	private String ruta = "";
+	private int pantalla;
+	private Paragraph parrafo;
 
 	/**
 	 * Launch the application.
@@ -65,21 +69,20 @@ public class ImprimirPantalla extends JFrame{
 	/**
 	 * Create the application.
 	 */
-	public ImprimirPantalla(Licencia li) {
+	public ImprimirPantalla(Licencia li, int pantalla) {
+		System.out.println("INICIA IMPRIMIR");
+		FileSystemView filesys = FileSystemView.getFileSystemView();
+		ruta += filesys.getHomeDirectory();
+		ruta += "\\";
 		licencia = li;
+		this.pantalla = pantalla;
+		System.out.println("por arrancar initialize()");
 		initialize();
+		System.out.println("arrancó initialize()");
 	}
 	
 	public ImprimirPantalla() {
 		
-		/*
-		 * PARA EL TESTEO DE LA PANTALLA
-		 
-		Calendar fechaprueba = Calendar.getInstance();
-		Titular tit = new Titular("93457343", "ksjfk", "hola lskjh", "El Paracao 111", "A","11",fechaprueba , GrupoSanguineo.AB, true, true, Sexo.FEMENINO);
-		licencia = new Licencia(Clase.A,null,fechaprueba,tit, "hola uno dos tre alta observacion ahre skjfsl posdjflw wlkje");
-		licencia.setIdlicencia(3);
-		*/
 		initialize();
 	}
 
@@ -87,13 +90,15 @@ public class ImprimirPantalla extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
+		System.out.println("DALE LPM");
 		frame = new JFrame();
 		frame.setTitle("Imprimir Licencia");
 		frame.setBounds(100, 100, 779, 391);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
+		
+		
 
 		if(licencia.getTitular().getPiso().compareTo("")==0) {
 			dom+= licencia.getTitular().getDireccion()+", Santa Fe";
@@ -190,12 +195,24 @@ public class ImprimirPantalla extends JFrame{
 				if(licencia.getLicenciaOtro()!=null) {
 				clasesLicencia.add(licencia.getLicenciaOtro());}
 				//System.out.println("El dni del titular a pasar es: "+licencia.getTitular().getDni());
-				Paragraph parrafo = new Paragraph("Comprobante de licencia N°: "+licencia.getIdlicencia()+
-						"\nPrecio: $"+CostosLicencia.getInstance().getCostoLicencia(clasesLicencia, licencia.getTitular().getFechaNacimiento(), licencia.getTitular().getDni())+
-						"\nFecha de emisión: "+fechaemision.get(Calendar.DAY_OF_MONTH)+"/"+
-						(fechaemision.get(Calendar.MONTH)+1)+"/"+fechaemision.get(Calendar.YEAR)+
-						"\nHora de emisión: "+fechaemision.get(Calendar.HOUR_OF_DAY)+":"+fechaemision.get(Calendar.MINUTE)+
-						"\nDirección: Salvador Caputto 3800, Santa Fe", font);
+				
+				
+				if(pantalla==6) {
+					 parrafo = new Paragraph("Comprobante de licencia N°: "+licencia.getIdlicencia()+
+							"\nPrecio: $50"+ 
+							"\nFecha de emisión: "+fechaemision.get(Calendar.DAY_OF_MONTH)+"/"+
+							(fechaemision.get(Calendar.MONTH)+1)+"/"+fechaemision.get(Calendar.YEAR)+
+							"\nHora de emisión: "+fechaemision.get(Calendar.HOUR_OF_DAY)+":"+fechaemision.get(Calendar.MINUTE)+
+							"\nDirección: Salvador Caputto 3800, Santa Fe", font);
+				}else {
+					 parrafo = new Paragraph("Comprobante de licencia N°: "+licencia.getIdlicencia()+
+							"\nPrecio: $"+CostosLicencia.getInstance().getCostoLicencia(clasesLicencia, licencia.getTitular().getFechaNacimiento(), licencia.getTitular().getDni())+
+							"\nFecha de emisión: "+fechaemision.get(Calendar.DAY_OF_MONTH)+"/"+
+							(fechaemision.get(Calendar.MONTH)+1)+"/"+fechaemision.get(Calendar.YEAR)+
+							"\nHora de emisión: "+fechaemision.get(Calendar.HOUR_OF_DAY)+":"+fechaemision.get(Calendar.MINUTE)+
+							"\nDirección: Salvador Caputto 3800, Santa Fe", font);
+				}
+				
 				try {
 					document.add(parrafo);
 				
