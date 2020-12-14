@@ -1,35 +1,49 @@
 package Pantallas;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import Entidades.*;
+import Logica.GestorLicencia;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JCheckBox;
 import java.awt.Font;
 import javax.swing.JEditorPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-public class EmitirLicencia {
+public class EmitirLicencia extends JFrame{
 
-	private JFrame frmEmitirLicencia;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField tfNombre;
 	private JTextField tfApellido;
 	private JTextField tfTipoDoc;
 	private JTextField tfNroDoc;
 	private JTextField tfFechaNac;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-
+	private JTextField tfRH;
+	private JTextField tfGS;
+	private JTextField tfDepto;
+	private JTextField tfPiso;
+	private JTextField tfCalle;
+//	private Titular titularEmitir=new Titular();
+	private JCheckBox cbA,cbB,cbC,cbD,cbE,cbF,cbG;
+	private String aclaracion="<html>Aclaración:<br/>No se seleccionó un titular.</html>";
+	private JLabel lblAclaracion;
+	private JButton confirmar;
+	private Titular titularEncontrado;
+	private JCheckBox cbDonante;
+	private JEditorPane tfObservaciones;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -38,7 +52,7 @@ public class EmitirLicencia {
 			public void run() {
 				try {
 					EmitirLicencia window = new EmitirLicencia();
-					window.frmEmitirLicencia.setVisible(true);
+					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -52,25 +66,33 @@ public class EmitirLicencia {
 	public EmitirLicencia() {
 		initialize();
 	}
-
+	
+	public EmitirLicencia(Titular titularEncontrado) {
+		this.titularEncontrado=titularEncontrado;
+		initialize();
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmEmitirLicencia = new JFrame();
-		frmEmitirLicencia.setTitle("Emitir Licencia");
-		frmEmitirLicencia.setBounds(100, 100, 779, 391);
-		frmEmitirLicencia.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		System.out.println(titularEncontrado);
+		this.setTitle("Emitir Licencia");
+		this.setBounds(100, 100, 779, 391);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+
 		JPanel panel = new JPanel();
-		frmEmitirLicencia.getContentPane().add(panel, BorderLayout.CENTER);
+		getContentPane().add(panel, BorderLayout.CENTER);
 		
 		JButton buscarTitular = new JButton("Buscar Titular");
 		buscarTitular.setHorizontalAlignment(SwingConstants.RIGHT);
 		buscarTitular.setVerticalAlignment(SwingConstants.BOTTOM);
-		buscarTitular.setBounds(265, 9, 95, 21);
+		buscarTitular.setBounds(243, 9, 117, 21);
 		buscarTitular.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				BuscarTitular buscarTit = new BuscarTitular(1);
+				buscarTit.setVisible(true);
+				dispose();
 			}
 		});
 		panel.setLayout(null);
@@ -78,7 +100,7 @@ public class EmitirLicencia {
 		
 		JLabel lblSeleccioneTitular = new JLabel("Seleccione un titular existente");
 		lblSeleccioneTitular.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblSeleccioneTitular.setLabelFor(frmEmitirLicencia);
+		lblSeleccioneTitular.setLabelFor(this);
 		lblSeleccioneTitular.setBounds(30, 12, 195, 13);
 		panel.add(lblSeleccioneTitular);
 		
@@ -96,7 +118,7 @@ public class EmitirLicencia {
 		panelTitular.add(lblNombre);
 		
 		JLabel lblApellido = new JLabel("Apellido");
-		lblApellido.setBounds(165, 10, 45, 13);
+		lblApellido.setBounds(165, 10, 66, 13);
 		panelTitular.add(lblApellido);
 		
 		JLabel lblTipoDoc = new JLabel("Tipo Documento");
@@ -115,67 +137,62 @@ public class EmitirLicencia {
 		
 		tfTipoDoc = new JTextField();
 		tfTipoDoc.setColumns(10);
-		tfTipoDoc.setBounds(110, 38, 100, 19);
+		tfTipoDoc.setBounds(131, 37, 100, 19);
 		panelTitular.add(tfTipoDoc);
 		
 		tfNroDoc = new JTextField();
 		tfNroDoc.setColumns(10);
-		tfNroDoc.setBounds(110, 64, 100, 19);
+		tfNroDoc.setBounds(131, 63, 100, 19);
 		panelTitular.add(tfNroDoc);
 		
 		JLabel lblNroDocumento = new JLabel("Nro Documento");
-		lblNroDocumento.setBounds(10, 67, 80, 13);
+		lblNroDocumento.setBounds(10, 67, 117, 13);
 		panelTitular.add(lblNroDocumento);
 		
 		JLabel lblFechaDeNacimiento = new JLabel("Fecha de nacimiento");
-		lblFechaDeNacimiento.setBounds(10, 91, 96, 13);
+		lblFechaDeNacimiento.setBounds(10, 91, 117, 13);
 		panelTitular.add(lblFechaDeNacimiento);
 		
 		tfFechaNac = new JTextField();
 		tfFechaNac.setColumns(10);
-		tfFechaNac.setBounds(110, 88, 100, 19);
+		tfFechaNac.setBounds(131, 87, 100, 19);
 		panelTitular.add(tfFechaNac);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(235, 116, 85, 19);
-		panelTitular.add(textField);
+		tfRH = new JTextField();
+		tfRH.setColumns(10);
+		tfRH.setBounds(235, 116, 85, 19);
+		panelTitular.add(tfRH);
 		
-		JLabel lblFactorrh = new JLabel("Factor RH");
-		lblFactorrh.setBounds(176, 119, 55, 13);
+		JLabel lblFactorrh = new JLabel("RH");
+		lblFactorrh.setBounds(204, 120, 55, 13);
 		panelTitular.add(lblFactorrh);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(102, 116, 67, 19);
-		panelTitular.add(textField_1);
+		tfGS = new JTextField();
+		tfGS.setColumns(10);
+		tfGS.setBounds(120, 116, 67, 19);
+		panelTitular.add(tfGS);
 		
 		JLabel lblGrupoSanguineo = new JLabel("Grupo Sanguineo");
-		lblGrupoSanguineo.setBounds(10, 119, 80, 13);
+		lblGrupoSanguineo.setBounds(10, 119, 117, 13);
 		panelTitular.add(lblGrupoSanguineo);
 		
-		JCheckBox chckbxNewCheckBox_2 = new JCheckBox("Donante de Organos");
-		chckbxNewCheckBox_2.setBounds(10, 141, 130, 21);
-		panelTitular.add(chckbxNewCheckBox_2);
+		cbDonante = new JCheckBox("Donante de Organos");
+		cbDonante.setBounds(10, 141, 159, 21);
+		panelTitular.add(cbDonante);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(247, 186, 73, 19);
-		panelTitular.add(textField_2);
-		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(174, 218, 85, 19);
-		panelTitular.add(textField_3);
+		tfDepto = new JTextField();
+		tfDepto.setColumns(10);
+		tfDepto.setBounds(174, 218, 85, 19);
+		panelTitular.add(tfDepto);
 		
 		JLabel lblDepto = new JLabel("Depto");
-		lblDepto.setBounds(137, 221, 32, 13);
+		lblDepto.setBounds(137, 221, 73, 13);
 		panelTitular.add(lblDepto);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(42, 218, 85, 19);
-		panelTitular.add(textField_4);
+		tfPiso = new JTextField();
+		tfPiso.setColumns(10);
+		tfPiso.setBounds(42, 218, 85, 19);
+		panelTitular.add(tfPiso);
 		
 		JLabel lblPiso = new JLabel("Piso");
 		lblPiso.setBounds(10, 221, 45, 13);
@@ -190,66 +207,285 @@ public class EmitirLicencia {
 		lblDireccion.setBounds(10, 168, 55, 13);
 		panelTitular.add(lblDireccion);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(42, 189, 168, 19);
-		panelTitular.add(textField_5);
-		
-		JLabel lblNro = new JLabel("Nro");
-		lblNro.setBounds(217, 192, 32, 13);
-		panelTitular.add(lblNro);
+		tfCalle = new JTextField();
+		tfCalle.setColumns(10);
+		tfCalle.setBounds(42, 189, 189, 19);
+		panelTitular.add(tfCalle);
 		
 		JLabel lblSeleccionarClase = new JLabel("Seleccione la Clase de la Licencia");
-		lblSeleccionarClase.setBounds(404, 39, 166, 13);
+		lblSeleccionarClase.setBounds(404, 39, 278, 13);
 		panel.add(lblSeleccionarClase);
 		
-		JCheckBox cbA = new JCheckBox("Clase A");
+		cbA = new JCheckBox("Clase A");
 		cbA.setBounds(404, 55, 68, 21);
 		panel.add(cbA);
 		
 		JLabel lblObservaciones = new JLabel("Observaciones");
-		lblObservaciones.setBounds(403, 216, 95, 21);
+		lblObservaciones.setBounds(404, 203, 95, 21);
 		panel.add(lblObservaciones);
 		
-		JCheckBox cbB = new JCheckBox("Clase B");
-		cbB.setBounds(474, 55, 68, 21);
+		cbB = new JCheckBox("Clase B");
+		cbB.setBounds(474, 55, 78, 21);
 		panel.add(cbB);
 		
 		JButton cancelar = new JButton("Cancelar");
+		cancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Menu menu = new Menu();
+				menu.frmMen.setVisible(true);
+				dispose();
+			}
+		});
 		cancelar.setBounds(29, 311, 85, 21);
 		panel.add(cancelar);
 		
-		JButton confirmar = new JButton("Confirmar");
+		confirmar = new JButton("Confirmar");
+		confirmar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(titularEncontrado);
+				
+				Clase moto=null,otro=null;
+				
+				if(cbA.isSelected()) moto=Clase.A;
+				if(cbB.isSelected()) otro=Clase.B;
+				else if(cbC.isSelected()) otro=Clase.C;
+				else if(cbD.isSelected()) otro=Clase.D;
+				else if(cbE.isSelected()) otro=Clase.E;
+				else if(cbF.isSelected()) otro=Clase.F;
+				else if(cbG.isSelected()) otro=Clase.G;
+					
+				GestorLicencia.getInstance().crearLicencia(titularEncontrado,moto,otro,tfObservaciones.getText());
+				
+				
+				Licencia licencia = titularEncontrado.getLicencia();
+				ImprimirPantalla imprimirLic = new ImprimirPantalla(licencia, 1);
+				imprimirLic.frame.setVisible(true);
+				dispose();
+			}
+		});
 		confirmar.setBounds(638, 311, 103, 21);
 		panel.add(confirmar);
 		
-		JCheckBox cbC = new JCheckBox("Clase C");
-		cbC.setBounds(544, 55, 68, 21);
+		cbC = new JCheckBox("Clase C");
+
+		cbC.setBounds(550, 55, 78, 21);
 		panel.add(cbC);
 		
-		JCheckBox cbD = new JCheckBox("Clase D");
-		cbD.setBounds(614, 55, 68, 21);
+		cbD = new JCheckBox("Clase D");
+		cbD.setBounds(625, 55, 84, 21);
 		panel.add(cbD);
 		
-		JCheckBox cbE = new JCheckBox("Clase E");
+		cbE = new JCheckBox("Clase E");
 		cbE.setBounds(404, 78, 68, 21);
 		panel.add(cbE);
 		
-		JCheckBox cbF = new JCheckBox("Clase F");
+		cbF = new JCheckBox("Clase F");
 		cbF.setBounds(474, 78, 68, 21);
 		panel.add(cbF);
 		
-		JCheckBox cbG = new JCheckBox("Clase G");
-		cbG.setBounds(544, 78, 68, 21);
+		cbG = new JCheckBox("Clase G");
+		cbG.setBounds(550, 78, 95, 21);
 		panel.add(cbG);
 		
-		JLabel lblAclaracion = new JLabel("Aclaraci\u00F3n:");
-		lblAclaracion.setFont(new Font("Tahoma", Font.BOLD, 10));
-		lblAclaracion.setBounds(404, 122, 68, 13);
+		lblAclaracion = new JLabel(aclaracion);
+		lblAclaracion.setVerticalAlignment(SwingConstants.TOP);
+		lblAclaracion.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblAclaracion.setBounds(404, 122, 330, 91);
 		panel.add(lblAclaracion);
 		
-		JEditorPane editorPane = new JEditorPane();
-		editorPane.setBounds(404, 240, 337, 63);
-		panel.add(editorPane);
+		tfObservaciones = new JEditorPane();
+		tfObservaciones.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (e.getKeyChar()== '\n') {
+					String s=tfObservaciones.getText();
+					s=s.substring(0, s.length()-1);
+					tfObservaciones.setText(s);
+				}
+				
+				if (tfObservaciones.getText().length()==200) e.consume();
+			}
+		});
+		tfObservaciones.setBounds(404, 224, 337, 79);
+		panel.add(tfObservaciones);
+		
+		tfNombre.setEnabled(false);
+		tfApellido.setEnabled(false);
+		tfTipoDoc.setEnabled(false);
+		tfNroDoc.setEnabled(false);
+		tfFechaNac.setEnabled(false);
+		tfRH.setEnabled(false);
+		tfGS.setEnabled(false);
+		tfDepto.setEnabled(false);
+		tfPiso.setEnabled(false);
+		tfCalle.setEnabled(false);
+		cbDonante.setEnabled(false);
+		tfObservaciones.setEnabled(false);
+
+		actualizarAclaracion();
+		
+		confirmar.setEnabled(false);
+		
+		
+		cbA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				actualizarAclaracion();
+			}
+		});
+		
+		cbB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cbC.setSelected(false);
+				cbD.setSelected(false);
+				cbE.setSelected(false);
+				cbF.setSelected(false);
+				cbG.setSelected(false);
+				
+				actualizarAclaracion();
+			}
+		});
+		
+		cbC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cbB.setSelected(false);
+				cbD.setSelected(false);
+				cbE.setSelected(false);
+				cbF.setSelected(false);
+				cbG.setSelected(false);
+			
+				actualizarAclaracion();
+			}
+		});
+		
+		cbD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cbC.setSelected(false);
+				cbB.setSelected(false);
+				cbE.setSelected(false);
+				cbF.setSelected(false);
+				cbG.setSelected(false);
+				
+				actualizarAclaracion();
+			}
+		});
+		
+		cbE.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cbC.setSelected(false);
+				cbD.setSelected(false);
+				cbB.setSelected(false);
+				cbF.setSelected(false);
+				cbG.setSelected(false);
+				
+				actualizarAclaracion();
+			}
+		});
+		
+		cbF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cbC.setSelected(false);
+				cbD.setSelected(false);
+				cbE.setSelected(false);
+				cbB.setSelected(false);
+				cbG.setSelected(false);
+				
+				actualizarAclaracion();
+			}
+		});
+		
+		cbG.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cbC.setSelected(false);
+				cbD.setSelected(false);
+				cbE.setSelected(false);
+				cbF.setSelected(false);
+				cbB.setSelected(false);
+				
+				actualizarAclaracion();
+			}
+		});
+
+	}	
+	
+	private void actualizarAclaracion() {
+		aclaracion="<html>Aclaración:<br/>";
+		
+		if(titularEncontrado==null) {
+			aclaracion=aclaracion+"No se seleccionó un titular.</html>";
+			cbA.setEnabled(false);
+			cbB.setEnabled(false);
+			cbC.setEnabled(false);
+			cbD.setEnabled(false);
+			cbE.setEnabled(false);
+			cbF.setEnabled(false);
+			cbG.setEnabled(false);
+		}else{
+			tfObservaciones.setEnabled(true);
+			
+			actualizarDatos();
+			
+			if(!cbA.isSelected()&&!cbB.isSelected()&&!cbC.isSelected()&&!cbD.isSelected()&&!cbE.isSelected()&&!cbF.isSelected()&&!cbG.isSelected()){
+				aclaracion=aclaracion+"Seleccione una clase para la licencia.</html>";
+				confirmar.setEnabled(false);
+			}else {
+				
+				aclaracion=aclaracion+"El titular puede conducir vehiculos de clase";
+
+				if(cbA.isSelected()) {
+					aclaracion=aclaracion+" A";
+				}
+				if(cbB.isSelected() && !cbA.isSelected()) {
+					aclaracion=aclaracion+" B";
+				}
+				
+				if(cbB.isSelected()&&cbA.isSelected()) {
+					aclaracion=aclaracion+" y B";
+				}
+				if(cbC.isSelected()) {
+					aclaracion=aclaracion+" B y C";
+				}
+				if(cbD.isSelected()) {
+					aclaracion=aclaracion+" B C y D";
+				}
+				if(cbE.isSelected()) {
+					aclaracion=aclaracion+" B C D y E";
+				}
+				if(cbF.isSelected()) {
+					aclaracion=aclaracion+" B C D E y F";
+				}
+				if(cbG.isSelected()) {
+					aclaracion=aclaracion+" B C D E F y G";
+				}
+				aclaracion=aclaracion+".<html>";
+				
+				confirmar.setEnabled(true);
+				
+			}
+		}
+				
+		lblAclaracion.setText(aclaracion);
 	}
+	
+	private void actualizarDatos() {
+		System.out.println(titularEncontrado);
+		
+		tfNombre.setText(titularEncontrado.getNombre());
+		tfApellido.setText(titularEncontrado.getApellido());;
+		tfTipoDoc.setText("DNI");
+		tfNroDoc.setText(titularEncontrado.getDni());;
+		tfFechaNac.setText(new SimpleDateFormat("dd/MM/yyyy").format(titularEncontrado.getFechaNacimiento().getTime()));
+		tfDepto.setText(titularEncontrado.getDepto());
+		tfPiso.setText(titularEncontrado.getPiso());
+		tfCalle.setText(titularEncontrado.getDireccion());
+		if(titularEncontrado.isFactorRH()) {
+			tfRH.setText(" + ");
+		}else {
+			tfRH.setText(" - ");
+		}
+		cbDonante.setSelected(titularEncontrado.isEsDonante());
+		tfGS.setText(titularEncontrado.getGrupoSanguineo().toString());
+	}
+
 }
