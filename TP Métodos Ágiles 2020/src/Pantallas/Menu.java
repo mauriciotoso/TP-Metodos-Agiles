@@ -190,6 +190,11 @@ public class Menu extends JFrame{
 		});
 		btnModificarUsuario.setBounds(27, 261, 149, 29);
 		frmMen.getContentPane().add(btnModificarUsuario);
+		
+		JLabel lblNewLabel_1 = new JLabel("Usted est\u00E1 logueado como el superusuario.");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		lblNewLabel_1.setBounds(116, 314, 263, 14);
+		frmMen.getContentPane().add(lblNewLabel_1);
 		crearCopia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -199,10 +204,5 @@ public class Menu extends JFrame{
 
 			}
 		});
-		
-		
-		
-		
-
 	}
 }

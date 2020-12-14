@@ -59,22 +59,32 @@ public class ListadoVigente {
 		ArrayList<Licencia> listaLicencias = GestorLicencia.getInstance().getLicenciasVigentes();
 		
 		String[][] lista= new String[listaLicencias.size()][5];
-		String[] columnas={"ID de Licencia","Apellido","Nombre", "Fecha de Expiración","Clases"};
+		String[] columnas={"ID de Licencia","Apellido","Nombre", "Grupo Sanguíneo","Donante de Organos"};
 		
 		int i=0;
 		for(Licencia l:listaLicencias) {
 			lista[i][0]=l.getIdlicencia()+"";
 			lista[i][1]=l.getTitular().getApellido();
 			lista[i][2]=l.getTitular().getNombre();
-			lista[i][3]=new SimpleDateFormat("yyyy/MM/dd").format(l.getFechaVencimiento().getTime());
 			
-			if(l.getLicenciaMoto()==null) {
-				lista[i][4]=l.getLicenciaOtro()+"";	
-			}else if(l.getLicenciaOtro()==null) {
-				lista[i][4]=l.getLicenciaMoto()+"";	
+			String grupoSang =l.getTitular().getGrupoSanguineo().toString();
+			
+			if(l.getTitular().isFactorRH()) {
+				grupoSang=grupoSang+" +";
 			}else {
-				lista[i][4]=l.getLicenciaMoto()+""+l.getLicenciaOtro();	
+				grupoSang=grupoSang+" -";
 			}
+			
+			lista[i][3]=grupoSang;
+			
+			String donante;
+			if(l.getTitular().isEsDonante()) {
+				donante= "Si";
+			}else {
+				donante= "No";
+			}
+			
+			lista[i][4]=donante;
 			
 			i++;
 		}

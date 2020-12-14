@@ -83,7 +83,7 @@ public class GestorLicencia {
 		}else if(edad <= 70) {
 			cantidadAnios = 3;
 		}else {
-			cantidadAnios = 1;//Aca no deberia ser 1 año??
+			cantidadAnios = 1;
 		}
 		
 		if(diferenciaMeses <= 6) 

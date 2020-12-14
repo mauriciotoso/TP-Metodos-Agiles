@@ -9,13 +9,13 @@ public class App {
 	public static void main(String[] args) {
 		
 
-		Titular t = new Titular("41160820","Toso","Mauricio","Pasaje Parpal 3055","-","-",Calendar.getInstance(),GrupoSanguineo.A,true,true,Sexo.MASCULINO);
+		Titular t = new Titular("41160822","Toso","Mauricio","Pasaje Parpal 3055","-","-",Calendar.getInstance(),GrupoSanguineo.A,true,true,Sexo.MASCULINO);
 		//Licencia l = new Licencia(null,Clase.B,Calendar.getInstance(),t,"-");
     
 		//Titular t = new Titular("1000","Toso","Mauricio","Pasaje Parpal 3055","-","-",Calendar.getInstance(),GrupoSanguineo.A,true,true, Sexo.MASCULINO);
 		
 		Calendar vencimiento = Calendar.getInstance();
-		vencimiento.set(2021,00,13);
+		vencimiento.set(2020,11,30);
 		
 		Licencia l = new Licencia(null,Clase.B, vencimiento, t, "");
 		
